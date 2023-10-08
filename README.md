@@ -33,6 +33,14 @@ Sigue estos pasos para configurar y ejecutar la aplicación:
 6. Configura la conexión a la base de datos en el archivo de configuración ( `amanda_cell`).
 7. Ejecuta la aplicación en el servidor Tomcat.
 
+## Problemas
+
+Si encuentras el siguiente problema:
+
+**"Deployment descriptor directory cannot be found netbeans."**
+
+Debes crear la carpeta `WEB-INF` en la carpeta raíz del proyecto `amanda-cell-sistema\web`.
+
 ## Contribuir
 
 Sigue estos pasos para contribuir:
