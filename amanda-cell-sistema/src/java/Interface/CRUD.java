@@ -7,7 +7,7 @@ public interface CRUD <T> {
     
     public List toList();
     public T list(int id);
-    public boolean add(T entidad);
+    public boolean create(T entidad);
     public boolean edit(T entidad);
     public boolean delete(int id);
     

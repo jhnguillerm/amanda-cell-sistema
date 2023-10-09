@@ -1,23 +1,18 @@
-
 package Controller;
 
-import Model.Producto;
-import ModelDAO.ProductoDAO;
+import Model.Proveedor;
+import ModelDAO.ProveedorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "SvProducto", urlPatterns = {"/SvProducto"})
-public class SvProducto extends HttpServlet {
-    
-    String toList = "View/toList.jsp";
-    String producto = "View/Producto.jsp";
+@WebServlet(name = "SvProveedor", urlPatterns = {"/SvProveedor"})
+public class SvProveedor extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,10 +22,10 @@ public class SvProducto extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SvProducto</title>");            
+            out.println("<title>Servlet SvProveedor</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SvProducto at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SvProveedor at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -39,21 +34,11 @@ public class SvProducto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso = null;
-        String action = request.getParameter("accion");
-        if (action.equalsIgnoreCase("listar")) {
-            acceso = producto;
-        }
-        RequestDispatcher view = request.getRequestDispatcher(acceso);
-        view.forward(request, response);
-        //Listar productos.
-        /*ProductoDAO productoDAO = new ProductoDAO();
-        List<Producto> listaProductos = productoDAO.toList();
-        
-        request.setAttribute("productos", listaProductos);
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher(producto);
-        dispatcher.forward(request, response);*/
+        ProveedorDAO proveedorDAO = new ProveedorDAO();
+        List<Proveedor> listaProveedores = proveedorDAO.toList();
+        request.setAttribute("listaProveedores", listaProveedores);
+
+        request.getRequestDispatcher("/View/Producto.jsp").forward(request, response);
     }
 
     @Override

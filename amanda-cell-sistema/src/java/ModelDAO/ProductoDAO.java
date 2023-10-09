@@ -44,6 +44,7 @@ public class ProductoDAO implements CRUD{
                 list.add(producto);
             }
         } catch (Exception e) {
+            System.out.println("Producto - toList: " + e);
         }
         
         return list;
@@ -55,8 +56,32 @@ public class ProductoDAO implements CRUD{
     }
 
     @Override
-    public boolean add(Object entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean create(Object entidad) {
+        String sql = "INSERT INTO Producto (nombre, descripcion, precio, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try {
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getDescripcion());
+            ps.setDouble(3, producto.getPrecio());
+            ps.setInt(4, producto.getStock());
+            ps.setString(5, producto.getTipo());
+            ps.setInt(5, producto.getIdProveedor());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Producto - create: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
     }
 
     @Override

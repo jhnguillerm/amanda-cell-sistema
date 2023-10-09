@@ -10,6 +10,6 @@
         <form action="View/Producto.jsp" method="post">
             <input type="submit" value="Enviar">
         </form>
-        <a href="Controlador?accion=listar">Listar</a>
+        <a href="SvProducto?accion=listar">Listar</a>
     </body>
 </html>

@@ -25,7 +25,6 @@ body {
 
 /* Envoltorio */
 .wrapper {
-    align-items: stretch;
     display: flex;
     width: 100%;
     background-color: #f5f7f9;
@@ -41,6 +40,8 @@ body {
     direction: ltr;
     max-width: 260px;
     min-width: 260px;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar-content {
@@ -219,6 +220,22 @@ a.sidebar-link svg {
 .content-data {
     height: 150px;
     background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.content-data-title {
+    color: #c0c5ca;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.content-data-value {
+    color: #0a223b;
+    font-size: 25px;
+    font-weight: 600;
 }
 
 /* / Main */
