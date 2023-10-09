@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Model.Proveedor"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Producto"%>
@@ -152,41 +153,42 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Formulario - Agregar Producto -->
-                                    <form class="row g-3">
+                                    <form action="/amanda-cell-sistema/SvProducto" class="row g-3">
                                         <div class="col-12">
                                             <label for="txtNombre" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="txtNombre">
+                                            <input name="txtNombre" type="text" class="form-control" id="txtNombre">
                                         </div>
                                         <div class="col-12">
                                             <label for="areaDescripcion" class="form-label">Descripción</label>
-                                            <textarea class="form-control" id="areaDescripcion"
+                                            <textarea name="areaDescripcion" class="form-control" id="areaDescripcion"
                                                       rows="3"></textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="txtPrecio" class="form-label">Precio</label>
-                                            <input type="text" class="form-control" id="txtPrecio">
+                                            <input name="txtPrecio" type="text" class="form-control" id="txtPrecio">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="txtStock" class="form-label">Stock</label>
-                                            <input type="text" class="form-control" id="txtStock">
+                                            <input name="txtStock" type="text" class="form-control" id="txtStock">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="txtTipo" class="form-label">Tipo</label>
-                                            <input type="text" class="form-control" id="txtTipo">
+                                            <input name="txtTipo" type="text" class="form-control" id="txtTipo">
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="txtIdProveedor" class="form-label">ID Proveedor</label>
+                                            <input name="txtIdProveedor" type="text" class="form-control" id="txtIdProveedor">
+                                        </div>
+                                        <!--
                                         <div class="col-md-6">
                                             <label for="cbProveedor" class="form-label">Proveedor</label>
                                             <select id="cbProveedor" class="form-select">
-                                                <%
-                                                    List<Proveedor> listaProveedores = (List<Proveedor>) request.getAttribute("listaProveedores");
-                                                    for (Proveedor proveedor : listaProveedores) {
-                                                %>
-                                                <option value="<%= proveedor.getIdProveedor()%>"><%= proveedor.getNombre()%></option>
-                                                <%
-                                                    }
-                                                %>
+                                                <c:forEach items="${listaProveedores}" var="proveedor">
+                                                    <option value="${proveedor.idProveedor}">${proveedor.nombre}</option>
+                                                </c:forEach>
                                             </select>
                                         </div>
+                                        -->
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary">Agregar</button>
                                         </div>

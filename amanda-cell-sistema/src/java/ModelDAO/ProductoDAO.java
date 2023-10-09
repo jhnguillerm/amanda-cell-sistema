@@ -60,6 +60,9 @@ public class ProductoDAO implements CRUD{
         String sql = "INSERT INTO Producto (nombre, descripcion, precio, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)";
         
         try {
+            
+            Producto producto = (Producto) entidad;
+            
             ps = connection.prepareStatement(sql);
             
             ps.setString(1, producto.getNombre());
@@ -67,7 +70,7 @@ public class ProductoDAO implements CRUD{
             ps.setDouble(3, producto.getPrecio());
             ps.setInt(4, producto.getStock());
             ps.setString(5, producto.getTipo());
-            ps.setInt(5, producto.getIdProveedor());
+            ps.setInt(6, producto.getIdProveedor());
             
             ps.execute();
             

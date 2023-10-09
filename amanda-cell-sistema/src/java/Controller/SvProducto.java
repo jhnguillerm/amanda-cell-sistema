@@ -1,4 +1,3 @@
-
 package Controller;
 
 import Model.Producto;
@@ -15,37 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "SvProducto", urlPatterns = {"/SvProducto"})
 public class SvProducto extends HttpServlet {
-    
-    String toList = "View/toList.jsp";
-    String producto = "View/Producto.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SvProducto</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SvProducto at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso = null;
-        String action = request.getParameter("accion");
-        if (action.equalsIgnoreCase("listar")) {
-            acceso = producto;
-        }
-        RequestDispatcher view = request.getRequestDispatcher(acceso);
-        view.forward(request, response);
         //Listar productos.
         /*ProductoDAO productoDAO = new ProductoDAO();
         List<Producto> listaProductos = productoDAO.toList();
@@ -59,7 +35,28 @@ public class SvProducto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Obteniendo los parámetros de los input del formulario
+        String nombre = request.getParameter("txtNombre");
+        String descripcion = request.getParameter("areaDescripcion");
+        double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+        int stock = Integer.parseInt(request.getParameter("txtStock"));
+        String tipo = request.getParameter("txtTipo");
+        int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+        
+        Producto producto = new Producto();
+        producto.setNombre(nombre);
+        producto.setDescripcion(descripcion);
+        producto.setPrecio(precio);
+        producto.setStock(stock);
+        producto.setTipo(tipo);
+        producto.setIdProveedor(idProveedor);
+        
+        ProductoDAO productoDAO = new ProductoDAO();
+    if (productoDAO.create(producto)) {
+        response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+    } else {
+        response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+    }
     }
 
     @Override
