@@ -1,3 +1,4 @@
+<%@page import="ModelDAO.ProveedorDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Model.Proveedor"%>
 <%@page import="java.util.Iterator"%>
@@ -153,7 +154,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- Formulario - Agregar Producto -->
-                                    <form action="/amanda-cell-sistema/SvProducto" class="row g-3">
+                                    <form action="/amanda-cell-sistema/SvProducto" method="post" class="row g-3">
                                         <div class="col-12">
                                             <label for="txtNombre" class="form-label">Nombre</label>
                                             <input name="txtNombre" type="text" class="form-control" id="txtNombre">
@@ -179,16 +180,6 @@
                                             <label for="txtIdProveedor" class="form-label">ID Proveedor</label>
                                             <input name="txtIdProveedor" type="text" class="form-control" id="txtIdProveedor">
                                         </div>
-                                        <!--
-                                        <div class="col-md-6">
-                                            <label for="cbProveedor" class="form-label">Proveedor</label>
-                                            <select id="cbProveedor" class="form-select">
-                                                <c:forEach items="${listaProveedores}" var="proveedor">
-                                                    <option value="${proveedor.idProveedor}">${proveedor.nombre}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        -->
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary">Agregar</button>
                                         </div>

@@ -42,7 +42,7 @@ public class SvProducto extends HttpServlet {
         int stock = Integer.parseInt(request.getParameter("txtStock"));
         String tipo = request.getParameter("txtTipo");
         int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
-        
+
         Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
@@ -50,13 +50,13 @@ public class SvProducto extends HttpServlet {
         producto.setStock(stock);
         producto.setTipo(tipo);
         producto.setIdProveedor(idProveedor);
-        
+
         ProductoDAO productoDAO = new ProductoDAO();
-    if (productoDAO.create(producto)) {
-        response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
-    } else {
-        response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
-    }
+        if (productoDAO.create(producto)) {
+            response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+        }
     }
 
     @Override

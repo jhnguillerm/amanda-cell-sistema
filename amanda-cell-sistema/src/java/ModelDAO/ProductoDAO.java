@@ -10,11 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ProductoDAO implements CRUD{
+public class ProductoDAO extends ConexionDB implements CRUD{
     
     ConexionDB conexionDB = new ConexionDB();
-    Connection connection;
-    PreparedStatement ps;
+    Connection connection = null;
+    PreparedStatement ps = null;
     ResultSet rs;
     Producto producto = new Producto();
 
@@ -60,6 +60,7 @@ public class ProductoDAO implements CRUD{
         String sql = "INSERT INTO Producto (nombre, descripcion, precio, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)";
         
         try {
+            Connection connection = conexionDB.getConnection();
             
             Producto producto = (Producto) entidad;
             
@@ -74,6 +75,7 @@ public class ProductoDAO implements CRUD{
             
             ps.execute();
             
+            System.out.println("Ser agregó con exito.");
             return true;
         } catch (Exception e) {
             System.out.println("Producto - create: " + e);
@@ -82,9 +84,9 @@ public class ProductoDAO implements CRUD{
             try {
                 connection.close();
             } catch (Exception e) {
-                System.err.println(e);
+                System.out.println(e);
             }
-        }
+        }    
     }
 
     @Override

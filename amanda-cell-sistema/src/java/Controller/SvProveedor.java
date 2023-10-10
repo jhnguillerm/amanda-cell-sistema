@@ -3,7 +3,6 @@ package Controller;
 import Model.Proveedor;
 import ModelDAO.ProveedorDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +22,12 @@ public class SvProveedor extends HttpServlet {
             throws ServletException, IOException {
         ProveedorDAO proveedorDAO = new ProveedorDAO();
         List<Proveedor> listaProveedores = proveedorDAO.toList();
-        request.setAttribute("listaProveedores", listaProveedores);
+
+        if (listaProveedores != null) {
+            request.setAttribute("listaProveedores", listaProveedores);
+        } else {
+            request.setAttribute("error", "Error al cargar la lista de proveedores.");
+        }
 
         request.getRequestDispatcher("/View/Producto.jsp").forward(request, response);
     }
