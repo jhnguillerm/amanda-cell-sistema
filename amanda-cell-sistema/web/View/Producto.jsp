@@ -141,7 +141,12 @@
                                     <td class="align-middle"><%=producto.getStock()%></td>
                                     <td class="align-middle"><%=producto.getTipo()%></td>
                                     <td class="align-middle"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
-                                    <td><button type="button" class="btn"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button><button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#btn-delete-producto"></button></td>
+                                    <td>
+                                        <!-- Boton para actualizar un producto -->
+                                        <button type="button" class="btn align-middle"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
+                                        <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
+                                        <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#btn-delete-producto"></button>
+                                    </td>
                                 </tr>
                                 <%
                                     }
@@ -213,10 +218,6 @@
                                         <label for="txtTipo" class="form-label">Tipo</label>
                                         <input name="txtTipo" type="text" class="form-control" id="txtTipo" required>
                                     </div>
-                                    <!-- <div class="col-md-6">
-                                        <label for="txtIdProveedor" class="form-label">ID Proveedor</label>
-                                        <input name="txtIdProveedor" type="text" class="form-control" id="txtIdProveedor" required>
-                                    </div> -->
                                     <div class="col-md-6">
                                         <label for="cbProveedor" class="form-label">Proveedor</label>
                                         <select id="cbProveedor" class="form-select" name="cbProveedor">
@@ -255,6 +256,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar</button>
+                                <!-- Boton que elimina definitivamente el producto -->
                                 <button type="button" class="btn btn-danger">Eliminar</button>
                             </div>
                         </div>
@@ -264,6 +266,8 @@
                 <!-- / MODALES-->
             </main>
         </div>
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

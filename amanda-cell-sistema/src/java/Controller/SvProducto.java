@@ -42,12 +42,11 @@ public class SvProducto extends HttpServlet {
         double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
         int stock = Integer.parseInt(request.getParameter("txtStock"));
         String tipo = request.getParameter("txtTipo");
-        //int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
         String idProveedorString = request.getParameter("cbProveedor");
-        
+
         if (idProveedorString != null && !idProveedorString.isEmpty()) {
             int idProveedor = Integer.parseInt(idProveedorString);
-            
+
             Producto producto = new Producto();
             producto.setNombre(nombre);
             producto.setDescripcion(descripcion);
@@ -56,7 +55,7 @@ public class SvProducto extends HttpServlet {
             producto.setStock(stock);
             producto.setTipo(tipo);
             producto.setIdProveedor(idProveedor);
-            
+
             ProductoDAO productoDAO = new ProductoDAO();
             if (productoDAO.create(producto)) {
                 response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
@@ -67,21 +66,6 @@ public class SvProducto extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
         }
 
-        /*Producto producto = new Producto();
-        producto.setNombre(nombre);
-        producto.setDescripcion(descripcion);
-        producto.setPrecioCompra(precioCompra);
-        producto.setPrecioVenta(precioVenta);
-        producto.setStock(stock);
-        producto.setTipo(tipo);
-        producto.setIdProveedor(idProveedor);
-
-        ProductoDAO productoDAO = new ProductoDAO();
-        if (productoDAO.create(producto)) {
-            response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
-        }*/
     }
 
     @Override
