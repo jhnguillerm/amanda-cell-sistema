@@ -38,15 +38,40 @@ public class SvProducto extends HttpServlet {
         // Obteniendo los parámetros de los input del formulario
         String nombre = request.getParameter("txtNombre");
         String descripcion = request.getParameter("areaDescripcion");
-        double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+        double precioCompra = Double.parseDouble(request.getParameter("txtPrecioCompra"));
+        double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
         int stock = Integer.parseInt(request.getParameter("txtStock"));
         String tipo = request.getParameter("txtTipo");
-        int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+        //int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+        String idProveedorString = request.getParameter("cbProveedor");
+        
+        if (idProveedorString != null && !idProveedorString.isEmpty()) {
+            int idProveedor = Integer.parseInt(idProveedorString);
+            
+            Producto producto = new Producto();
+            producto.setNombre(nombre);
+            producto.setDescripcion(descripcion);
+            producto.setPrecioCompra(precioCompra);
+            producto.setPrecioVenta(precioVenta);
+            producto.setStock(stock);
+            producto.setTipo(tipo);
+            producto.setIdProveedor(idProveedor);
+            
+            ProductoDAO productoDAO = new ProductoDAO();
+            if (productoDAO.create(producto)) {
+                response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+            }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+        }
 
-        Producto producto = new Producto();
+        /*Producto producto = new Producto();
         producto.setNombre(nombre);
         producto.setDescripcion(descripcion);
-        producto.setPrecio(precio);
+        producto.setPrecioCompra(precioCompra);
+        producto.setPrecioVenta(precioVenta);
         producto.setStock(stock);
         producto.setTipo(tipo);
         producto.setIdProveedor(idProveedor);
@@ -56,7 +81,7 @@ public class SvProducto extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
         } else {
             response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
-        }
+        }*/
     }
 
     @Override

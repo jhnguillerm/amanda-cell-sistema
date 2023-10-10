@@ -17,7 +17,7 @@ Antes de ejecutar la aplicación, asegúrate de tener instalados los siguientes 
 - [Tomcat Server](https://tomcat.apache.org/)
 - [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
-Todos estos también se encuentran en la carpeta REQUERIDO.
+Todos estos también se encuentran en la carpeta `REQUERIDO`.
 
 ## Configuración
 

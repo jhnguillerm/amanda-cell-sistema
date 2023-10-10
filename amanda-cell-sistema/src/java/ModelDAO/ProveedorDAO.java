@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProveedorDAO implements CRUD<Proveedor>{
+public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
     
     ConexionDB conexionDB = new ConexionDB();
     Connection connection;
@@ -59,13 +59,50 @@ public class ProveedorDAO implements CRUD<Proveedor>{
     }
 
     @Override
-    public boolean edit(Proveedor entidad) {
+    public boolean update(Proveedor entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Proveedor entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean search(Proveedor entidad) {
+        String sql = "SELECT * FROM Proveedor WHERE id_proveedor = ?";
+        
+        try {
+            connection = conexionDB.getConnection();
+            
+            Proveedor proveedor = (Proveedor) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1, proveedor.getIdProveedor());
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                proveedor.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
+                proveedor.setNombre(rs.getString("nombre"));
+                proveedor.setDireccion(rs.getString("direccion"));
+                proveedor.setNumero(rs.getString("numero"));
+                proveedor.setCorreo(rs.getString("correo"));
+                
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Proveedor - search: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
     
 }

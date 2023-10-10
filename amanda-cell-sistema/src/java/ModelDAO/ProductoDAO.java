@@ -36,7 +36,8 @@ public class ProductoDAO extends ConexionDB implements CRUD{
                 producto.setIdProducto(rs.getInt("id_producto"));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));
-                producto.setPrecio(rs.getDouble("precio"));
+                producto.setPrecioCompra(rs.getDouble("precio_compra"));
+                producto.setPrecioVenta(rs.getDouble("precio_venta"));
                 producto.setStock(rs.getInt("stock"));
                 producto.setTipo(rs.getString("tipo"));
                 producto.setIdProveedor(rs.getInt("id_proveedor"));
@@ -57,7 +58,7 @@ public class ProductoDAO extends ConexionDB implements CRUD{
 
     @Override
     public boolean create(Object entidad) {
-        String sql = "INSERT INTO Producto (nombre, descripcion, precio, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try {
             Connection connection = conexionDB.getConnection();
@@ -68,10 +69,11 @@ public class ProductoDAO extends ConexionDB implements CRUD{
             
             ps.setString(1, producto.getNombre());
             ps.setString(2, producto.getDescripcion());
-            ps.setDouble(3, producto.getPrecio());
-            ps.setInt(4, producto.getStock());
-            ps.setString(5, producto.getTipo());
-            ps.setInt(6, producto.getIdProveedor());
+            ps.setDouble(3, producto.getPrecioCompra());
+            ps.setDouble(4, producto.getPrecioVenta());
+            ps.setInt(5, producto.getStock());
+            ps.setString(6, producto.getTipo());
+            ps.setInt(7, producto.getIdProveedor());
             
             ps.execute();
             
@@ -90,12 +92,40 @@ public class ProductoDAO extends ConexionDB implements CRUD{
     }
 
     @Override
-    public boolean edit(Object entidad) {
+    public boolean update(Object entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Object entidad) {
+        String sql = "DELETE FROM Producto WHERE id_producto = ?";
+        
+        try {
+            connection = getConnection();
+            
+            Producto producto = (Producto) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1, producto.getIdProducto());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Producto - delete: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    @Override
+    public boolean search(Object entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

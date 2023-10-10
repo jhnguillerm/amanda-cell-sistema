@@ -8,8 +8,7 @@
     <body>
         <h1>Hello World!</h1>
         <form action="View/Producto.jsp" method="post">
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Productos">
         </form>
-        <a href="SvProducto?accion=listar">Listar</a>
     </body>
 </html>
