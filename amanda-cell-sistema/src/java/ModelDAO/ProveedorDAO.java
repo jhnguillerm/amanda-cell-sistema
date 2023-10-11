@@ -49,11 +49,6 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
     }
 
     @Override
-    public Proveedor list(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public boolean create(Proveedor entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

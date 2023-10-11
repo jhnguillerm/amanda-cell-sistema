@@ -1,5 +1,4 @@
 <%@page import="ModelDAO.ProveedorDAO"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="Model.Proveedor"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Producto"%>
@@ -14,10 +13,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sistema Principal</title>
         <!-- Estilos -->
-        <link rel="stylesheet" href="../css/style.css"">
+        <link rel="stylesheet" href="../css/style.css">
         <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
         <!-- Bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
         <!-- Ionicons -->
@@ -88,72 +89,63 @@
                 <div class="summary-block">
                     <div class="content-data">
                         <p class="content-data-title">STOCK TOTAL</p>
-                        <span class="content-data-value">120</span>
+                        <span class="content-data-value">0</span>
                     </div>
                     <div class="content-data">
                         <p class="content-data-title">TOTAL PRECIO COMPRA</p>
-                        <span class="content-data-value">s/.12,300</span>
+                        <span class="content-data-value">0</span>
                     </div>
                     <div class="content-data">
                         <p class="content-data-title">TOTAL PRECIO VENTA</p>
-                        <span class="content-data-value">s/.15,300</span>
+                        <span class="content-data-value">0</span>
                     </div>
                 </div>
                 <div class="content-table">
-                    <div class="scroll-table">
-                        <h5 class="h5">Productos</h5>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#ID</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Descripción</th>
-                                    <th scope="col">Precio Compra</th>
-                                    <th scope="col">Precio Venta</th>
-                                    <th scope="col">Stock</th>
-                                    <th scope="col">Tipo</th>
-                                    <th scope="col">Proveedor</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
+                    <table id="tablaProducto" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                                <th>Tipo</th>
+                                <th>Proveedor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <%
-                                ProductoDAO productoDAO = new ProductoDAO();
-                                List<Producto> list = productoDAO.toList();
-                                Iterator<Producto> iterator = list.iterator();
-                                Producto producto = null;
+                            ProductoDAO productoDAO = new ProductoDAO();
+                            List<Producto> list = productoDAO.toList();
+                            Iterator<Producto> iterador = list.iterator();
+                            Producto producto = null;
 
-                                while (iterator.hasNext()) {
-                                    producto = iterator.next();
-                                    int idProveedor = producto.getIdProveedor();
-                                    ProveedorDAO proveedorDAO = new ProveedorDAO();
-                                    Proveedor proveedor = new Proveedor();
-                                    proveedor.setIdProveedor(idProveedor);
-                                    boolean found = proveedorDAO.search(proveedor);
-
+                            while (iterador.hasNext()) {
+                                producto = iterador.next();
+                                int idProveedor = producto.getIdProveedor();
+                                ProveedorDAO proveedorDAO = new ProveedorDAO();
+                                Proveedor proveedor = new Proveedor();
+                                proveedor.setIdProveedor(idProveedor);
+                                boolean found = proveedorDAO.search(proveedor);
+                        %>
+                            <tr>
+                                <td><%=producto.getIdProducto()%></td>
+                                <td><%=producto.getNombre()%></td>
+                                <td><%=producto.getDescripcion()%></td>
+                                <td><%=producto.getPrecioCompra()%></td>
+                                <td><%=producto.getPrecioVenta()%></td>
+                                <td><%=producto.getStock()%></td>
+                                <td><%=producto.getTipo()%></td>
+                                <td><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
+                                <td> </td>
+                            </tr>
+                            <%
+                                }
                             %>
-                            <tbody>
-                                <tr>
-                                    <td class="align-middle"><%=producto.getIdProducto()%></td>
-                                    <td class="align-middle"><%=producto.getNombre()%></td>
-                                    <td class="align-middle"><%=producto.getDescripcion()%></td>
-                                    <td class="align-middle"><%=producto.getPrecioCompra()%></td>
-                                    <td class="align-middle"><%=producto.getPrecioVenta()%></td>
-                                    <td class="align-middle"><%=producto.getStock()%></td>
-                                    <td class="align-middle"><%=producto.getTipo()%></td>
-                                    <td class="align-middle"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
-                                    <td>
-                                        <!-- Boton para actualizar un producto -->
-                                        <button type="button" class="btn align-middle"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
-                                        <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                        <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#btn-delete-producto"></button>
-                                    </td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- Buttons -->
                 <div class="botones" style="grid-column: 1 / 5;">
@@ -257,7 +249,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar</button>
                                 <!-- Boton que elimina definitivamente el producto -->
-                                <button type="button" class="btn btn-danger">Eliminar</button>
+                                <a href="" class="btn btn-danger">Eliminar</a>
                             </div>
                         </div>
                     </div>
@@ -267,11 +259,24 @@
             </main>
         </div>
 
-
-
+        <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#tablaProducto').DataTable({
+                    // Configuración de DataTable, como "paging" o "searching"
+                    "paging": true,
+                    "lengthMenu": [10, 25, 50],
+                    "searching": true
+                });
+            });
+        </script>
+        <!-- / Bootstrap -->
     </body>
 
 </html>

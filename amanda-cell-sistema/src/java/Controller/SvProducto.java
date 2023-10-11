@@ -22,19 +22,14 @@ public class SvProducto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Listar productos.
-        /*ProductoDAO productoDAO = new ProductoDAO();
-        List<Producto> listaProductos = productoDAO.toList();
-        
-        request.setAttribute("productos", listaProductos);
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher(producto);
-        dispatcher.forward(request, response);*/
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // CREAR NUEVO PRUDUCTO
         // Obteniendo los parámetros de los input del formulario
         String nombre = request.getParameter("txtNombre");
         String descripcion = request.getParameter("areaDescripcion");
@@ -65,6 +60,11 @@ public class SvProducto extends HttpServlet {
         } else {
             response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
         }
+        // / CREAR NUEVO PRODUCTO
+
+        // ELIMINAR PRODUCTO
+        
+        // / ELIMINAR PRODUCTO
 
     }
 

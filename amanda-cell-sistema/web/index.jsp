@@ -7,8 +7,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form action="View/Producto.jsp" method="post">
-            <input type="submit" value="Productos">
-        </form>
+        <a href="View/Producto.jsp">Productos</a>
     </body>
 </html>

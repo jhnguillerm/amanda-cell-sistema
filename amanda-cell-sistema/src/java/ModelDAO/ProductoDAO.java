@@ -52,11 +52,6 @@ public class ProductoDAO extends ConexionDB implements CRUD{
     }
 
     @Override
-    public Object list(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public boolean create(Object entidad) {
         String sql = "INSERT INTO Producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
@@ -126,7 +121,42 @@ public class ProductoDAO extends ConexionDB implements CRUD{
 
     @Override
     public boolean search(Object entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM Proveedor WHERE id_proveedor = ?";
+        
+        try {
+            connection = conexionDB.getConnection();
+            
+            Producto producto = (Producto) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1, producto.getIdProducto());
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecioCompra(Double.parseDouble(rs.getString("precio_compra")));
+                producto.setPrecioVenta(Double.parseDouble(rs.getString("precio_venta")));
+                producto.setStock(Integer.parseInt(rs.getString("stock")));
+                producto.setTipo(rs.getString("tipo"));
+                producto.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
+                
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Proveedor - search: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
     
 }

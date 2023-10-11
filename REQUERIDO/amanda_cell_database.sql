@@ -99,7 +99,22 @@ VALUES
     ('Auriculares Bluetooth', 'Auriculares inalámbricos con cancelación de ruido', NULL, 40.00, 49.99, 25, 'Accesorio', 5),
     ('Auriculares Inalámbricos', 'Auriculares Bluetooth con cancelación de ruido', NULL, 40.00, 49.99, 50, 'Accesorio', 3),
     ('Cámara Trasera para iPhone X', 'Cámara trasera de repuesto para iPhone X', NULL, 20.00, 29.99, 20, 'Cámara', 2),
-    ('Funda Protectora para Samsung Galaxy S10', 'Funda resistente para Samsung Galaxy S10', NULL, 8.00, 14.99, 30, 'Accesorio', 1);
+    ('Funda Protectora para Samsung Galaxy S10', 'Funda resistente para Samsung Galaxy S10', NULL, 8.00, 14.99, 30, 'Accesorio', 1),
+    ('Auriculares con Cable para iPhone', 'Auriculares con cable de alta calidad para iPhone', NULL, 15.00, 29.99, 50, 'Auriculares', 1),
+    ('Cargador Inalámbrico para Samsung', 'Cargador inalámbrico rápido para dispositivos Samsung', NULL, 18.00, 34.99, 40, 'Cargador', 3),
+    ('Batería Externa 10000mAh', 'Batería externa portátil de 10000mAh para carga de dispositivos', NULL, 25.00, 39.99, 30, 'Batería', 2),
+    ('Funda de Cuero para iPhone 13', 'Funda elegante de cuero para iPhone 13', NULL, 12.00, 24.99, 25, 'Accesorio', 4),
+    ('Teclado Inalámbrico para Tablet', 'Teclado inalámbrico compacto para tablet', NULL, 22.00, 39.99, 20, 'Teclado', 5),
+    ('Auriculares Deportivos Bluetooth', 'Auriculares inalámbricos para deportes con resistencia al agua', NULL, 30.00, 49.99, 35, 'Auriculares', 1),
+    ('Cámara Trasera para Samsung Galaxy Note 10', 'Cámara trasera de repuesto para Samsung Galaxy Note 10', NULL, 28.00, 39.99, 15, 'Cámara', 2),
+    ('Cable de Carga Rápida USB-C', 'Cable de carga rápida USB-C con conectores de aluminio', NULL, 8.00, 17.99, 60, 'Cable', 4),
+    ('Funda Resistente para iPad', 'Funda resistente y a prueba de golpes para iPad', NULL, 15.00, 29.99, 30, 'Accesorio', 3),
+    ('Altavoz Bluetooth Portátil', 'Altavoz inalámbrico portátil con calidad de sonido superior', NULL, 40.00, 69.99, 25, 'Altavoz', 5),
+    ('Cargador de Coche USB Dual', 'Cargador de coche con dos puertos USB para cargar dispositivos en el automóvil', NULL, 10.00, 19.99, 45, 'Cargador', 1),
+    ('Funda con Soporte para iPhone 12', 'Funda con soporte plegable para iPhone 12', NULL, 9.00, 18.99, 35, 'Accesorio', 2),
+    ('Kit de Destornilladores de Precisión', 'Kit de destornilladores de precisión para reparación de dispositivos', NULL, 15.00, 29.99, 20, 'Herramientas', 4),
+    ('Cámara Frontal para Google Pixel 4', 'Cámara frontal de repuesto para Google Pixel 4', NULL, 32.00, 44.99, 12, 'Cámara', 5),
+    ('Funda con Teclado para Tablet', 'Funda con teclado integrado para tablet', NULL, 20.00, 39.99, 18, 'Teclado', 3);
     
 SELECT * FROM Producto;
 
