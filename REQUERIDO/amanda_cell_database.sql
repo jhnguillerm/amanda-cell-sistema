@@ -75,7 +75,6 @@ CREATE TABLE Venta_Empleado (
     FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
 );
 
--- Inserciones de prueba para Proveedor
 INSERT INTO Proveedor (nombre, direccion, numero, correo)
 VALUES
     ('Proveedor A', 'Calle 123, Ciudad A', '123-456-7890', 'proveedora@example.com'),
@@ -84,7 +83,6 @@ VALUES
     ('Proveedor D', 'Avenida 789, Ciudad D', '888-555-9999', 'proveedord@example.com'),
     ('Proveedor E', 'Calle 456, Ciudad E', '777-444-3333', 'proveedore@example.com');
 
--- Inserciones de prueba para Producto (relacionados con reparación de celulares)
 INSERT INTO Producto (nombre, descripcion, imagen, precio_compra, precio_venta, stock, tipo, id_proveedor)
 VALUES
     ('Pantalla LCD para iPhone 11', 'Pantalla de repuesto compatible con iPhone 11', NULL, 80.00, 129.99, 20, 'Pantalla', 1),
@@ -114,7 +112,18 @@ VALUES
     ('Funda con Soporte para iPhone 12', 'Funda con soporte plegable para iPhone 12', NULL, 9.00, 18.99, 35, 'Accesorio', 2),
     ('Kit de Destornilladores de Precisión', 'Kit de destornilladores de precisión para reparación de dispositivos', NULL, 15.00, 29.99, 20, 'Herramientas', 4),
     ('Cámara Frontal para Google Pixel 4', 'Cámara frontal de repuesto para Google Pixel 4', NULL, 32.00, 44.99, 12, 'Cámara', 5),
-    ('Funda con Teclado para Tablet', 'Funda con teclado integrado para tablet', NULL, 20.00, 39.99, 18, 'Teclado', 3);
+    ('Funda con Teclado para Tablet', 'Funda con teclado integrado para tablet', NULL, 20.00, 39.99, 18, 'Teclado', 3),
+    ('Funda Protectora para iPhone 11', 'Funda resistente para iPhone 11', NULL, 6.00, 12.99, 35, 'Accesorio', 1),
+    ('Cargador Rápido para iPhone 12', 'Cargador de carga rápida para iPhone 12', NULL, 15.00, 29.99, 30, 'Cargador', 2),
+    ('Auriculares con Cancelación de Ruido', 'Auriculares inalámbricos con tecnología de cancelación de ruido', NULL, 50.00, 89.99, 20, 'Auriculares', 3),
+    ('Batería para iPhone X', 'Batería de repuesto para iPhone X', NULL, 25.00, 39.99, 25, 'Batería', 4),
+    ('Cámara Trasera para Google Pixel 3', 'Cámara trasera de repuesto para Google Pixel 3', NULL, 28.00, 39.99, 15, 'Cámara', 5),
+    ('Cable de Carga USB para iPad', 'Cable de carga USB para dispositivos iPad', NULL, 10.00, 19.99, 50, 'Cable', 1),
+    ('Altavoz Inalámbrico Resistente al Agua', 'Altavoz inalámbrico resistente al agua para actividades al aire libre', NULL, 35.00, 59.99, 15, 'Altavoz', 2),
+    ('Funda con Teclado para iPad', 'Funda con teclado integrado para iPad', NULL, 18.00, 34.99, 20, 'Accesorio', 3),
+    ('Cargador de Coche USB-C', 'Cargador de coche con puerto USB-C para carga rápida en el automóvil', NULL, 12.00, 24.99, 25, 'Cargador', 4),
+    ('Kit de Herramientas de Reparación Profesional', 'Kit de herramientas de reparación profesional para dispositivos electrónicos', NULL, 35.00, 64.99, 10, 'Herramientas', 5);
+
     
 SELECT * FROM Producto;
 

@@ -11,7 +11,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Productos</title>
+        <title>Proveedores</title>
         <!-- Estilos -->
         <link rel="stylesheet" href="../css/style.css">
         <!-- Bootstrap -->
@@ -57,10 +57,10 @@
                         <li class="sidebar-header">
                             Materiales
                         </li>
-                        <li class="sidebar-item active"><a class="sidebar-link" href="Producto.jsp"><ion-icon class="align-middle"
-                                                                                                              name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="Proveedor.jsp"><ion-icon class="align-middle"
-                                                                                                        name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
+                        <li class="sidebar-item"><a class="sidebar-link" href="Producto.jsp"><ion-icon class="align-middle"
+                                                                                                       name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
+                        <li class="sidebar-item active"><a class="sidebar-link" href="Proveedor.jsp"><ion-icon class="align-middle"
+                                                                                                               name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
                         </li>
                         <li class="sidebar-header">
                             Usuarios
@@ -85,61 +85,35 @@
             <!-- / Nav vertical -->
 
             <main class="content">
-                <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Productos</strong></h1>
-                <div class="summary-block">
-                    <div class="content-data">
-                        <p class="content-data-title">STOCK TOTAL</p>
-                        <span class="content-data-value">0</span>
-                    </div>
-                    <div class="content-data">
-                        <p class="content-data-title">TOTAL PRECIO COMPRA</p>
-                        <span class="content-data-value">0</span>
-                    </div>
-                    <div class="content-data">
-                        <p class="content-data-title">TOTAL PRECIO VENTA</p>
-                        <span class="content-data-value">0</span>
-                    </div>
-                </div>
+                <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Proveedores</strong></h1>
                 <div class="content-table">
-                    <h5 class="h5">Tabla de productos</h5>
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#ID</th>
                                 <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Precio Compra</th>
-                                <th>Precio Venta</th>
-                                <th>Stock</th>
-                                <th>Tipo</th>
-                                <th>Proveedor</th>
+                                <th>Dirección</th>
+                                <th>Número</th>
+                                <th>Correo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                                ProductoDAO productoDAO = new ProductoDAO();
-                                List<Producto> list = productoDAO.toList();
-                                Iterator<Producto> iterador = list.iterator();
-                                Producto producto = null;
+                                ProveedorDAO proveedorDAO = new ProveedorDAO();
+                                List<Proveedor> list = proveedorDAO.toList();
+                                Iterator<Proveedor> iterador = list.iterator();
+                                Proveedor proveedor = null;
 
                                 while (iterador.hasNext()) {
-                                    producto = iterador.next();
-                                    int idProveedor = producto.getIdProveedor();
-                                    ProveedorDAO proveedorDAO = new ProveedorDAO();
-                                    Proveedor proveedor = new Proveedor();
-                                    proveedor.setIdProveedor(idProveedor);
-                                    boolean found = proveedorDAO.search(proveedor);
+                                    proveedor = iterador.next();
                             %>
                             <tr>
-                                <td><%=producto.getIdProducto()%></td>
-                                <td><%=producto.getNombre()%></td>
-                                <td><%=producto.getDescripcion()%></td>
-                                <td><%=producto.getPrecioCompra()%></td>
-                                <td><%=producto.getPrecioVenta()%></td>
-                                <td><%=producto.getStock()%></td>
-                                <td><%=producto.getTipo()%></td>
-                                <td><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
+                                <td><%=proveedor.getIdProveedor()%></td>
+                                <td><%=proveedor.getNombre()%></td>
+                                <td><%=proveedor.getDireccion()%></td>
+                                <td><%=proveedor.getNumero()%></td>
+                                <td><%=proveedor.getCorreo()%></td>
                                 <td>
                                     <!-- Boton para actualizar un producto -->
                                     <button type="button" class="btn align-middle"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
@@ -162,21 +136,6 @@
                     <!-- / Button - Agregar Producto -->
                 </div>
                 <!-- / Buttons -->
-                <div class="content-graphics">
-                    <h5 class="h5">Tipos de productos</h5>
-                    <span>Pantalla </span><div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-success" style="width: 25%"></div>
-                    </div>
-                    Cargador<div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-info" style="width: 50%"></div>
-                    </div>
-                    Batería<div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-warning" style="width: 75%"></div>
-                    </div>
-                    Cámara<div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-danger" style="width: 66%"></div>
-                    </div>
-                </div>
                 <!-- MODALES -->
                 <!-- Modal - Agregar Producto -->
                 <div class="modal fade" id="btn-create-producto" tabindex="-1" aria-labelledby="modal-create-producto"
@@ -215,21 +174,6 @@
                                     <div class="col-md-6">
                                         <label for="txtTipo" class="form-label">Tipo</label>
                                         <input name="txtTipo" type="text" class="form-control" id="txtTipo" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="cbProveedor" class="form-label">Proveedor</label>
-                                        <select id="cbProveedor" class="form-select" name="cbProveedor">
-                                            <option value="">Selecciona un proveedor</option>
-                                            <%
-                                                ProveedorDAO proveedorDAO = new ProveedorDAO();
-                                                List<Proveedor> listaProveedores = proveedorDAO.toList();
-                                                for (Proveedor proveedor : listaProveedores) {
-                                            %>
-                                            <option value="<%= proveedor.getIdProveedor()%>"><%= proveedor.getNombre()%></option>
-                                            <%
-                                                }
-                                            %>
-                                        </select>
                                     </div>
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">Agregar</button>

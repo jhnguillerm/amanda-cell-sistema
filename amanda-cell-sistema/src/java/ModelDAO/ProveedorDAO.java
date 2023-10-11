@@ -50,7 +50,31 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean create(Proveedor entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO Proveedor (nombre, direccion, numero, correo)";
+        
+        try {
+            Connection connection = getConnection();
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, proveedor.getNombre());
+            ps.setString(2, proveedor.getDireccion());
+            ps.setString(3, proveedor.getNumero());
+            ps.setString(4, proveedor.getCorreo());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Proveedor - create: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 
     @Override
