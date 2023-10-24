@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ProductoDAO extends ConexionDB implements CRUD{
+public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
     
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
@@ -52,7 +52,7 @@ public class ProductoDAO extends ConexionDB implements CRUD{
     }
 
     @Override
-    public boolean create(Object entidad) {
+    public boolean create(Producto entidad) {
         String sql = "INSERT INTO Producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try {
@@ -87,16 +87,46 @@ public class ProductoDAO extends ConexionDB implements CRUD{
     }
 
     @Override
-    public boolean update(Object entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean update(Producto entidad) {
+        String sql = "UPDATE Producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, id_proveedor = ? WHERE id_producto = ?";
+        
+        try {
+            connection = conexionDB.getConnection();
+            
+            Producto producto = (Producto) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getDescripcion());
+            ps.setDouble(3, producto.getPrecioCompra());
+            ps.setDouble(4, producto.getPrecioVenta());
+            ps.setInt(5, producto.getStock());
+            ps.setString(6, producto.getTipo());
+            ps.setInt(7, producto.getIdProveedor());
+            ps.setInt(8, producto.getIdProducto());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Producto - update: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 
     @Override
-    public boolean delete(Object entidad) {
+    public boolean delete(Producto entidad) {
         String sql = "DELETE FROM Producto WHERE id_producto = ?";
         
         try {
-            connection = getConnection();
+            connection = conexionDB.getConnection();
             
             Producto producto = (Producto) entidad;
             
@@ -120,7 +150,7 @@ public class ProductoDAO extends ConexionDB implements CRUD{
     }
 
     @Override
-    public boolean search(Object entidad) {
+    public boolean search(Producto entidad) {
         String sql = "SELECT * FROM Proveedor WHERE id_proveedor = ?";
         
         try {

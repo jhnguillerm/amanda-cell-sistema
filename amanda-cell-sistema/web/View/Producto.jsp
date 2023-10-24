@@ -101,7 +101,19 @@
                     </div>
                 </div>
                 <div class="content-table">
-                    <h5 class="h5">Tabla de productos</h5>
+                    <div class="row w-100 justify-content-between mb-3">
+                        <div class="col-5">
+                            <h5 class="h5">Tabla de productos</h5>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Button - Agregar Producto -->
+                            <button type="button" class="btn btn-primary" id="abrir-modal-producto" data-bs-toggle="modal" data-bs-target="#modal-producto">
+                                Agregar Producto
+                            </button>
+                            <!-- / Button - Agregar Producto -->
+                        </div>
+                    </div>
+
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -132,19 +144,41 @@
                                     boolean found = proveedorDAO.search(proveedor);
                             %>
                             <tr>
-                                <td><%=producto.getIdProducto()%></td>
-                                <td><%=producto.getNombre()%></td>
-                                <td><%=producto.getDescripcion()%></td>
-                                <td><%=producto.getPrecioCompra()%></td>
-                                <td><%=producto.getPrecioVenta()%></td>
-                                <td><%=producto.getStock()%></td>
-                                <td><%=producto.getTipo()%></td>
-                                <td><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
+                                <td class="align-middle td_id_producto"><%=producto.getIdProducto()%></td>
+                                <td class="td_nombre"><%=producto.getNombre()%></td>
+                                <td class="td_descripcion"><%=producto.getDescripcion()%></td>
+                                <td class="align-middle td_precio_compra"><%=producto.getPrecioCompra()%></td>
+                                <td class="td_precio_venta"><%=producto.getPrecioVenta()%></td>
+                                <td class="td_stock"><%=producto.getStock()%></td>
+                                <td class="td_tipo"><%=producto.getTipo()%></td>
+                                <td class="td_proveedor"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
                                 <td>
                                     <!-- Boton para actualizar un producto -->
-                                    <button type="button" class="btn align-middle"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
+                                    <button type="button" class="btn align-middle btn-editar-producto" data-bs-toggle="modal" data-bs-target="#modal-producto"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                    <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#btn-delete-producto"></button>
+                                    <button type="button" class="btn-close align-middle btn-modal-eliminar-producto" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-producto" data-nombre="<%= producto.getNombre()%>" data-id="<%= producto.getIdProducto()%>"></button>
+                                    <!-- Modal - Eliminar Producto -->
+                                    <div class="modal fade" id="modal-confirmar-eliminar-producto" tabindex="-1" aria-labelledby="modal-delete-producto" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="modal-confirmar-eliminar-producto">Eliminar producto</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Seguro que deseas eliminar este producto?</p>
+                                                    <p>ID: <span id="producto-id"></span></p>
+                                                    <p>Nombre: <span id="producto-nombre"></span></p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar Producto</button>
+                                                        <!-- Botón para eliminar un producto -->
+                                                        <button type="submit" class="btn btn-danger" id="btn-eliminar-producto" name="action" value="delete">Eliminar Producto</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / Modal - Eliminar Producto -->
                                 </td>
                             </tr>
                             <%
@@ -153,15 +187,6 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Buttons -->
-                <div class="botones" style="grid-column: 1 / 5;">
-                    <!-- Button - Agregar Producto -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-create-producto">
-                        Agregar Producto
-                    </button>
-                    <!-- / Button - Agregar Producto -->
-                </div>
-                <!-- / Buttons -->
                 <div class="content-graphics">
                     <h5 class="h5">Tipos de productos</h5>
                     <span>Pantalla </span><div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -179,7 +204,7 @@
                 </div>
                 <!-- MODALES -->
                 <!-- Modal - Agregar Producto -->
-                <div class="modal fade" id="btn-create-producto" tabindex="-1" aria-labelledby="modal-create-producto"
+                <div class="modal fade" id="modal-producto" tabindex="-1" aria-labelledby="modal-create-producto"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
@@ -191,6 +216,11 @@
                             <div class="modal-body">
                                 <!-- Formulario - Agregar Producto -->
                                 <form action="/amanda-cell-sistema/SvProducto" method="post" class="row g-3">
+                                    <div class="col-12" id="div-id_producto">
+                                        <label for="txtIdProducto" class="form-label">ID</label>
+                                        <input type="text" class="form-control" id="txtIdProducto" disabled>
+                                        <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" class="form-control">
+                                    </div>
                                     <div class="col-12">
                                         <label for="txtNombre" class="form-label">Nombre</label>
                                         <input name="txtNombre" type="text" class="form-control" id="txtNombre" required>
@@ -232,7 +262,8 @@
                                         </select>
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-agregar-producto" name="action" value="create">Agregar Producto</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-actualizar-producto" name="action" value="update">Actualizar Producto</button>
                                     </div>
                                 </form>
                                 <!-- / Formulario - Agregar Producto -->
@@ -241,35 +272,17 @@
                     </div>
                 </div>
                 <!-- / Modal - Agregar Producto -->
-                <!-- Modal - Eliminar Producto -->
-                <div class="modal fade" id="btn-delete-producto" tabindex="-1" aria-labelledby="modal-delete-producto" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modal-delete-producto">Eliminar producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ¿Seguro que deseas eliminar este producto?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar</button>
-                                <!-- Boton que elimina definitivamente el producto -->
-                                <a href="" class="btn btn-danger">Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- / Modal - Eliminar Producto -->
+
                 <!-- / MODALES-->
             </main>
         </div>
-
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
@@ -282,6 +295,8 @@
             });
         </script>
         <!-- / Bootstrap -->
-    </body>
+
+        <script <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>></script>
+</body>
 
 </html>
