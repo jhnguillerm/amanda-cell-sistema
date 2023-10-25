@@ -1,17 +1,10 @@
-<%@page import="ModelDAO.ProveedorDAO"%>
-<%@page import="Model.Proveedor"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="Model.Producto"%>
-<%@page import="java.util.List"%>
-<%@page import="ModelDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Clientes</title>
+        <title>Ventas</title>
         <!-- Estilos -->
         <link rel="stylesheet" href="../css/style.css">
         <!-- Bootstrap -->
@@ -25,7 +18,6 @@
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
@@ -33,7 +25,7 @@
                 <div class="sidebar-content">
                     <!-- Logo -->
                     <div>
-                        <a class="sidebar-brand" href="index.html">
+                        <a class="sidebar-brand" href="../main.jsp">
                             <h1 class="sidebar-title">Amanda Cell</h1>
                         </a>
                     </div>
@@ -49,24 +41,24 @@
                         <li class="sidebar-header">
                             Servicios
                         </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="venta.jsp"><ion-icon class="align-middle"
-                                                                                                    name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="reparacion.jsp"><ion-icon class="align-middle"
-                                                                                                         name="construct"></ion-icon><span class="align-middle">Reparaciones</span></a>
+                        <li class="sidebar-item active"><a class="sidebar-link" href="venta.jsp"><ion-icon class="align-middle"
+                                                                                            name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
+                                                                                            name="construct"></ion-icon><span class="align-middle">Reparaciones</span></a>
                         </li>
                         <li class="sidebar-header">
                             Materiales
                         </li>
                         <li class="sidebar-item"><a class="sidebar-link" href="producto.jsp"><ion-icon class="align-middle"
-                                                                                                       name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
+                                                                                                              name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="proveedor.jsp"><ion-icon class="align-middle"
                                                                                                         name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
                         </li>
                         <li class="sidebar-header">
                             Usuarios
                         </li>
-                        <li class="sidebar-item active"><a class="sidebar-link" href="cliente.jsp"><ion-icon class="align-middle"
-                                                                                                             name="person-add"></ion-icon><span class="align-middle">Clientes</span></a>
+                        <li class="sidebar-item"><a class="sidebar-link" href="cliente.jsp"><ion-icon class="align-middle"
+                                                                                                      name="person-add"></ion-icon><span class="align-middle">Clientes</span></a>
                         </li>
                         <li class="sidebar-item"><a class="sidebar-link" href="empleado.jsp"><ion-icon class="align-middle"
                                                                                                        name="person"></ion-icon class="align-middle"><span
@@ -88,12 +80,13 @@
                 
             </main>
         </div>
-
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
@@ -107,5 +100,4 @@
         </script>
         <!-- / Bootstrap -->
     </body>
-
 </html>

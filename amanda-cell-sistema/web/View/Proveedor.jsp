@@ -49,26 +49,26 @@
                         <li class="sidebar-header">
                             Servicios
                         </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
+                        <li class="sidebar-item"><a class="sidebar-link" href="venta.jsp"><ion-icon class="align-middle"
                                                                                             name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
+                        <li class="sidebar-item"><a class="sidebar-link" href="reparacion.jsp"><ion-icon class="align-middle"
                                                                                             name="construct"></ion-icon><span class="align-middle">Reparaciones</span></a>
                         </li>
                         <li class="sidebar-header">
                             Materiales
                         </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="Producto.jsp"><ion-icon class="align-middle"
+                        <li class="sidebar-item"><a class="sidebar-link" href="producto.jsp"><ion-icon class="align-middle"
                                                                                                        name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
-                        <li class="sidebar-item active"><a class="sidebar-link" href="Proveedor.jsp"><ion-icon class="align-middle"
+                        <li class="sidebar-item active"><a class="sidebar-link" href="proveedor.jsp"><ion-icon class="align-middle"
                                                                                                                name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
                         </li>
                         <li class="sidebar-header">
                             Usuarios
                         </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="Cliente.jsp"><ion-icon class="align-middle"
+                        <li class="sidebar-item"><a class="sidebar-link" href="cliente.jsp"><ion-icon class="align-middle"
                                                                                                       name="person-add"></ion-icon><span class="align-middle">Clientes</span></a>
                         </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="Empleado.jsp"><ion-icon class="align-middle"
+                        <li class="sidebar-item"><a class="sidebar-link" href="empleado.jsp"><ion-icon class="align-middle"
                                                                                                        name="person"></ion-icon class="align-middle"><span
                                     class="align-middle">Empleados</span></a></li>
                         <li class="sidebar-header">

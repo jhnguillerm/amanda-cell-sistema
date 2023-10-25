@@ -21,7 +21,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
     @Override
     public List toList() {
         ArrayList<Proveedor> list = new ArrayList<>();
-        String sql = "SELECT * FROM Proveedor";
+        String sql = "SELECT * FROM proveedor";
         
         try {
             connection = conexionDB.getConnection();
@@ -50,7 +50,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean create(Proveedor entidad) {
-        String sql = "INSERT INTO Proveedor (nombre, direccion, numero, correo)";
+        String sql = "INSERT INTO proveedor (nombre, direccion, numero, correo)";
         
         try {
             Connection connection = getConnection();
@@ -89,7 +89,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean search(Proveedor entidad) {
-        String sql = "SELECT * FROM Proveedor WHERE id_proveedor = ?";
+        String sql = "SELECT * FROM proveedor WHERE id_proveedor = ?";
         
         try {
             connection = conexionDB.getConnection();

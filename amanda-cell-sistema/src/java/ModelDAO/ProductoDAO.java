@@ -15,13 +15,13 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
     PreparedStatement ps = null;
-    ResultSet rs;
+    ResultSet rs = null;
     Producto producto = new Producto();
 
     @Override
     public List toList() {
         ArrayList<Producto> list = new ArrayList<>();
-        String sql = "SELECT * FROM Producto";
+        String sql = "SELECT * FROM producto";
         
         try {
             connection = conexionDB.getConnection();
@@ -53,7 +53,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
 
     @Override
     public boolean create(Producto entidad) {
-        String sql = "INSERT INTO Producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try {
             Connection connection = conexionDB.getConnection();
@@ -88,7 +88,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
 
     @Override
     public boolean update(Producto entidad) {
-        String sql = "UPDATE Producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, id_proveedor = ? WHERE id_producto = ?";
+        String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, id_proveedor = ? WHERE id_producto = ?";
         
         try {
             connection = conexionDB.getConnection();
@@ -123,7 +123,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
 
     @Override
     public boolean delete(Producto entidad) {
-        String sql = "DELETE FROM Producto WHERE id_producto = ?";
+        String sql = "DELETE FROM producto WHERE id_producto = ?";
         
         try {
             connection = conexionDB.getConnection();
@@ -151,7 +151,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
 
     @Override
     public boolean search(Producto entidad) {
-        String sql = "SELECT * FROM Proveedor WHERE id_proveedor = ?";
+        String sql = "SELECT * FROM proveedor WHERE id_proveedor = ?";
         
         try {
             connection = conexionDB.getConnection();

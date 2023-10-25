@@ -1,35 +1,36 @@
+
 package Controller;
 
-import Model.Proveedor;
-import ModelDAO.ProveedorDAO;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "SvProveedor", urlPatterns = {"/SvProveedor"})
-public class SvProveedor extends HttpServlet {
+public class SvVenta extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SvVenta</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SvVenta at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProveedorDAO proveedorDAO = new ProveedorDAO();
-        List<Proveedor> listaProveedores = proveedorDAO.toList();
-
-        if (listaProveedores != null) {
-            request.setAttribute("listaProveedores", listaProveedores);
-        } else {
-            request.setAttribute("error", "Error al cargar la lista de proveedores.");
-        }
-
-        request.getRequestDispatcher("/View/producto.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     @Override

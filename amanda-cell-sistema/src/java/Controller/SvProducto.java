@@ -54,9 +54,9 @@ public class SvProducto extends HttpServlet {
 
                 ProductoDAO productoDAO = new ProductoDAO();
                 if (productoDAO.create(producto)) {
-                    response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/producto.jsp");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
                 }
             } else if (action.equals("update")) {
                 int idProducto = Integer.parseInt(request.getParameter("txtIdProducto"));
@@ -80,9 +80,9 @@ public class SvProducto extends HttpServlet {
 
                 ProductoDAO productoDAO = new ProductoDAO();
                 if (productoDAO.update(producto)) {
-                    response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/producto.jsp");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
                 }
             } else if (action.equals("delete")) {
                 int idProducto = Integer.parseInt(request.getParameter("txtIdProducto"));
@@ -92,9 +92,9 @@ public class SvProducto extends HttpServlet {
                 producto.setIdProducto(idProducto);
 
                 if (productoDAO.delete(producto)) {
-                    response.sendRedirect(request.getContextPath() + "/View/Producto.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/producto.jsp");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/View/Error.jsp");
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
                 }
             }
         }
