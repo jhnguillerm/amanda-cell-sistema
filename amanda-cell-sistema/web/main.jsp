@@ -112,7 +112,7 @@
             });
         </script>
         <!-- / Bootstrap -->
-        <script <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>></script>
+        <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>
 </body>
 
 </html>

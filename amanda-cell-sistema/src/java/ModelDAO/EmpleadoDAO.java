@@ -14,7 +14,6 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado>{
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
     Empleado empleado = new Empleado();
 
     @Override
