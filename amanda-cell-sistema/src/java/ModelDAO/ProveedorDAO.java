@@ -13,9 +13,9 @@ import java.util.List;
 public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
     
     ConexionDB conexionDB = new ConexionDB();
-    Connection connection;
-    PreparedStatement ps;
-    ResultSet rs;
+    Connection connection = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     Proveedor proveedor = new Proveedor();
 
     @Override
@@ -50,10 +50,12 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean create(Proveedor entidad) {
-        String sql = "INSERT INTO proveedor (nombre, direccion, numero, correo)";
+        String sql = "INSERT INTO proveedor (nombre, direccion, numero, correo) VALUES (?, ?, ?, ?)";
         
         try {
-            Connection connection = getConnection();
+            connection = conexionDB.getConnection();
+            
+            Proveedor proveedor = (Proveedor) entidad;
             
             ps = connection.prepareStatement(sql);
             
@@ -79,12 +81,62 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean update(Proveedor entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE proveedor SET nombre = ?, direccion = ?, numero = ?, correo = ? WHERE id_proveedor = ?";
+        
+        try {
+            connection = conexionDB.getConnection();
+            
+            Proveedor proveedor = (Proveedor) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, proveedor.getNombre());
+            ps.setString(2, proveedor.getDireccion());
+            ps.setString(3, proveedor.getNumero());
+            ps.setString(4, proveedor.getCorreo());
+            ps.setInt(5, proveedor.getIdProveedor());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Proveedor - update: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 
     @Override
     public boolean delete(Proveedor entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM proveedor WHERE id_proveedor = ?";
+        
+        try {
+            connection = conexionDB.getConnection();
+            
+            Proveedor proveedor = (Proveedor) entidad;
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1, proveedor.getIdProveedor());
+            
+            ps.execute();
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Producto - delete: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
 
     @Override

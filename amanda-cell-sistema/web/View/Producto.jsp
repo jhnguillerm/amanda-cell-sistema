@@ -113,7 +113,6 @@
                             <!-- / Button - Agregar Producto -->
                         </div>
                     </div>
-
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -289,13 +288,13 @@
             $(document).ready(function () {
                 $('#tablaProducto').DataTable({
                     "paging": true,
-                    "lengthMenu": [10, 25, 50],
+                    "lengthMenu": [6, 10, 25, 50],
                     "searching": true
                 });
             });
         </script>
         <!-- / Bootstrap -->
-        <script <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>></script>
+        <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>
 </body>
 
 </html>

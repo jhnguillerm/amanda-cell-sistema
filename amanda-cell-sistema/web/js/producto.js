@@ -39,21 +39,18 @@ $(document).ready(function () {
         $("#producto-id").text(idProducto);
         $("#producto-nombre").text(nombreProducto);
 
-        // Agregar lógica para eliminar producto
         $("#btn-eliminar-producto").on("click", function () {
             $.ajax({
-                url: "/amanda-cell-sistema/SvProducto", // La URL de tu servlet
+                url: "/amanda-cell-sistema/SvProducto",
                 method: "POST",
                 data: {
                     action: "delete",
                     txtIdProducto: idProducto
                 },
                 success: function (response) {
-                    // Manejar la respuesta del servidor, por ejemplo, recargar la página
-                    location.reload(); // Recargar la página después de eliminar el producto
+                    location.reload();
                 },
                 error: function (error) {
-                    // Manejar errores si la solicitud falla
                     console.error("Error al eliminar producto: " + error);
                 }
             });

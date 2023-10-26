@@ -35,7 +35,63 @@ public class SvProveedor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getParameter("action") != null) {
+            String action = request.getParameter("action");
+            
+            if (action.equals("create")) {
+                String nombre = request.getParameter("txtNombre");
+                String direccion = request.getParameter("txtDireccion");
+                String numero = request.getParameter("txtNumero");
+                String correo = request.getParameter("txtCorreo");
+                
+                Proveedor proveedor = new Proveedor();
+                
+                proveedor.setNombre(nombre);
+                proveedor.setDireccion(direccion);
+                proveedor.setNumero(numero);
+                proveedor.setCorreo(correo);
+                
+                ProveedorDAO proveedorDAO = new ProveedorDAO();
+                if (proveedorDAO.create(proveedor)) {
+                    response.sendRedirect(request.getContextPath() + "/View/proveedor.jsp");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
+                }
+            } else if (action.equals("update")) {
+                int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                String nombre = request.getParameter("txtNombre");
+                String direccion = request.getParameter("txtDireccion");
+                String numero = request.getParameter("txtNumero");
+                String correo = request.getParameter("txtCorreo");
+                
+                Proveedor proveedor = new Proveedor();
+                
+                proveedor.setIdProveedor(idProveedor);
+                proveedor.setNombre(nombre);
+                proveedor.setDireccion(direccion);
+                proveedor.setNumero(numero);
+                proveedor.setCorreo(correo);
+                
+                ProveedorDAO proveedorDAO = new ProveedorDAO();
+                if (proveedorDAO.update(proveedor)) {
+                    response.sendRedirect(request.getContextPath() + "/View/proveedor.jsp");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
+                }
+            } else if (action.equals("delete")) {
+                int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                
+                ProveedorDAO proveedorDAO = new ProveedorDAO();
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(idProveedor);
+                
+                if (proveedorDAO.delete(proveedor)) {
+                    response.sendRedirect(request.getContextPath() + "/View/proveedor.jsp");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/View/error.jsp");
+                }
+            }
+        }
     }
 
     @Override

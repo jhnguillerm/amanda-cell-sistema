@@ -87,7 +87,19 @@
             <main class="content">
                 <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Proveedores</strong></h1>
                 <div class="content-table">
-                    <table id="tablaProducto" class="table table-striped" style="width:100%">
+                    <div class="row w-100 justify-content-between mb-3">
+                        <div class="col-5">
+                            <h5 class="h5">Tabla de proveedores</h5>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Button - Agregar proveedor -->
+                            <button type="button" class="btn btn-primary" id="abrir-modal-proveedor" data-bs-toggle="modal" data-bs-target="#modal-proveedor">
+                                Agregar Proveedor
+                            </button>
+                            <!-- / Button - Agregar proveedor -->
+                        </div>
+                    </div>
+                    <table id="tablaProveedor" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#ID</th>
@@ -109,16 +121,38 @@
                                     proveedor = iterador.next();
                             %>
                             <tr>
-                                <td><%=proveedor.getIdProveedor()%></td>
-                                <td><%=proveedor.getNombre()%></td>
-                                <td><%=proveedor.getDireccion()%></td>
-                                <td><%=proveedor.getNumero()%></td>
-                                <td><%=proveedor.getCorreo()%></td>
+                                <td class="td_id_proveedor"><%=proveedor.getIdProveedor()%></td>
+                                <td class="td_nombre"><%=proveedor.getNombre()%></td>
+                                <td class="td_direccion"><%=proveedor.getDireccion()%></td>
+                                <td class="td_numero"><%=proveedor.getNumero()%></td>
+                                <td class="td_correo"><%=proveedor.getCorreo()%></td>
                                 <td>
                                     <!-- Boton para actualizar un producto -->
-                                    <button type="button" class="btn align-middle"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
+                                    <button type="button" class="btn align-middle btn-editar-proveedor" data-bs-toggle="modal" data-bs-target="#modal-proveedor"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></button>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                    <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#btn-delete-producto"></button>
+                                    <button type="button" class="btn-close align-middle btn-modal-eliminar-proveedor" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-proveedor" data-nombre="<%= proveedor.getNombre()%>" data-id="<%= proveedor.getIdProveedor()%>"></button>
+                                    <!-- Modal - Eliminar Proveedor -->
+                                    <div class="modal fade" id="modal-confirmar-eliminar-proveedor" tabindex="-1" aria-labelledby="modal-delete-proveedor" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="modal-confirmar-eliminar-proveedor">Eliminar proveedor</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Seguro que deseas eliminar este proveedor?</p>
+                                                    <p>ID: <span id="proveedor-id"></span></p>
+                                                    <p>Nombre: <span id="proveedor-nombre"></span></p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar Proveedor</button>
+                                                        <!-- Botón para eliminar un proveedor -->
+                                                        <button type="submit" class="btn btn-danger" id="btn-eliminar-proveedor" name="action" value="delete">Eliminar Proveedor</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / Modal - Eliminar Proveedor -->
                                 </td>
                             </tr>
                             <%
@@ -127,105 +161,75 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Buttons -->
-                <div class="botones" style="grid-column: 1 / 5;">
-                    <!-- Button - Agregar Producto -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#btn-create-producto">
-                        Agregar Producto
-                    </button>
-                    <!-- / Button - Agregar Producto -->
-                </div>
-                <!-- / Buttons -->
                 <!-- MODALES -->
-                <!-- Modal - Agregar Producto -->
-                <div class="modal fade" id="btn-create-producto" tabindex="-1" aria-labelledby="modal-create-producto"
+                <!-- Modal - Agregar Proveedor -->
+                <div class="modal fade" id="modal-proveedor" tabindex="-1" aria-labelledby="modal-create-proveedor"
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modal-create-producto">Agregar Producto</h1>
+                                <h1 class="modal-title fs-5" id="modal-create-proveedor">Agregar Proveedor</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <!-- Formulario - Agregar Producto -->
-                                <form action="/amanda-cell-sistema/SvProducto" method="post" class="row g-3">
+                                <!-- Formulario - Agregar Proveedor -->
+                                <form action="/amanda-cell-sistema/SvProveedor" method="post" class="row g-3">
+                                    <div class="col-12" id="div-id_proveedor">
+                                        <label for="txtIdProveedor" class="form-label">ID</label>
+                                        <input type="text" class="form-control" id="txtIdProveedor" disabled>
+                                        <input name="txtIdProveedor" type="hidden" id="txtIdProveedor-hidden" class="form-control">
+                                    </div>
                                     <div class="col-12">
                                         <label for="txtNombre" class="form-label">Nombre</label>
                                         <input name="txtNombre" type="text" class="form-control" id="txtNombre" required>
                                     </div>
-                                    <div class="col-12">
-                                        <label for="areaDescripcion" class="form-label">Descripción</label>
-                                        <textarea name="areaDescripcion" class="form-control" id="areaDescripcion"
-                                                  rows="3" required></textarea>
+                                    <div class="col-md-12">
+                                        <label for="txtDireccion" class="form-label">Direccion</label>
+                                        <input name="txtDireccion" type="text" class="form-control" id="txtDireccion" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="txtPrecioCompra" class="form-label">Precio de compra</label>
-                                        <input name="txtPrecioCompra" type="text" class="form-control" id="txtPrecioCompra" required>
+                                    <div class="col-md-12">
+                                        <label for="txtNumero" class="form-label">Numero</label>
+                                        <input name="txtNumero" type="text" class="form-control" id="txtNumero" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="txtPrecioVenta" class="form-label">Precio de venta</label>
-                                        <input name="txtPrecioVenta" type="text" class="form-control" id="txtPrecioVenta" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="txtStock" class="form-label">Stock</label>
-                                        <input name="txtStock" type="text" class="form-control" id="txtStock" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="txtTipo" class="form-label">Tipo</label>
-                                        <input name="txtTipo" type="text" class="form-control" id="txtTipo" required>
+                                    <div class="col-md-12">
+                                        <label for="txtCorreo" class="form-label">Correo</label>
+                                        <input name="txtCorreo" type="text" class="form-control" id="txtCorreo" required>
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-agregar-proveedor" name="action" value="create">Agregar Proveedor</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-actualizar-proveedor" name="action" value="update">Actualizar Proveedor</button>
                                     </div>
                                 </form>
-                                <!-- / Formulario - Agregar Producto -->
+                                <!-- / Formulario - Agregar Proveedor -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- / Modal - Agregar Producto -->
-                <!-- Modal - Eliminar Producto -->
-                <div class="modal fade" id="btn-delete-producto" tabindex="-1" aria-labelledby="modal-delete-producto" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modal-delete-producto">Eliminar producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ¿Seguro que deseas eliminar este producto?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar</button>
-                                <!-- Boton que elimina definitivamente el producto -->
-                                <a href="" class="btn btn-danger">Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- / Modal - Eliminar Producto -->
                 <!-- / MODALES-->
             </main>
         </div>
-
+<!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#tablaProducto').DataTable({
+                $('#tablaProveedor').DataTable({
                     "paging": true,
-                    "lengthMenu": [10, 25, 50],
+                    "lengthMenu": [6, 10, 25, 50],
                     "searching": true
                 });
             });
         </script>
         <!-- / Bootstrap -->
+        <script src="${pageContext.servletContext.contextPath}/js/proveedor.js"></script>
     </body>
 
 </html>
