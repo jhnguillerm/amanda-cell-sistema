@@ -17,6 +17,9 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
     ResultSet rs = null;
     Producto producto = new Producto();
 
+    public ProductoDAO() {
+    }
+
     @Override
     public List toList() {
         ArrayList<Producto> list = new ArrayList<>();

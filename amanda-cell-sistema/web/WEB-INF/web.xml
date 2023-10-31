@@ -12,6 +12,10 @@
         <servlet-name>Controlador</servlet-name>
         <servlet-class>Controller.Controlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SvMain</servlet-name>
+        <servlet-class>Controller.SvMain</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SvVenta</servlet-name>
         <url-pattern>/SvVenta</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SvMain</servlet-name>
+        <url-pattern>/SvMain</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

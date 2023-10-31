@@ -13,9 +13,11 @@ public class ConexionDB {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Se conectó a la base de datos.");
+            if (connection == null || connection.isClosed()) {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                connection = DriverManager.getConnection(url, user, password);
+                System.out.println("Se conectó a la base de datos.");
+            }
         } catch (Exception ex) {
             System.out.println("Error Config/ConexionDB: " + ex);
         }

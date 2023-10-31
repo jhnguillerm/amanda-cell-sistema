@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ventas</title>
         <!-- Estilos -->
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/menu.css">
         <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -42,7 +42,7 @@
                             Servicios
                         </li>
                         <li class="sidebar-item active"><a class="sidebar-link" href="venta.jsp"><ion-icon class="align-middle"
-                                                                                            name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
+                                                                                                           name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
                                                                                             name="construct"></ion-icon><span class="align-middle">Reparaciones</span></a>
                         </li>
@@ -50,7 +50,7 @@
                             Materiales
                         </li>
                         <li class="sidebar-item"><a class="sidebar-link" href="producto.jsp"><ion-icon class="align-middle"
-                                                                                                              name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
+                                                                                                       name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="proveedor.jsp"><ion-icon class="align-middle"
                                                                                                         name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
                         </li>
@@ -77,7 +77,13 @@
             <!-- / Nav vertical -->
 
             <main class="content">
-                
+                <div class="container-fluid w-100 row m-5">
+                    <div class="row">
+                        <div class="col-12" style="background-color: #fff">
+                            
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
         <!-- jquery -->

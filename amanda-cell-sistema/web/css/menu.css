@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-body: #f5f7fb;
+    --bg-nav: #0a223b;
+    --text-sidebar-color: #ced4da;
+    --text-sidebar-link-color: #495057;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+}
+
+.align-middle {
+    vertical-align: bottom !important;
+}
+
+.btn-primary {
+    background-color: var(--bg-nav) !important;
+    border-color: var(--bg-nav) !important;
+    color: #fff !important;
+}
+
+.btn-primary:disabled {
+    color: #ccc !important;
+}
+
+/* Envoltorio */
+.wrapper {
+    display: flex;
+    width: 100%;
+    background-color: #f5f7f9;
+}
+
+/* Nav Vertical */
+.sidebar,
+.sidebar-content {
+    background-color: #0a223b;
+}
+
+.sidebar {
+    direction: ltr;
+    max-width: 260px;
+    min-width: 260px;
+    /* max-height: 100%; */
+    overflow-y: auto;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.sidebar-brand {
+    color: #f8f9fa;
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    padding: 1.15rem 1.5rem;
+    text-decoration: none;
+}
+
+.sidebar-brand:hover {
+    color: #abd5ff;
+}
+
+.sidebar-title {
+    font-size: 30px;
+}
+
+/* Perfil */
+
+.sidebar-profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-sidebar-color);
+}
+
+.sidebar-photo {
+    border-radius: 50%;
+}
+
+.sidebar-name {
+    margin: 0;
+}
+
+.sidebar-role {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+/* / Perfil */
+
+.sidebar-nav {
+    flex-grow: 1;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.sidebar-header {
+    background: transparent;
+    color: #ced4da;
+    font-size: .75rem;
+    padding: 1.5rem 1.5rem .375rem;
+}
+
+.sidebar-link {
+    font-size: 14px;
+}
+
+.sidebar-link span {
+    padding-left: 10px;
+}
+
+.sidebar-link {
+    border-left: 3px solid transparent;
+    color: rgba(233, 236, 239, .5);
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+    padding: .625rem 1.625rem;
+    position: relative;
+    text-decoration: none;
+    transition: background .1s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background: #317de8;
+    border-left-color: transparent;
+}
+
+.btn-logout {
+    border: none;
+    background-color: #0a223b;
+    width: 100%;
+    text-align: start;
+}
+
+.sidebar-item.active>.sidebar-link {
+    background: linear-gradient(90deg, rgba(59, 125, 221, .1), rgba(59, 125, 221, .088) 50%, transparent);
+    border-left-color: #3b7ddd;
+    color: #e9ecef
+}
+
+/* / Nav Vertical */
+
+/* Main */
+.content {
+    width: calc(100% - 260px)
+}
+/* / Main */
+

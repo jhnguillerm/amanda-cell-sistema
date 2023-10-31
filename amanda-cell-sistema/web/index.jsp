@@ -59,6 +59,6 @@
         </script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>
-</body>
+    </body>
 
 </html>
