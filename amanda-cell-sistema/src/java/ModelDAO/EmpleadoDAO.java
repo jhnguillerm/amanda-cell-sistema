@@ -59,6 +59,7 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado>{
             while (rs.next()) {
                 empleado.setUsername(rs.getString("username"));
                 empleado.setCorreo(rs.getString("pass"));
+                empleado.setNombres(rs.getString("nombres"));
             }
         } catch (Exception e) {
             System.out.println(e);

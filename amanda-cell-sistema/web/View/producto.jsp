@@ -178,7 +178,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-medium d-block" style="color: #808d9b">Jhon Moreno</span>
+                                                    <span class="fw-medium d-block" style="color: #808d9b">${requestScope.usuario.nombres}</span>
                                                     <small class="text-muted" style="color: #a2b0bb">Admin</small>
                                                 </div>
                                             </div>

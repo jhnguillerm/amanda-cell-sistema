@@ -34,7 +34,8 @@ public class SvLogin extends HttpServlet {
             empleado = empleadoDAO.login(usuario, password);
             if (empleado.getUsername() != null) {
                 request.setAttribute("usuario", empleado);
-                response.sendRedirect(request.getContextPath() + "/main.jsp");
+                request.getRequestDispatcher("View/producto.jsp").forward(request, response);
+                //response.sendRedirect(request.getContextPath() + "/main.jsp");
                 System.out.println("Si se validó");
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
