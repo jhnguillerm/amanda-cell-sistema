@@ -1,111 +1,121 @@
-<%@page import="ModelDAO.ProveedorDAO"%>
-<%@page import="Model.Proveedor"%>
+<%@page import="Model.Cliente"%>
+<%@page import="ModelDAO.ClienteDAO"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="Model.Producto"%>
 <%@page import="java.util.List"%>
-<%@page import="ModelDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Clientes</title>
-        <!-- Estilos -->
-        <link rel="stylesheet" href="../css/style.css">
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-        <!-- Bootstrap icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <!-- Ionicons -->
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <jsp:include page = "../components/head.jsp"/>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
-            <nav class="sidebar">
-                <div class="sidebar-content">
-                    <!-- Logo -->
-                    <div>
-                        <a class="sidebar-brand" href="index.html">
-                            <h1 class="sidebar-title">Amanda Cell</h1>
-                        </a>
-                    </div>
-                    <!-- / Logo -->
-                    <!-- Perfil -->
-                    <div class="sidebar-profile">
-                        <img class="sidebar-photo" src="../images/profile.webp" alt="profile" style="width: 100px;">
-                        <h5 class="sidebar-name">Jhon Moreno</h5>
-                        <p class="sidebar-role">Administrador</p>
-                    </div>
-                    <!-- / Perfil -->
-                    <ul class="sidebar-nav">
-                        <li class="sidebar-header">
-                            Servicios
-                        </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="venta.jsp"><ion-icon class="align-middle"
-                                                                                                    name="bag-handle"></ion-icon><span class="align-middle">Ventas</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="reparacion.jsp"><ion-icon class="align-middle"
-                                                                                                         name="construct"></ion-icon><span class="align-middle">Reparaciones</span></a>
-                        </li>
-                        <li class="sidebar-header">
-                            Materiales
-                        </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="producto.jsp"><ion-icon class="align-middle"
-                                                                                                       name="cube"></ion-icon><span class="align-middle">Productos</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="proveedor.jsp"><ion-icon class="align-middle"
-                                                                                                        name="people"></ion-icon><span class="align-middle">Proveedores</span></a>
-                        </li>
-                        <li class="sidebar-header">
-                            Usuarios
-                        </li>
-                        <li class="sidebar-item active"><a class="sidebar-link" href="cliente.jsp"><ion-icon class="align-middle"
-                                                                                                             name="person-add"></ion-icon><span class="align-middle">Clientes</span></a>
-                        </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="empleado.jsp"><ion-icon class="align-middle"
-                                                                                                       name="person"></ion-icon class="align-middle"><span
-                                    class="align-middle">Empleados</span></a></li>
-                        <li class="sidebar-header">
-                            Otros
-                        </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
-                                                                                            name="exit"></ion-icon><span class="align-middle">Log out</span></a>
-                        </li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="#"><ion-icon class="align-middle"
-                                                                                            name="options"></ion-icon><span class="align-middle">Settings</span></a></li>
-                    </ul>
-                </div>
-            </nav>
+            <jsp:include page = "../components/navbar_vertical.jsp"/>
             <!-- / Nav vertical -->
 
             <main class="content">
+                <!-- Nav horizontal -->
+                <jsp:include page = "../components/navbar_horizontal.jsp"/>
+                <!-- / Nav horizontal -->
+                <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Clientes</strong></h1>
                 
+                <div class="container-fluid p-3 rounded shadow-lg" style="background-color: #fff">
+                    <div class="row w-100 justify-content-between mb-3">
+                        <div class="col-5">
+                            <h5 class="h5">Tabla de clientes</h5>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Button - Agregar -->
+                            <a href="loadCliente.jsp?modo=agregar" class="btn btn-primary">Agregar cliente</a>
+                        </div>
+                    </div>
+                    <table id="tablaCliente" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Nombres</th>
+                                <th>DNI</th>
+                                <th>Correo</th>
+                                <th>Telefono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                ClienteDAO clienteDAO = new ClienteDAO();
+                                List<Cliente> list = clienteDAO.toList();
+                                Iterator<Cliente> iterador = list.iterator();
+                                Cliente cliente = null;
+
+                                while (iterador.hasNext()) {
+                                    cliente = iterador.next();
+                            %>
+                            <tr>
+                                <td class="align-middle"><%=cliente.getIdCliente()%></td>
+                                <td class="align-middle"><%=cliente.getNombres()%></td>
+                                <td class="align-middle"><%=cliente.getDni()%></td>
+                                <td class="align-middle"><%=cliente.getCorreo()%></td>
+                                <td class="align-middle"><%=cliente.getTelefono()%></td>
+                                <td class="align-middle">
+                                    <!-- Boton para actualizar -->
+                                    <a class="align-middle" href="loadCliente.jsp?idCliente=<%= cliente.getIdCliente()%>&nombres=<%= cliente.getNombres() %>&dni=<%= cliente.getDni()%>&correo=<%= cliente.getCorreo()%>&telefono=<%= cliente.getTelefono()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
+                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= cliente.getNombres()%>" data-id="<%= cliente.getIdCliente()%>"></button>
+                                    
+                                    <!-- Modal - Eliminar -->
+                                    <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Eliminar cliente</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Seguro que deseas eliminar este proveedor?</p>
+                                                    <p>ID: <span id="cliente-id"></span></p>
+                                                    <p>Nombre: <span id="cliente-nombres"></span></p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar cliente</button>
+                                                        <!-- Botón para eliminar un proveedor -->
+                                                        <button type="submit" class="btn btn-danger" id="btn-eliminar" name="action" value="delete">Eliminar cliente</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Modal - Eliminar -->
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
             </main>
         </div>
-
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#tablaProducto').DataTable({
+                $('#tablaCliente').DataTable({
                     "paging": true,
-                    "lengthMenu": [10, 25, 50],
+                    "lengthMenu": [6, 10, 25, 50],
                     "searching": true
                 });
             });
         </script>
         <!-- / Bootstrap -->
+        <script src="${pageContext.servletContext.contextPath}/js/cliente.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
     </body>
 
 </html>

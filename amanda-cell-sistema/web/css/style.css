@@ -30,7 +30,6 @@ body {
     width: 260px;
     min-height: 100vh;
     background: #0a223b;
-    position: absolute;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -143,6 +142,24 @@ body {
 .content {
     /* margin-left: 300px;
     margin-right: 40px; */
-    margin: 20px 20px 20px 280px;
+    margin: 20px;
     width: 100%;
+}
+
+.btn-salir {
+    width: 100%;
+    text-align: start;
+    background: #0a223b;
+    color: rgba(233, 236, 239, .5);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 18px 0 18px 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+}
+
+.btn-salir:hover {
+    background: #317de8;
+    color: #abd5ff
 }

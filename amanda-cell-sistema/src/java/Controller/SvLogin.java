@@ -3,7 +3,6 @@ package Controller;
 import Model.Empleado;
 import ModelDAO.EmpleadoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,15 +33,15 @@ public class SvLogin extends HttpServlet {
             empleado = empleadoDAO.login(usuario, password);
             if (empleado.getUsername() != null) {
                 request.setAttribute("usuario", empleado);
-                request.getRequestDispatcher("View/producto.jsp").forward(request, response);
-                //response.sendRedirect(request.getContextPath() + "/main.jsp");
+                //request.getRequestDispatcher("View/main.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/View/main.jsp");
                 System.out.println("Si se validó");
             } else {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("/View/login.jsp").forward(request, response);
                 System.out.println("No se valido");
             }
         } else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("/View/login.jsp").forward(request, response);
             System.out.println("No es igual");
         }
     }
