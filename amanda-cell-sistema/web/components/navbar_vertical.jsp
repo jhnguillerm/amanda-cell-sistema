@@ -24,7 +24,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="venta.jsp">Nueva venta</a>
+                        <a href="venta.jsp">Lista de ventas</a>
+                    </li>
+                    <li>
+                        <a href="nuevaVenta.jsp">Nueva venta</a>
                     </li>
                 </ul>
             </li>

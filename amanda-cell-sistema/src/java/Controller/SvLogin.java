@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SvLogin extends HttpServlet {
 
@@ -26,13 +27,15 @@ public class SvLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
         if (accion != null && accion.equalsIgnoreCase("login")) {
             String usuario = request.getParameter("txtUsuario");
             String password = request.getParameter("txtPassword");
             empleado = empleadoDAO.login(usuario, password);
             if (empleado.getUsername() != null) {
-                request.setAttribute("usuario", empleado);
+                session.setAttribute("usuario", empleado.getUsername());
+                session.setAttribute("nombres", empleado.getNombres());
                 //request.getRequestDispatcher("View/main.jsp").forward(request, response);
                 response.sendRedirect(request.getContextPath() + "/View/main.jsp");
                 System.out.println("Si se validó");

@@ -1,3 +1,4 @@
+<%@page import="Model.Empleado"%>
 <header id="nav-horizontal" class="p-3 mb-3 border-bottom rounded shadow-lg" style="background-color: #fff;">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -6,11 +7,13 @@
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Servicios</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Materiales</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Usuarios</a></li>
+                <li><a href="../webpage/webPage.jsp" class="nav-link px-2 link-body-emphasis">Pagina Web</a></li>
             </ul>
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <span>${requestScope.usuario.nombres}</span>
+
+                    <span></span>
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
@@ -23,7 +26,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-medium d-block" style="color: #808d9b">${requestScope.usuario.username}</span>
+                                    <span class="fw-medium d-block" style="color: #808d9b"></span>
                                     <small class="text-muted" style="color: #a2b0bb">Admin</small>
                                 </div>
                             </div>

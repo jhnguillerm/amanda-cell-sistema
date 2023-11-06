@@ -37,7 +37,6 @@ CREATE TABLE empleado (
     PRIMARY KEY (id_empleado)
 );
 
-drop tables detalle_venta, venta, empleado;
 
 CREATE TABLE cliente (
     id_cliente INT AUTO_INCREMENT NOT NULL,
@@ -65,12 +64,15 @@ CREATE TABLE detalle_venta (
     id_detalle_venta INT AUTO_INCREMENT NOT NULL,
     cantidad INT,
     precio_venta DECIMAL(10, 2),
+    subtotal DECIMAL(10, 2),
     id_producto INT,
     id_venta INT,
     PRIMARY KEY (id_detalle_venta),
     FOREIGN KEY (id_producto) REFERENCES producto (id_producto),
     FOREIGN KEY (id_venta) REFERENCES venta (id_venta)
 );
+
+drop table detalle_venta;
 
 CREATE TABLE servicio (
     id_servicio INT AUTO_INCREMENT NOT NULL,
@@ -143,3 +145,33 @@ VALUES
 INSERT INTO  empleado (nombres, dni, correo, telefono, username, pass)
 VALUES 
 	("Jhon Moreno", "78453745", "jhn_guillerm@utp.edu.pe", "947534854", "jhnguillerm", "papaoso");
+
+INSERT INTO cliente (nombres, dni, correo, telefono) VALUES
+('Juan Pérez', '12345678', 'juan@example.com', '555-1234'),
+('María López', '23456789', 'maria@example.com', '555-5678'),
+('Carlos Rodríguez', '34567890', 'carlos@example.com', '555-9012'),
+('Ana Martínez', '45678901', 'ana@example.com', '555-2345'),
+('Luis García', '56789012', 'luis@example.com', '555-6789'),
+('Laura Sánchez', '67890123', 'laura@example.com', '555-1234'),
+('Pablo Fernández', '78901234', 'pablo@example.com', '555-5678'),
+('Marta Ramírez', '89012345', 'marta@example.com', '555-9012');
+
+INSERT INTO venta (num_serie, fecha_venta, monto, estado, id_cliente, id_empleado)
+VALUES ('SERIE001', '2023-10-30', 250.00, 'A', 1, 1),
+       ('SERIE002', '2023-10-31', 150.50, 'A', 2, 1),
+       ('SERIE003', '2023-11-01', 300.75, 'A', 6, 1),
+       ('SERIE004', '2023-11-02', 75.25, 'A', 1, 1),
+       ('SERIE005', '2023-11-03', 420.00, 'A', 2, 1);
+
+INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_venta)
+VALUES
+    (2, 50.00, 100.00, 1, 26),
+    (3, 25.50, 76.50, 2, 26),
+    (1, 100.25, 100.25, 3, 27),
+    (4, 18.75, 75.00, 4, 27),
+    (2, 70.00, 140.00, 5, 28),
+    (3, 35.25, 105.75, 1, 28),
+    (1, 150.00, 150.00, 2, 28),
+    (2, 40.50, 81.00, 3, 28);
+
+

@@ -1,11 +1,12 @@
-<%@page import="Model.Producto"%>
-<%@page import="ModelDAO.ProductoDAO"%>
+<%@page import="Model.Venta"%>
+<%@page import="ModelDAO.VentaDAO"%>
 <%@page import="Model.Cliente"%>
-<%@page import="java.util.List"%>
 <%@page import="ModelDAO.ClienteDAO"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <jsp:include page = "../components/head.jsp"/>
     </head>
@@ -14,183 +15,86 @@
             <!-- Nav vertical -->
             <jsp:include page = "../components/navbar_vertical.jsp"/>
             <!-- / Nav vertical -->
+
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvProducto" method="post" class="m-0">
-                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-
-                        <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Nueva venta</h4>
+                <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Ventas</strong></h1>
+                
+                <div class="container-fluid p-3 rounded shadow-lg" style="background-color: #fff">
+                    <div class="row w-100 justify-content-between mb-3">
+                        <div class="col-5">
+                            <h5 class="h5">Tabla de ventas</h5>
                         </div>
-                        <div class="d-flex align-content-center flex-wrap gap-3">
-                            <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar Producto</button>
-                            <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar Producto</button>
+                        <div class="col-auto">
+                            <!-- Button - Agregar -->
+                            <a href="nuevaVenta.jsp?modo=agregar" class="btn btn-primary">Nueva venta</a>
                         </div>
                     </div>
+                    <table id="tablaVenta" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>N° serie</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                VentaDAO ventaDAO = new VentaDAO();
+                                List<Venta> list = ventaDAO.toList();
+                                Iterator<Venta> iterador = list.iterator();
+                                Venta venta = null;
 
-                    <div class="row">
-                        <!-- Primera columna -->
-                        <div class="col-12 col-lg-4">
-                            <!-- Cliente -->
-                            <div class="card mb-4 border-0 shadow-lg">
-                                <div class="card-header border-0 bg-body">
-                                    <h5 class="card-title mb-0">Datos del cliente</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="mb-3 col">
-                                        <div class="input-group">
-                                            <select id="cbCliente" class="form-select" name="cbCliente">
-                                                <option value="">Selecciona el cliente</option>
-                                                <%
-                                                    ClienteDAO clienteDAO = new ClienteDAO();
-                                                    List<Cliente> listaClientes = clienteDAO.toList();
-                                                    for (Cliente cliente : listaClientes) {
-                                                %>
-                                                <option value="<%= cliente.getIdCliente()%>"><%= cliente.getNombres()%></option>
-                                                <%
-                                                    }
-                                                %>
-                                            </select>
-                                            <button class="btn btn-primary">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-4">
-                                            <label class="form-label" for="txtDni">DNI</label>
-                                            <input type="text" class="form-control" name="txtDni" id="txtDni" disabled>
-                                        </div>
-                                        <div class="col-8">
-                                            <label class="form-label" for="txtNombres">Nombres</label>
-                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /Cliente -->
-                            <!-- Producto -->
-                            <div class="card mb-4 border-0 shadow-lg">
-                                <div class="card-header border-0 bg-body">
-                                    <h5 class="card-title mb-0">Datos del producto</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="mb-3 col">
-                                        <div class="input-group">
-                                            <select id="cbProducto" class="form-select" name="cbProducto">
-                                                <option value="">Selecciona el producto</option>
-                                                <%
-                                                    ProductoDAO productoDAO = new ProductoDAO();
-                                                    List<Producto> listaProductos = productoDAO.toList();
-                                                    for (Producto producto : listaProductos) {
-                                                %>
-                                                <option value="<%= producto.getIdProducto()%>"><%= producto.getNombre()%></option>
-                                                <%
-                                                    }
-                                                %>
-                                            </select>
-                                            <button class="btn btn-primary">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-12">
-                                            <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-4">
-                                            <label class="form-label" for="txtPrecio">Precio</label>
-                                            <input type="text" class="form-control" name="txtPrecio" id="txtPrecio" disabled>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="form-label" for="txtStock">Stock</label>
-                                            <input type="text" class="form-control" name="txtStock" id="txtStock" disabled>
-                                        </div>
-                                        <div class="col-4">
-                                            <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" class="form-control" name="txtCantidad" id="txtCantidad">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /Producto -->
-                        </div>
-                        <!-- /Primera columna -->
-                        <!-- Segunda columna-->
-                        <div class="col-12 col-lg-8">
-                            <!-- Información general -->
-                            <div class="card mb-4 border-0 shadow-lg">
-                                <div class="card-header border-0 bg-body d-flex align-items-center">
-                                    <h5 class="card-tile mb-0">NRO. SERIE</h5>
-                                    <div class="col-3 px-4">
-                                        <input type="number" class="form-control" name="txtNumSerie" id="txtNumSerie" disabled>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <table id="tablaVenta" class="table table-striped" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Producto</th>
-                                                <th>Precio</th>
-                                                <th>Cantidad</th>
-                                                <th>Total</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="align-middle"></td>
-                                                <td class="align-middle"></td>
-                                                <td class="align-middle">
-                                                    <div class="col-2">
-                                                        <input type="number" class="form-control" name="txtCantidad" id="txtNumSerie">
+                                while (iterador.hasNext()) {
+                                    venta = iterador.next();
+                            %>
+                            <tr>
+                                <td class="align-middle"><%=venta.getIdVenta()%></td>
+                                <td class="align-middle"><%=venta.getNumSerie()%></td>
+                                <td class="align-middle"><%=venta.getFechaVenta()%></td>
+                                <td class="align-middle"><%=venta.getMonto()%></td>
+                                <td class="align-middle"><%=venta.getEstado()%></td>
+                                <td class="align-middle">
+                                    <!-- Boton para actualizar -->
+                                    <a class="align-middle" href="loadCliente.jsp"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
+                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= venta.getNumSerie()%>" data-id="<%= venta.getIdVenta()%>"></button>
+                                    
+                                    <!-- Modal - Eliminar -->
+                                    <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Eliminar cliente</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Seguro que deseas eliminar este proveedor?</p>
+                                                    <p>ID: <span id="cliente-id"></span></p>
+                                                    <p>Nombre: <span id="cliente-nombres"></span></p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar cliente</button>
+                                                        <!-- Botón para eliminar un proveedor -->
+                                                        <button type="submit" class="btn btn-danger" id="btn-eliminar" name="action" value="delete">Eliminar cliente</button>
                                                     </div>
-                                                </td>
-                                                <td class="align-middle"></td>
-                                                <td class="align-middle">
-                                                    <!-- Boton para actualizar un proveedor -->
-                                                    <a class="align-middle" href=""><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
-                                                    <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                                    <button type="button" class="btn-close align-middle btn-modal-eliminar-proveedor" data-bs-toggle="modal" data-bs-target="#modal-eliminar"></button>
-
-                                                    <!-- Modal - Eliminar Proveedor -->
-                                                    <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete-proveedor" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5">Eliminar proveedor</h1>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p>¿Seguro que deseas eliminar este proveedor?</p>
-                                                                    <p>ID: <span id="proveedor-id"></span></p>
-                                                                    <p>Nombre: <span id="proveedor-nombre"></span></p>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Conservar Proveedor</button>
-                                                                        <!-- Botón para eliminar un proveedor -->
-                                                                        <button type="submit" class="btn btn-danger" id="btn-eliminar-proveedor" name="action" value="delete">Eliminar Proveedor</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- / Modal - Eliminar Proveedor -->
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /Información genenal -->
-                        </div>
-                        <!-- /Segunda columna -->
-                    </div>
-                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Modal - Eliminar -->
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
             </main>
         </div>
         <!-- jquery -->
@@ -212,6 +116,8 @@
             });
         </script>
         <!-- / Bootstrap -->
+        <script src="${pageContext.servletContext.contextPath}/js/cliente.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
     </body>
+
 </html>

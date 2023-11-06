@@ -153,17 +153,12 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
 
     @Override
     public boolean search(Producto entidad) {
-        String sql = "SELECT * FROM proveedor WHERE id_proveedor = ?";
-        
+        String sql = "SELECT * FROM producto WHERE id_producto = ?";
         try {
             connection = conexionDB.getConnection();
-            
             Producto producto = (Producto) entidad;
-            
             ps = connection.prepareStatement(sql);
-            
             ps.setInt(1, producto.getIdProducto());
-            
             rs = ps.executeQuery();
             
             if (rs.next()) {
@@ -180,7 +175,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Proveedor - search: " + e);
+            System.out.println("Producto - search: " + e);
             return false;
         } finally {
             try {

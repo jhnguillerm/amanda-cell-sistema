@@ -122,7 +122,32 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
 
     @Override
     public boolean search(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+        try {
+            connection = conexionDB.getConnection();
+            Cliente cliente = (Cliente) entidad;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, cliente.getIdCliente());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cliente.setIdCliente(rs.getInt("id_cliente"));
+                cliente.setNombres(rs.getString("nombres"));
+                cliente.setDni(rs.getString("dni"));
+                cliente.setCorreo(rs.getString("correo"));
+                cliente.setTelefono(rs.getString("telefono"));
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Cliente - search: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }
     
 }
