@@ -129,4 +129,23 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public int generarNumSerie() {
+        int numSerie = 1;
+        String sql = "SELECT MAX(id_venta) FROM venta";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int maxId = rs.getInt(1);
+                if (maxId > 0) {
+                    numSerie = maxId + 1;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Venta - generarNumSerie: " + e);
+        }
+        return numSerie;
+    }
+
 }

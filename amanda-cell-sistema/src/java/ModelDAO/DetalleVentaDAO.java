@@ -126,4 +126,37 @@ public class DetalleVentaDAO extends ConexionDB implements CRUD<DetalleVenta> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public List<DetalleVenta> obtenerDetallesVentaPorVenta(int idVenta) {
+        ArrayList<DetalleVenta> list = new ArrayList<>();
+        String sql = "SELECT * FROM detalle_venta WHERE id_venta = ?";
+
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, idVenta);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DetalleVenta detalleVenta = new DetalleVenta();
+                detalleVenta.setIdDetalleVenta(rs.getInt("id_detalle_venta"));
+                detalleVenta.setCantidad(rs.getInt("cantidad"));
+                detalleVenta.setPrecioVenta(rs.getDouble("precio_venta"));
+                detalleVenta.setSubtotal(rs.getDouble("subtotal"));
+                detalleVenta.setIdProducto(rs.getInt("id_producto"));
+                detalleVenta.setIdVenta(rs.getInt("id_venta"));
+                list.add(detalleVenta);
+            }
+        } catch (Exception e) {
+            System.out.println("DetalleVenta - obtenerDetallesVentaPorVenta: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        return list;
+    }
+
 }

@@ -4,8 +4,8 @@
 <%@page import="Model.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page import="ModelDAO.ClienteDAO"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,8 +27,8 @@
                             <h4 class="mb-1 mt-3">Nueva venta</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
-                            <button type="submit" class="btn btn-danger" id="btn-agregar" name="action" value="create">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Generar venta</button>
+                            <button type="submit" class="btn btn-danger" name="action" value="cancelar">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="create">Generar venta</button>
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@
                             <div class="card mb-4 border-0 shadow-lg">
                                 <div class="card-header border-0 bg-body d-flex justify-content-between align-items-center">
                                     <h5 class="card-title mb-0">Datos del cliente</h5>
-                                    <a href="loadCliente.jsp" class="fw-medium">Agregar cliente</a>
+                                    <a href="loadCliente.jsp" class="fw-medium">Nuevo cliente</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3 col">
@@ -68,6 +68,7 @@
                                             <label class="form-label" for="txtDni">DNI</label>
                                             <input type="text" class="form-control" name="txtDni" id="txtDni" disabled value="${cliente.getDni()}">
                                             <input name="txtDni" type="hidden" id="txtDni-hidden" class="form-control" value="${cliente.getDni()}">
+                                            <input type="hidden" class="form-control" name="txtIdCliente" value="${cliente.getIdCliente()}">
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombres">Nombres</label>
@@ -82,7 +83,7 @@
                             <div class="card mb-4 border-0 shadow-lg">
                                 <div class="card-header border-0 bg-body d-flex justify-content-between align-items-center">
                                     <h5 class="card-title mb-0">Datos del producto</h5>
-                                    <a href="loadProducto.jsp" class="fw-medium">Agregar producto</a>
+                                    <a href="loadProducto.jsp" class="fw-medium">Nuevo producto</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3 col">
@@ -110,7 +111,6 @@
                                             <input type="text" class="form-control" name="txtNombre" id="txtNombre" disabled value="${producto.getNombre()}">
                                             <input type="hidden" class="form-control" name="txtNombre" id="txtNombre-hidden" value="${producto.getNombre()}">
                                             <input type="hidden" class="form-control" name="txtIdProducto" id="txtIdProducto" value="${producto.getIdProducto()}">
-
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -146,7 +146,8 @@
                                 <div class="card-header border-0 d-flex align-items-center">
                                     <h5 class="card-tile mb-0">NRO. SERIE</h5>
                                     <div class="col-3 px-4">
-                                        <input type="number" class="form-control" name="txtNumSerie" id="txtNumSerie" disabled>
+                                        <input type="text" class="form-control" value="${numSerie}" name="txtNumSerie" id="txtNumSerie" disabled>
+                                        <input type="hidden" class="form-control" value="${numSerie}" name="txtNumSerie">
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -157,6 +158,7 @@
                                                 <th>Precio</th>
                                                 <th>Cantidad</th>
                                                 <th>Subtotal</th>
+                                                <th>ID VENTA</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
@@ -164,14 +166,13 @@
                                         <c:forEach items="${listaDetalle}" var="detalle">
                                             <tr>
                                                 <td class="align-middle">${detalle.nombreProducto}</td>
-                                                <td class="align-middle">${detalle.precioVenta}</td>
+                                                <td class="align-middle">S/.${detalle.precioVenta}</td>
                                                 <td class="align-middle">${detalle.cantidad}</td>
-                                                <td class="align-middle">${detalle.subtotal}</td>
+                                                <td class="align-middle">S/.${detalle.subtotal}</td>
+                                                <td class="align-middle">${detalle.idVenta}</td>
                                                 <td class="align-middle">
-                                                    <!-- Boton para actualizar un proveedor -->
-                                                    <a class="align-middle" href=""><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
-                                                    <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                                    <button type="button" class="btn-close align-middle"></button>
+                                                    <button type="button" name="action" value="eliminarDetalle" class="btn-close align-middle">
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -179,9 +180,10 @@
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end align-items-center border-0">
-                                    <h5 class="card-tile mb-0">Total: </h5>
+                                    <h5 class="card-tile mb-0">Total: S/.</h5>
                                     <div class="col-3 px-4">
-                                        <input type="number" class="form-control" value="${total}" name="txtTotal" id="txtTotal" disabled>
+                                        <input type="text" class="form-control" value="${total}" name="txtTotal" id="txtTotal" disabled>
+                                        <input type="hidden" class="form-control" value="${total}" name="txtTotal">
                                     </div>
                                 </div>
                             </div>

@@ -9,8 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
-    
+public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
+
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
     PreparedStatement ps = null;
@@ -24,17 +24,17 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
     public List toList() {
         ArrayList<Producto> list = new ArrayList<>();
         String sql = "SELECT * FROM producto";
-        
+
         try {
             connection = conexionDB.getConnection();
-            
+
             ps = connection.prepareStatement(sql);
-            
+
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Producto producto = new Producto();
-                
+
                 producto.setIdProducto(rs.getInt("id_producto"));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));
@@ -43,27 +43,27 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
                 producto.setStock(rs.getInt("stock"));
                 producto.setTipo(rs.getString("tipo"));
                 producto.setIdProveedor(rs.getInt("id_proveedor"));
-                
+
                 list.add(producto);
             }
         } catch (Exception e) {
             System.out.println("Producto - toList: " + e);
         }
-        
+
         return list;
     }
 
     @Override
     public boolean create(Producto entidad) {
         String sql = "INSERT INTO producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
+
         try {
             Connection connection = conexionDB.getConnection();
-            
+
             Producto producto = (Producto) entidad;
-            
+
             ps = connection.prepareStatement(sql);
-            
+
             ps.setString(1, producto.getNombre());
             ps.setString(2, producto.getDescripcion());
             ps.setDouble(3, producto.getPrecioCompra());
@@ -71,9 +71,9 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             ps.setInt(5, producto.getStock());
             ps.setString(6, producto.getTipo());
             ps.setInt(7, producto.getIdProveedor());
-            
+
             ps.execute();
-            
+
             System.out.println("Ser agregó con exito.");
             return true;
         } catch (Exception e) {
@@ -85,20 +85,20 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }    
+        }
     }
 
     @Override
     public boolean update(Producto entidad) {
         String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, id_proveedor = ? WHERE id_producto = ?";
-        
+
         try {
             connection = conexionDB.getConnection();
-            
+
             Producto producto = (Producto) entidad;
-            
+
             ps = connection.prepareStatement(sql);
-            
+
             ps.setString(1, producto.getNombre());
             ps.setString(2, producto.getDescripcion());
             ps.setDouble(3, producto.getPrecioCompra());
@@ -107,9 +107,9 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             ps.setString(6, producto.getTipo());
             ps.setInt(7, producto.getIdProveedor());
             ps.setInt(8, producto.getIdProducto());
-            
+
             ps.execute();
-            
+
             return true;
         } catch (Exception e) {
             System.out.println("Producto - update: " + e);
@@ -123,21 +123,46 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
         }
     }
 
+    public boolean updateStock(int idProducto, int stock) {
+        String sql = "UPDATE producto SET stock = ? WHERE id_producto = ?";
+
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, stock);
+            ps.setInt(2, idProducto);
+
+            ps.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Producto - updateStock: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     @Override
     public boolean delete(Producto entidad) {
         String sql = "DELETE FROM producto WHERE id_producto = ?";
-        
+
         try {
             connection = conexionDB.getConnection();
-            
+
             Producto producto = (Producto) entidad;
-            
+
             ps = connection.prepareStatement(sql);
-            
+
             ps.setInt(1, producto.getIdProducto());
-            
+
             ps.execute();
-            
+
             return true;
         } catch (Exception e) {
             System.out.println("Producto - delete: " + e);
@@ -160,7 +185,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             ps = connection.prepareStatement(sql);
             ps.setInt(1, producto.getIdProducto());
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
                 producto.setNombre(rs.getString("nombre"));
@@ -170,7 +195,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
                 producto.setStock(Integer.parseInt(rs.getString("stock")));
                 producto.setTipo(rs.getString("tipo"));
                 producto.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
-                
+
                 return true;
             }
             return false;
@@ -185,5 +210,5 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto>{
             }
         }
     }
-    
+
 }

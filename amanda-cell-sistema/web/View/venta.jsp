@@ -21,7 +21,7 @@
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
                 <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Ventas</strong></h1>
-                
+
                 <div class="container-fluid p-3 rounded shadow-lg" style="background-color: #fff">
                     <div class="row w-100 justify-content-between mb-3">
                         <div class="col-5">
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-auto">
                             <!-- Button - Agregar -->
-                            <a href="nuevaVenta.jsp?modo=agregar" class="btn btn-primary">Nueva venta</a>
+                            <a href="nuevaVenta.jsp" class="btn btn-primary">Nueva venta</a>
                         </div>
                     </div>
                     <table id="tablaVenta" class="table table-striped" style="width:100%">
@@ -60,11 +60,14 @@
                                 <td class="align-middle"><%=venta.getMonto()%></td>
                                 <td class="align-middle"><%=venta.getEstado()%></td>
                                 <td class="align-middle">
-                                    <!-- Boton para actualizar -->
-                                    <a class="align-middle" href="loadCliente.jsp"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <!-- Boton para ver la venta -->
+                                    <a class="align-middle btn" href="detalleVenta.jsp?idVenta=<%=venta.getIdVenta()%>&numSerie=<%=venta.getNumSerie()%>&fecha=<%=venta.getFechaVenta()%>&monto=<%=venta.getMonto()%>&idCliente=<%=venta.getIdCliente()%>">
+                                        <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i>
+                                    </a>
+
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= venta.getNumSerie()%>" data-id="<%= venta.getIdVenta()%>"></button>
-                                    
+
                                     <!-- Modal - Eliminar -->
                                     <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
                                         <div class="modal-dialog">
