@@ -30,7 +30,6 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
                 venta.setNumSerie(rs.getString("num_serie"));
                 venta.setFechaVenta(rs.getString("fecha_venta"));
                 venta.setMonto(rs.getDouble("monto"));
-                venta.setEstado(rs.getString("estado"));
                 venta.setIdCliente(rs.getInt("id_cliente"));
                 venta.setIdEmpleado(rs.getInt("id_empleado"));
                 list.add(venta);
@@ -43,7 +42,7 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
 
     @Override
     public boolean create(Venta entidad) {
-        String sql = "INSERT INTO venta (num_serie, fecha_venta, monto, estado, id_cliente, id_empleado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO venta (num_serie, fecha_venta, monto, id_cliente, id_empleado) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = conexionDB.getConnection();
             Venta venta = (Venta) entidad;
@@ -52,9 +51,8 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
             ps.setString(1, venta.getNumSerie());
             ps.setString(2, venta.getFechaVenta());
             ps.setDouble(3, venta.getMonto());
-            ps.setString(4, venta.getEstado());
-            ps.setInt(5, venta.getIdCliente());
-            ps.setInt(6, venta.getIdEmpleado());
+            ps.setInt(4, venta.getIdCliente());
+            ps.setInt(5, venta.getIdEmpleado());
 
             ps.execute();
 
@@ -73,7 +71,7 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
 
     @Override
     public boolean update(Venta entidad) {
-        String sql = "UPDATE venta SET num_serie = ?, fecha_venta = ?, monto  = ?, estado = ?, id_cliente = ? , id_empleado = ? WHERE id_venta = ?";
+        String sql = "UPDATE venta SET num_serie = ?, fecha_venta = ?, monto  = ?, id_cliente = ? , id_empleado = ? WHERE id_venta = ?";
         try {
             connection = conexionDB.getConnection();
             Venta venta = (Venta) entidad;
@@ -82,10 +80,9 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
             ps.setString(1, venta.getNumSerie());
             ps.setString(2, venta.getFechaVenta());
             ps.setDouble(3, venta.getMonto());
-            ps.setString(4, venta.getEstado());
-            ps.setInt(5, venta.getIdCliente());
-            ps.setInt(6, venta.getIdEmpleado());
-            ps.setInt(7, venta.getIdVenta());
+            ps.setInt(4, venta.getIdCliente());
+            ps.setInt(5, venta.getIdEmpleado());
+            ps.setInt(6, venta.getIdVenta());
 
             ps.execute();
 

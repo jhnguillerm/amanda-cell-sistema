@@ -7,19 +7,17 @@ public class Venta {
     private String numSerie;
     private String fechaVenta;
     private double monto;
-    private String estado;
     private int idCliente;
     private int idEmpleado;
 
     public Venta() {
     }
 
-    public Venta(int idVenta, String numSerie, String fechaVenta, double monto, String estado, int idCliente, int idEmpleado) {
+    public Venta(int idVenta, String numSerie, String fechaVenta, double monto, int idCliente, int idEmpleado) {
         this.idVenta = idVenta;
         this.numSerie = numSerie;
         this.fechaVenta = fechaVenta;
         this.monto = monto;
-        this.estado = estado;
         this.idCliente = idCliente;
         this.idEmpleado = idEmpleado;
     }
@@ -54,14 +52,6 @@ public class Venta {
 
     public void setMonto(double monto) {
         this.monto = monto;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public int getIdCliente() {

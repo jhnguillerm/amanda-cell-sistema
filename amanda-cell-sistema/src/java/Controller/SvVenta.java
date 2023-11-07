@@ -36,7 +36,6 @@ public class SvVenta extends HttpServlet {
     int numSerie;
     String fechaVenta = "2023-11-07";
     double total;
-    String estado = "A";
     int idEmpleado = 1;
 
     //DetalleVenta
@@ -155,7 +154,6 @@ public class SvVenta extends HttpServlet {
                 venta.setNumSerie(numSerieString);
                 venta.setFechaVenta(fechaVenta);
                 venta.setMonto(total);
-                venta.setEstado(estado);
                 venta.setIdCliente(idCliente);
                 venta.setIdEmpleado(idEmpleado);
 

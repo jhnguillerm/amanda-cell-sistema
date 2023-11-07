@@ -16,7 +16,6 @@ CREATE TABLE producto (
     id_producto INT AUTO_INCREMENT NOT NULL,
     nombre VARCHAR(100),
     descripcion TEXT,
-    imagen LONGBLOB,
     precio_compra DECIMAL(10, 2),
     precio_venta DECIMAL(10, 2),
     stock INT,
@@ -25,6 +24,16 @@ CREATE TABLE producto (
     PRIMARY KEY (id_producto),
     FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor)
 );
+
+CREATE TABLE imagen_producto (
+    id_imagen INT AUTO_INCREMENT NOT NULL,
+    id_producto INT,
+    imagen LONGBLOB,
+    PRIMARY KEY (id_imagen),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
+
+
 
 CREATE TABLE empleado (
     id_empleado INT AUTO_INCREMENT NOT NULL,
@@ -52,7 +61,6 @@ CREATE TABLE venta (
     num_serie VARCHAR(100),
     fecha_venta DATE,
     monto DECIMAL(10, 2),
-    estado CHAR(1),
     id_cliente INT,
     id_empleado INT,
     PRIMARY KEY (id_venta),
