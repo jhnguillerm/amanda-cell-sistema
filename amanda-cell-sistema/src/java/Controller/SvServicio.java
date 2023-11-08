@@ -1,13 +1,13 @@
 package Controller;
 
 import Model.Cliente;
-import Model.DetalleVenta;
+import Model.DetalleServicio;
 import Model.Producto;
-import Model.Venta;
+import Model.Servicio;
 import ModelDAO.ClienteDAO;
-import ModelDAO.DetalleVentaDAO;
+import ModelDAO.DetalleServicioDAO;
 import ModelDAO.ProductoDAO;
-import ModelDAO.VentaDAO;
+import ModelDAO.ServicioDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class SvVenta extends HttpServlet {
+public class SvServicio extends HttpServlet {
 
     //Cliente
     Cliente cliente = new Cliente();
@@ -29,19 +28,24 @@ public class SvVenta extends HttpServlet {
     ProductoDAO productoDAO = new ProductoDAO();
     int idProducto;
 
-    //Venta
-    Venta venta = new Venta();
-    VentaDAO ventaDAO = new VentaDAO();
-    int idVenta;
+    //Servicio
+    Servicio servicio = new Servicio();
+    ServicioDAO servicioDAO = new ServicioDAO();
+    int idServicio;
     int numSerie;
-    String fechaVenta = "2023-11-07";
+    String problema;
+    String descripcion;
+    double costo;
     double total;
+    String fechaRecepcion;
+    String fechaEntrega;
+    String estado;
     int idEmpleado = 1;
 
-    //DetalleVenta
-    DetalleVenta detalleVenta = new DetalleVenta();
-    DetalleVentaDAO detalleVentaDAO = new DetalleVentaDAO();
-    List<DetalleVenta> listaDetalle = new ArrayList<>();
+    //Detalle servicio;
+    DetalleServicio detalleServicio = new DetalleServicio();
+    DetalleServicioDAO detalleServicioDAO = new DetalleServicioDAO();
+    List<DetalleServicio> listaDetalle = new ArrayList<>();
     int cantidad;
     double precioVenta;
     double subtotal;
@@ -49,6 +53,7 @@ public class SvVenta extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
     @Override
@@ -62,11 +67,13 @@ public class SvVenta extends HttpServlet {
             throws ServletException, IOException {
 
         if (request.getParameter("action") != null) {
+
             String action = request.getParameter("action");
 
-            numSerie = ventaDAO.generarNumSerie();
+            numSerie = servicioDAO.generarNumSerie();
             request.setAttribute("numSerie", numSerie);
 
+            //Buscar cliente
             if (action.equals("searchCliente")) {
                 idCliente = Integer.parseInt(request.getParameter("cbCliente"));
 
@@ -79,8 +86,9 @@ public class SvVenta extends HttpServlet {
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
-            } else if (action.equals("searchProducto")) {
 
+                //Buscar Producto
+            } else if (action.equals("searchProducto")) {
                 idProducto = Integer.parseInt(request.getParameter("cbProducto"));
 
                 producto.setIdProducto(idProducto);;
@@ -103,18 +111,18 @@ public class SvVenta extends HttpServlet {
                 cantidad = Integer.parseInt(request.getParameter("txtCantidad"));
                 precioVenta = Double.parseDouble(request.getParameter("txtPrecio"));
                 subtotal = cantidad * precioVenta;
-                idVenta = numSerie;
+                idServicio = numSerie;
 
-                detalleVenta = new DetalleVenta();
+                detalleServicio = new DetalleServicio();
 
-                detalleVenta.setCantidad(cantidad);
-                detalleVenta.setPrecioVenta(precioVenta);
-                detalleVenta.setSubtotal(subtotal);
-                detalleVenta.setIdProducto(idProducto);
-                detalleVenta.setNombreProducto(nombreProducto);
-                detalleVenta.setIdVenta(idVenta);
+                detalleServicio.setCantidad(cantidad);
+                detalleServicio.setPrecioVenta(precioVenta);
+                detalleServicio.setSubtotal(subtotal);
+                detalleServicio.setIdProducto(idProducto);
+                detalleServicio.setNombreProducto(nombreProducto);
+                detalleServicio.setIdServicio(idServicio);
 
-                listaDetalle.add(detalleVenta);
+                listaDetalle.add(detalleServicio);
 
                 for (int i = 0; i < listaDetalle.size(); i++) {
                     total += listaDetalle.get(i).getSubtotal();
@@ -123,8 +131,10 @@ public class SvVenta extends HttpServlet {
                 request.setAttribute("total", total);
                 request.setAttribute("listaDetalle", listaDetalle);
 
+                //Eliminar en registro de la tabla
             } else if (action.equals("eliminarDetalle")) {
                 
+                //Crear Servicio y DetalleServicio
             } else if (action.equals("create")) {
                 //Actualizar stock
                 for (int i = 0; i < listaDetalle.size(); i++) {
@@ -142,45 +152,56 @@ public class SvVenta extends HttpServlet {
                     productoDAO.updateStock(idProducto, newStock);
                 }
 
-                //Venta
+                //Servicio
                 numSerie = Integer.parseInt(request.getParameter("txtNumSerie"));
                 String numSerieString = String.valueOf(numSerie);
+                problema = request.getParameter("txtProblema");
+                descripcion = request.getParameter("areaDescripcion");
+                costo = Double.parseDouble(request.getParameter("txtCosto"));
                 total = Double.parseDouble(request.getParameter("txtTotal"));
+                fechaRecepcion = request.getParameter("txtFechaRecepcion");
+                fechaEntrega = request.getParameter("txtFechaEntrega");
+                estado = request.getParameter("cbEstado");
                 idCliente = Integer.parseInt(request.getParameter("txtIdCliente"));
 
-                venta = new Venta();
+                servicio = new Servicio();
 
-                venta.setNumSerie(numSerieString);
-                venta.setFechaVenta(fechaVenta);
-                venta.setMonto(total);
-                venta.setIdCliente(idCliente);
-                venta.setIdEmpleado(idEmpleado);
+                servicio.setNumSerie(numSerieString);
+                servicio.setProblema(problema);
+                servicio.setDescripcion(descripcion);
+                servicio.setCosto(costo);
+                servicio.setTotal(total + costo);
+                servicio.setFechaRecepcion(fechaRecepcion);
+                servicio.setFechaEntrega(fechaEntrega);
+                servicio.setEstado(estado);
+                servicio.setIdCliente(idCliente);
+                servicio.setIdEmpleado(idEmpleado);
 
-                ventaDAO = new VentaDAO();
-                ventaDAO.create(venta);
+                servicioDAO = new ServicioDAO();
+                servicioDAO.create(servicio);
 
-                //DetalleVenta
+                //DetalleServicio
                 for (int i = 0; i < listaDetalle.size(); i++) {
-                    detalleVenta = new DetalleVenta();
+                    detalleServicio = new DetalleServicio();
 
-                    detalleVenta.setCantidad(listaDetalle.get(i).getCantidad());
-                    detalleVenta.setPrecioVenta(listaDetalle.get(i).getPrecioVenta());
-                    detalleVenta.setSubtotal(listaDetalle.get(i).getSubtotal());
-                    detalleVenta.setIdProducto(listaDetalle.get(i).getIdProducto());
-                    detalleVenta.setIdVenta(listaDetalle.get(i).getIdVenta());
+                    detalleServicio.setCantidad(listaDetalle.get(i).getCantidad());
+                    detalleServicio.setPrecioVenta(listaDetalle.get(i).getPrecioVenta());
+                    detalleServicio.setSubtotal(listaDetalle.get(i).getSubtotal());
+                    detalleServicio.setIdProducto(listaDetalle.get(i).getIdProducto());
+                    detalleServicio.setIdServicio(listaDetalle.get(i).getIdServicio());
 
-                    detalleVentaDAO = new DetalleVentaDAO();
-                    detalleVentaDAO.create(detalleVenta);
+                    detalleServicioDAO = new DetalleServicioDAO();
+                    detalleServicioDAO.create(detalleServicio);
                 }
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
+                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 return;
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
+                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 return;
             }
-            request.getRequestDispatcher("View/nuevaVenta.jsp").forward(request, response);
+            request.getRequestDispatcher("View/nuevoServicio.jsp").forward(request, response);
         }
     }
 

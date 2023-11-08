@@ -14,7 +14,7 @@
                    data-bs-toggle="dropdown" aria-expanded="false">
 
                     <span></span>
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img src="../images/profile.webp" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
                     <li>
@@ -22,7 +22,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="https://github.com/mdo.png" width="40" height="40" alt="" class="w-px-40 h-auto rounded-circle">
+                                        <img src="../images/profile.webp" width="40" height="40" alt="" class="w-px-40 h-auto rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

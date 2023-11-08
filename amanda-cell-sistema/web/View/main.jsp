@@ -4,6 +4,7 @@
 <html lang="en">
     <head>
         <jsp:include page = "../components/head.jsp"/>
+        <link rel="stylesheet" href="../css/main.css"/>
     </head>
 
     <body>
@@ -15,14 +16,16 @@
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div id="chart1"></div>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 bg-body">
+                            <div id="chart1" class="chart"></div>
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div id="chart2"></div>
+                            <div id="chart2" class="chart"></div>
                         </div>
                     </div>
                 </div>
+            </main>
+        </div>
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <!-- Bootstrap -->
@@ -33,7 +36,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
         <!-- Scripts -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
-        <script src="../js/graficos.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/graficos.js"></script>
     </body>
 
 </html>

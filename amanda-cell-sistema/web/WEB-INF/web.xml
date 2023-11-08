@@ -16,6 +16,10 @@
         <servlet-name>SvMain</servlet-name>
         <servlet-class>Controller.SvMain</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SvServicio</servlet-name>
+        <servlet-class>Controller.SvServicio</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SvVenta</servlet-name>
         <url-pattern>/SvVenta</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>SvMain</servlet-name>
         <url-pattern>/SvMain</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SvServicio</servlet-name>
+        <url-pattern>/SvServicio</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

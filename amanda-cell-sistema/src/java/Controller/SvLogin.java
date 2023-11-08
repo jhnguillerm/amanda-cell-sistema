@@ -32,7 +32,8 @@ public class SvLogin extends HttpServlet {
         if (accion != null && accion.equalsIgnoreCase("login")) {
             String usuario = request.getParameter("txtUsuario");
             String password = request.getParameter("txtPassword");
-            empleado = empleadoDAO.login(usuario, password);
+            String encryptedPassword = empleadoDAO.getMD5(password);
+            empleado = empleadoDAO.login(usuario, encryptedPassword);
             if (empleado.getUsername() != null) {
                 session.setAttribute("usuario", empleado.getUsername());
                 session.setAttribute("nombres", empleado.getNombres());
@@ -40,11 +41,14 @@ public class SvLogin extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/View/main.jsp");
                 System.out.println("Si se validó");
             } else {
-                request.getRequestDispatcher("/View/login.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 System.out.println("No se valido");
             }
-        } else {
-            request.getRequestDispatcher("/View/login.jsp").forward(request, response);
+        } else if (accion.equals("salir")) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+        }
+        else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
             System.out.println("No es igual");
         }
     }

@@ -1,44 +1,62 @@
-<%@page import="ModelDAO.ProveedorDAO"%>
-<%@page import="Model.Proveedor"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="Model.Producto"%>
-<%@page import="java.util.List"%>
-<%@page import="ModelDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pagina Principal</title>
-        <!-- Estilos -->
-        <link rel="stylesheet" href="css/style.css">
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-        <!-- Bootstrap icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <!-- Ionicons -->
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <style>
-            .contenedor {
-                width: 100%;
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Login</title>
     </head>
-
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <body>
-        <div class="contenedor">
-            <a href="View/login.jsp">LOGIN</a>
-        </div>
+        <section class="text-center text-lg-start d-flex align-items-center" style="height: 100vh">
+            <style>
+                .cascading-right {
+                    margin-right: -50px;
+                }
+
+                @media (max-width: 991.98px) {
+                    .cascading-right {
+                        margin-right: 0;
+                    }
+                }
+            </style>
+
+            <div class="container py-4">
+                <div class="row g-0 align-items-center h-100">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <div class="card cascading-right" style="
+                             background: hsla(0, 0%, 100%, 0.55);
+                             backdrop-filter: blur(30px);
+                             ">
+                            <div class="card-body p-5 shadow-5 text-center">
+                                <h2 class="fw-bold mb-5">Login</h2>
+                                <form action="${pageContext.request.contextPath}/SvLogin" method="post">
+                                    <!-- User input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="txtUsuario" id="txtUsuario" class="form-control">
+                                        <label class="form-label" for="txtUsuario">Usuario</label>
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="password" name="txtPassword" id="txtPassword" class="form-control">
+                                        <label class="form-label" for="txtPassword">Password</label>
+                                    </div>
+
+                                    <button type="submit" name="accion" value="login" class="btn btn-primary btn-block mb-4">Ingresar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <img src="images/login.jpg" class="rounded-4 shadow-4" style="height: 90vh" alt="No foto">
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <!-- / jquery -->
@@ -46,19 +64,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#tablaProducto').DataTable({
-                    "paging": true,
-                    "lengthMenu": [10, 25, 50],
-                    "searching": true
-                });
-            });
-        </script>
         <!-- / Bootstrap -->
-        <script src="${pageContext.servletContext.contextPath}/js/producto.js"></script>
     </body>
-
 </html>

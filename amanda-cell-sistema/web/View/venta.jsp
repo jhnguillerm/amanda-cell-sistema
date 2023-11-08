@@ -59,7 +59,7 @@
                                 <td class="align-middle"><%=venta.getMonto()%></td>
                                 <td class="align-middle">
                                     <!-- Boton para ver la venta -->
-                                    <a class="align-middle btn" href="detalleVenta.jsp?idVenta=<%=venta.getIdVenta()%>&numSerie=<%=venta.getNumSerie()%>&fecha=<%=venta.getFechaVenta()%>&monto=<%=venta.getMonto()%>&idCliente=<%=venta.getIdCliente()%>">
+                                    <a class="align-middle btn" href="detalleVenta.jsp?idVenta=<%=venta.getIdVenta()%>&numSerie=<%=venta.getNumSerie()%>&fecha=<%=venta.getFechaVenta()%>&monto=<%=venta.getMonto()%>&idCliente=<%=venta.getIdCliente()%>&idEmpleado=<%=venta.getIdEmpleado()%>">
                                         <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i>
                                     </a>
 

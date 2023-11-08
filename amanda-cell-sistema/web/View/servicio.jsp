@@ -1,3 +1,5 @@
+<%@page import="Model.Servicio"%>
+<%@page import="ModelDAO.ServicioDAO"%>
 <%@page import="Model.Venta"%>
 <%@page import="ModelDAO.VentaDAO"%>
 <%@page import="Model.Cliente"%>
@@ -32,39 +34,41 @@
                             <a href="nuevaVenta.jsp" class="btn btn-primary">Nuevo servicio</a>
                         </div>
                     </div>
-                    <table id="tablaVenta" class="table table-striped" style="width:100%">
+                    <table id="tablaServicio" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>N° serie</th>
-                                <th>Fecha</th>
+                                <th>Problema</th>
+                                <th>Fecha recepción</th>
+                                <th>Fecha entrega</th>
                                 <th>Total</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                                VentaDAO ventaDAO = new VentaDAO();
-                                List<Venta> list = ventaDAO.toList();
-                                Iterator<Venta> iterador = list.iterator();
-                                Venta venta = null;
+                                ServicioDAO servicioDAO = new ServicioDAO();
+                                List<Servicio> list = servicioDAO.toList();
+                                Iterator<Servicio> iterador = list.iterator();
+                                Servicio servicio = null;
 
                                 while (iterador.hasNext()) {
-                                    venta = iterador.next();
+                                    servicio = iterador.next();
                             %>
                             <tr>
-                                <td class="align-middle"><%=venta.getIdVenta()%></td>
-                                <td class="align-middle"><%=venta.getNumSerie()%></td>
-                                <td class="align-middle"><%=venta.getFechaVenta()%></td>
-                                <td class="align-middle"><%=venta.getMonto()%></td>
+                                <td class="align-middle"><%=servicio.getNumSerie()%></td>
+                                <td class="align-middle"><%=servicio.getProblema()%></td>
+                                <td class="align-middle"><%=servicio.getFechaRecepcion()%></td>
+                                <td class="align-middle"><%=servicio.getFechaEntrega()%></td>
+                                <td class="align-middle"><%=servicio.getTotal()%></td>
                                 <td class="align-middle">
                                     <!-- Boton para ver la venta -->
-                                    <a class="align-middle btn" href="detalleVenta.jsp?idVenta=<%=venta.getIdVenta()%>&numSerie=<%=venta.getNumSerie()%>&fecha=<%=venta.getFechaVenta()%>&monto=<%=venta.getMonto()%>&idCliente=<%=venta.getIdCliente()%>">
+                                    <a class="align-middle btn" href="detalleServicio.jsp?idServicio=<%=servicio.getIdServicio()%>&numSerie=<%=servicio.getNumSerie()%>&problema=<%=servicio.getProblema()%>&descripcion=<%=servicio.getDescripcion()%>&costo=<%=servicio.getCosto()%>&total=<%=servicio.getTotal()%>&fechaRecepcion=<%=servicio.getFechaRecepcion()%>&fechaEntrega=<%=servicio.getFechaEntrega()%>&estado=<%=servicio.getEstado()%>&idCliente=<%=servicio.getIdCliente()%>&idEmpleado=<%=servicio.getIdEmpleado()%>">
                                         <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i>
                                     </a>
 
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= venta.getNumSerie()%>" data-id="<%= venta.getIdVenta()%>"></button>
+                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= servicio.getNumSerie()%>" data-id="<%= servicio.getIdServicio()%>"></button>
 
                                     <!-- Modal - Eliminar -->
                                     <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
@@ -109,7 +113,7 @@
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#tablaVenta').DataTable({
+                $('#tablaServicio').DataTable({
                     "paging": true,
                     "lengthMenu": [6, 10, 25, 50],
                     "searching": true

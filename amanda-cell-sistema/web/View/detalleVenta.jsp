@@ -42,14 +42,31 @@
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-6 col-md-6">
-                                <h6 class="mb-2">Empleado:</h6>
-                                <div>
-                                    <strong>Empleado no encontrado</strong>
-                                </div>
-                            </div>
+                                <%
+                                    int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
+                                    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                                    Empleado empleado = new Empleado();
+                                    empleado.setIdEmpleado(idEmpleado);
 
+                                    if (empleadoDAO.search(empleado)) {
+                                        String nombreCliente = empleado.getNombres();
+                                        String dniCliente = empleado.getDni();
+                                %>
+                                <div>
+                                    <h6 class="mb-2">Empleado: <strong><%= nombreCliente%></strong> </h6>
+                                </div>
+
+                                <div>DNI: <%= dniCliente%></div>
+                                <%
+                                } else {
+                                %>
+                                <strong>Cliente no encontrado</strong>
+                                <div>DNI: Cliente no encontrado</div>
+                                <%
+                                    }
+                                %>
+                            </div>
                             <div class="col-6 col-md-6">
-                                <h6 class="mb-2">Cliente:</h6>
                                 <%
                                     int idCliente = Integer.parseInt(request.getParameter("idCliente"));
                                     ClienteDAO clienteDAO = new ClienteDAO();
@@ -61,7 +78,7 @@
                                         String dniCliente = cliente.getDni();
                                 %>
                                 <div>
-                                    <strong><%= nombreCliente%></strong> 
+                                    <h6 class="mb-2">Cliente: <strong><%= nombreCliente%></strong></h6>
                                 </div>
 
                                 <div>DNI: <%= dniCliente%></div>

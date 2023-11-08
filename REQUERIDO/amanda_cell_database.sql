@@ -78,16 +78,26 @@ CREATE TABLE detalle_venta (
 
 CREATE TABLE servicio (
     id_servicio INT AUTO_INCREMENT NOT NULL,
+    num_serie VARCHAR(100),
+    problema VARCHAR(100),
     descripcion TEXT,
     costo DECIMAL(10, 2),
+    total DECIMAL(10, 2),
     fecha_recepcion DATE,
     fecha_entrega DATE,
-    estado CHAR(1),
-    PRIMARY KEY (id_servicio)
+    estado VARCHAR(50),
+    id_cliente INT,
+    id_empleado INT,
+    PRIMARY KEY (id_servicio),
+    FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
+    FOREIGN KEY (id_empleado) REFERENCES empleado (id_empleado)
 );
 
 CREATE TABLE detalle_servicio (
     id_detalle_servicio INT AUTO_INCREMENT NOT NULL,
+	cantidad INT,
+    precio_venta DECIMAL(10, 2),
+    subtotal DECIMAL(10, 2),
     id_producto INT,
     id_servicio INT,
     PRIMARY KEY (id_detalle_servicio),
@@ -108,7 +118,6 @@ VALUES
     ('Pantalla LCD para iPhone 11', 'Pantalla de repuesto compatible con iPhone 11', 80.00, 129.99, 20, 'Pantalla', 1),
     ('Cargador USB para Android', 'Cargador rápido para dispositivos Android', 10.00, 19.99, 50, 'Cargador', 2),
     ('Batería para Samsung Galaxy S20', 'Batería de repuesto para Samsung Galaxy S20', 35.00, 49.99, 30, 'Batería', 3),
-    ('Kit de Herramientas de Reparación', 'Kit de herramientas completo para reparación de celulares', 20.00, 29.99, 15, 'Herramientas', 4),
     ('Funda Protectora para iPhone 12', 'Funda resistente para iPhone 12', 8.00, 14.99, 40, 'Accesorio', 5),
     ('Cámara Frontal para Huawei P30', 'Cámara frontal de repuesto para Huawei P30', 30.00, 39.99, 10, 'Cámara', 1),
     ('Cable de Datos USB-C', 'Cable de datos USB-C de alta calidad', 5.00, 9.99, 60, 'Cable', 2),
@@ -144,9 +153,10 @@ VALUES
     ('Cargador de Coche USB-C', 'Cargador de coche con puerto USB-C para carga rápida en el automóvil', 12.00, 24.99, 25, 'Cargador', 4),
     ('Kit de Herramientas de Reparación Profesional', 'Kit de herramientas de reparación profesional para dispositivos electrónicos', 35.00, 64.99, 10, 'Herramientas', 5);
 
+
 INSERT INTO  empleado (nombres, dni, correo, telefono, username, pass)
 VALUES 
-	("Jhon Moreno", "78453745", "jhn_guillerm@utp.edu.pe", "947534854", "jhnguillerm", "papaoso");
+	("Jhon Moreno", "78453745", "jhn_guillerm@utp.edu.pe", "947534854", "jhnguillerm", "ebce79953d4fd11e1b8c625ef1ab3c9e");
 
 INSERT INTO cliente (nombres, dni, correo, telefono) VALUES
 ('Juan Pérez', '12345678', 'juan@example.com', '555-1234'),
@@ -158,7 +168,6 @@ INSERT INTO cliente (nombres, dni, correo, telefono) VALUES
 ('Pablo Fernández', '78901234', 'pablo@example.com', '555-5678'),
 ('Marta Ramírez', '89012345', 'marta@example.com', '555-9012');
 
--- Ventas
 INSERT INTO venta (num_serie, fecha_venta, monto, id_cliente, id_empleado) VALUES
 ('V0001', '2023-11-01', 350.00, 1, 1),
 ('V0002', '2023-11-02', 420.00, 2, 1),
@@ -175,7 +184,7 @@ INSERT INTO venta (num_serie, fecha_venta, monto, id_cliente, id_empleado) VALUE
 ('V0013', '2023-11-13', 420.00, 3, 1),
 ('V0014', '2023-11-14', 320.00, 4, 1),
 ('V0015', '2023-11-15', 550.00, 5, 1);
-
+    
 -- Detalles de Venta
 INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_venta) VALUES
 -- Detalles de Venta Venta 1
@@ -224,7 +233,7 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (4, 30.00, 120.00, 36, 8),
 (3, 44.00, 132.00, 37, 8),
 (2, 54.00, 108.00, 38, 8),
-(5, 29.00, 145.00, 1, 8), 
+(5, 29.00, 145.00, 1, 8),
 (1, 62.00, 62.00, 2, 8),
 -- Detalles de Venta Venta 9
 (3, 41.00, 123.00, 3, 9),
@@ -232,49 +241,40 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (4, 32.00, 128.00, 5, 9),
 (1, 70.00, 70.00, 6, 9),
 (2, 48.00, 96.00, 7, 9),
-
 -- Detalles de Venta Venta 10
 (2, 55.00, 110.00, 8, 10),
 (4, 31.00, 124.00, 9, 10),
 (3, 38.00, 114.00, 10, 10),
 (1, 75.00, 75.00, 11, 10),
 (5, 26.00, 130.00, 12, 10),
-
 -- Detalles de Venta Venta 11
 (5, 27.00, 135.00, 13, 11),
 (1, 63.00, 63.00, 14, 11),
 (3, 44.00, 132.00, 15, 11),
 (4, 34.00, 136.00, 16, 11),
 (2, 52.00, 104.00, 17, 11),
-
 -- Detalles de Venta Venta 12
 (3, 40.00, 120.00, 18, 12),
 (5, 30.00, 150.00, 19, 12),
 (2, 58.00, 116.00, 20, 12),
 (4, 33.00, 132.00, 21, 12),
 (1, 69.00, 69.00, 22, 12),
-
 -- Detalles de Venta Venta 13
 (1, 76.00, 76.00, 23, 13),
 (2, 56.00, 112.00, 24, 13),
 (5, 28.00, 140.00, 25, 13),
 (4, 35.00, 140.00, 26, 13),
 (3, 43.00, 129.00, 27, 13),
-
 -- Detalles de Venta Venta 14
 (4, 32.00, 128.00, 28, 14),
 (1, 74.00, 74.00, 29, 14),
 (3, 37.00, 111.00, 30, 14),
 (2, 57.00, 114.00, 31, 14),
 (5, 27.00, 135.00, 32, 14),
-
 -- Detalles de Venta Venta 15
 (2, 54.00, 108.00, 33, 15),
 (5, 29.00, 145.00, 34, 15),
 (1, 67.00, 67.00, 35, 15),
 (4, 31.00, 124.00, 36, 15),
 (3, 45.00, 135.00, 37, 15);
-
-
-
 

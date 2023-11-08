@@ -211,4 +211,48 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
         }
     }
 
+    public int cantidadProductos() {
+        int cantidad = 0;
+        String sql = "SELECT COUNT(*) AS cantidad_productos FROM producto";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cantidad = rs.getInt("cantidad_productos");
+            }
+        } catch (Exception e) {
+            System.out.println("Producto - cantidadProductos: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return cantidad;
+    }
+
+    public int totalStock() {
+        int totalStock = 0;
+        String sql = "SELECT SUM(stock) AS total_stock FROM producto";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalStock = rs.getInt("total_stock");
+            }
+        } catch (Exception e) {
+            System.out.println("Producto - totalStock: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return totalStock;
+    }
+
 }

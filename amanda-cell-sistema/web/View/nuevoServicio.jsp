@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="ModelDAO.ClienteDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -166,6 +167,10 @@
                                             <label class="form-label" for="txtEstado">Estado</label>
                                             <select id="cbEstado" class="form-select" name="cbEstado">
                                                 <option value="">Selecciona el estado</option>
+                                                <option value="Pendiente">Pendiente</option>
+                                                <option value="En Progreso">En Progreso</option>
+                                                <option value="Esperando Piezas">Esperando Piezas</option>
+                                                <option value="Finalizado">Finalizado</option>
                                             </select>
                                         </div>
                                     </div>

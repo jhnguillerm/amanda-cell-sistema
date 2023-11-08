@@ -1,34 +1,35 @@
 package Model;
 
-public class DetalleVenta {
+public class DetalleServicio {
     
-    private int idDetalleVenta;
+    private int idDetalleServicio;
     private int cantidad;
     private double precioVenta;
     private double subtotal;
     private int idProducto;
-    private int idVenta;
+    private int idServicio;
     
     private String nombreProducto;
 
-    public DetalleVenta() {
+    public DetalleServicio() {
     }
 
-    public DetalleVenta(int idDetalleVenta, int cantidad, double precioVenta, double subtotal, int idProducto, int idVenta) {
-        this.idDetalleVenta = idDetalleVenta;
+    public DetalleServicio(int idDetalleServicio, int cantidad, double precioVenta, double subtotal, int idProducto, int idServicio, String nombreProducto) {
+        this.idDetalleServicio = idDetalleServicio;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.subtotal = subtotal;
         this.idProducto = idProducto;
-        this.idVenta = idVenta;
+        this.idServicio = idServicio;
+        this.nombreProducto = nombreProducto;
     }
 
-    public int getIdDetalleVenta() {
-        return idDetalleVenta;
+    public int getIdDetalleServicio() {
+        return idDetalleServicio;
     }
 
-    public void setIdDetalleVenta(int idDetalleVenta) {
-        this.idDetalleVenta = idDetalleVenta;
+    public void setIdDetalleServicio(int idDetalleServicio) {
+        this.idDetalleServicio = idDetalleServicio;
     }
 
     public int getCantidad() {
@@ -63,12 +64,12 @@ public class DetalleVenta {
         this.idProducto = idProducto;
     }
 
-    public int getIdVenta() {
-        return idVenta;
+    public int getIdServicio() {
+        return idServicio;
     }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    public void setIdServicio(int idServicio) {
+        this.idServicio = idServicio;
     }
 
     public String getNombreProducto() {

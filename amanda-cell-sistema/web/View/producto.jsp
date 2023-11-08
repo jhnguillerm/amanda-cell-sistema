@@ -22,11 +22,16 @@
                 <jsp:include page = "../components/navbar_horizontal.jsp" />
                 <!-- / Nav horizontal -->
                 <h1 class="h3 my-4" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Productos</strong></h1>
-                
+
                 <div class="card border-0 shadow-lg mb-4">
                     <div class="card-widget-separator-wrapper">
                         <div class="card-body card-widget-separator">
                             <div class="row gy-4 gy-sm-1">
+                                <%
+                                    ProductoDAO productoDAOtotal = new ProductoDAO();
+                                    int cantidad = productoDAOtotal.cantidadProductos();
+                                    int totalStock = productoDAOtotal.totalStock();
+                                %>
                                 <div class="col-sm-6 col-lg-3">
                                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                         <div>
@@ -43,32 +48,23 @@
                                     <hr class="d-none d-sm-block d-lg-none me-4">
                                 </div>
                                 <div class="col-sm-6 col-lg-3">
-                                    <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
-                                        <div>
-                                            <h6 class="mb-2">Ventas en la web</h6>
-                                            <h4 class="mb-2">S/0</h4>
-                                            <p class="mb-0"><span class="text-muted me-2">0k orders</span><span class="badge bg-label-success">+12.4%</span></p>
-                                        </div>
-                                        <div class="avatar me-lg-4">
-                                            <span class="avatar-initial rounded bg-label-secondary">
-                                                <i class="bx bx-laptop bx-sm"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <hr class="d-none d-sm-block d-lg-none">
-                                </div>
-                                <div class="col-sm-6 col-lg-3">
                                     <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                                         <div>
-                                            <h6 class="mb-2">Descuentos</h6>
-                                            <h4 class="mb-2">S/235.12</h4>
-                                            <p class="mb-0 text-muted">4k orders</p>
+                                            <h6 class="mb-2">Cantidad productos</h6>
+
+                                            <h4 id="productCount"><%= cantidad %></h4>
+                                            <p class="mb-0 text-muted">-</p>
                                         </div>
-                                        <div class="avatar me-sm-4">
-                                            <span class="avatar-initial rounded bg-label-secondary">
-                                                <i class="bx bx-gift bx-sm"></i>
-                                            </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
+                                        <div>
+                                            <h6 class="mb-2">Total stock</h6>
+                                            <h4 class="mb-2"><%= totalStock %></h4>
+                                            <p class="mb-0 text-muted">-</p>
                                         </div>
+                                        <hr class="d-none d-sm-block d-lg-none">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-lg-3">
@@ -139,10 +135,10 @@
                                 <td class="align-middle td_proveedor"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
                                 <td class="align-middle">
                                     <!-- Boton para actualizar un producto -->
-                                    <a class="align-middle" href="loadProducto.jsp?idProducto=<%= producto.getIdProducto() %>&nombre=<%= producto.getNombre() %>&descripcion=<%= producto.getDescripcion() %>&precioCompra=<%= producto.getPrecioCompra() %>&precioVenta=<%= producto.getPrecioVenta() %>&stock=<%= producto.getStock() %>&tipo=<%= producto.getTipo() %>&idProveedor=<%= producto.getIdProveedor() %>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <a class="align-middle" href="loadProducto.jsp?idProducto=<%= producto.getIdProducto()%>&nombre=<%= producto.getNombre()%>&descripcion=<%= producto.getDescripcion()%>&precioCompra=<%= producto.getPrecioCompra()%>&precioVenta=<%= producto.getPrecioVenta()%>&stock=<%= producto.getStock()%>&tipo=<%= producto.getTipo()%>&idProveedor=<%= producto.getIdProveedor()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar-producto" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-producto" data-nombre="<%= producto.getNombre()%>" data-id="<%= producto.getIdProducto()%>"></button>
-                                    
+
                                     <!-- Modal - Eliminar Producto -->
                                     <div class="modal fade" id="modal-confirmar-eliminar-producto" tabindex="-1" aria-labelledby="modal-delete-producto" aria-hidden="true">
                                         <div class="modal-dialog">
