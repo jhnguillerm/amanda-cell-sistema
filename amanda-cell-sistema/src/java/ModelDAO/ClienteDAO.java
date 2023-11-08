@@ -150,4 +150,26 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
         }
     }
     
+    public int cantidadClientes() {
+        int cantidad = 0;
+        String sql = "SELECT COUNT(*) AS cantidad_clientes FROM cliente";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cantidad = rs.getInt("cantidad_clientes");
+            }
+        } catch (Exception e) {
+            System.out.println("Cliente - cantidadClientes: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return cantidad;
+    }
+    
 }

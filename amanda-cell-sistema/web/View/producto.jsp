@@ -35,14 +35,9 @@
                                 <div class="col-sm-6 col-lg-3">
                                     <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                         <div>
-                                            <h6 class="mb-2">Ventas en tienda</h6>
-                                            <h4 class="mb-2">S/5,345.43</h4>
-                                            <p class="mb-0"><span class="text-muted me-2">5k orders</span><span class="badge bg-label-success">+5.7%</span></p>
-                                        </div>
-                                        <div class="avatar me-sm-4">
-                                            <span class="avatar-initial rounded bg-label-secondary">
-                                                <i class="bx bx-store-alt bx-sm"></i>
-                                            </span>
+                                            <h6 class="mb-2">-</h6>
+                                            <h4 class="mb-2">-</h4>
+                                            <p class="mb-0"><span class="text-muted me-2">-</span><span class="badge bg-label-success">+5.7%</span></p>
                                         </div>
                                     </div>
                                     <hr class="d-none d-sm-block d-lg-none me-4">

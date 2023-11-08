@@ -278,3 +278,20 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (4, 31.00, 124.00, 36, 15),
 (3, 45.00, 135.00, 37, 15);
 
+INSERT INTO servicio (num_serie, problema, descripcion, costo, total, fecha_recepcion, fecha_entrega, estado, id_cliente, id_empleado)
+VALUES
+    ('1234567890', 'Pantalla rota', 'Reparación de la pantalla de iPhone 11', 80.00, 100.00, '2023-11-01', '2023-11-03', 'En proceso', 1, 1),
+    ('9876543210', 'Batería agotada', 'Reemplazo de batería de Samsung Galaxy S20', 35.00, 50.00, '2023-11-02', '2023-11-04', 'En proceso', 2, 1),
+    ('5678901234', 'Altavoz defectuoso', 'Reparación de altavoz para iPhone 8', 18.00, 25.00, '2023-11-03', '2023-11-05', 'En proceso', 3, 1),
+    ('3456789012', 'Cámara frontal dañada', 'Sustitución de cámara frontal de Huawei P30', 30.00, 45.00, '2023-11-04', '2023-11-06', 'En proceso', 4, 1),
+    ('4567890123', 'Botón de inicio no funciona', 'Reparación del botón de inicio de Samsung Galaxy A50', 7.00, 12.00, '2023-11-05', '2023-11-07', 'En proceso', 5, 1);
+
+INSERT INTO detalle_servicio (cantidad, precio_venta, subtotal, id_producto, id_servicio)
+VALUES
+    (1, 80.00, 80.00, 1, 1),
+    (1, 35.00, 35.00, 3, 2),
+    (1, 18.00, 18.00, 7, 3),
+    (1, 30.00, 30.00, 6, 4),
+    (1, 7.00, 7.00, 8, 5);
+
+

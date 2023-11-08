@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-auto">
                             <!-- Button - Agregar -->
-                            <a href="nuevaVenta.jsp" class="btn btn-primary">Nuevo servicio</a>
+                            <a href="nuevoServicio.jsp" class="btn btn-primary">Nuevo servicio</a>
                         </div>
                     </div>
                     <table id="tablaServicio" class="table table-striped" style="width:100%">

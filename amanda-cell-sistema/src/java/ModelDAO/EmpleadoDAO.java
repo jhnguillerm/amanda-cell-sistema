@@ -201,7 +201,6 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-
     }
 
 }

@@ -161,4 +161,26 @@ public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
         return numSerie;
     }
     
+    public int cantidadServicios() {
+        int cantidad = 0;
+        String sql = "SELECT COUNT(*) AS cantidad_servicios FROM servicio";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cantidad = rs.getInt("cantidad_servicios");
+            }
+        } catch (Exception e) {
+            System.out.println("Servicio - cantidadServicios: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return cantidad;
+    }
+    
 }

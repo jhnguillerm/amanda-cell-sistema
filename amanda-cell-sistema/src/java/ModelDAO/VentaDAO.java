@@ -144,5 +144,27 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
         }
         return numSerie;
     }
+    
+    public int cantidadVentas() {
+        int cantidad = 0;
+        String sql = "SELECT COUNT(*) AS cantidad_ventas FROM venta";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cantidad = rs.getInt("cantidad_ventas");
+            }
+        } catch (Exception e) {
+            System.out.println("Venta - cantidadVentas: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return cantidad;
+    }
 
 }
