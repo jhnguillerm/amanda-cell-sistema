@@ -1,11 +1,9 @@
-<%@page import="Model.DetalleVenta"%>
 <%@page import="Model.Producto"%>
 <%@page import="ModelDAO.ProductoDAO"%>
 <%@page import="Model.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page import="ModelDAO.ClienteDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,20 +13,18 @@
         <div class="wrapper">
             <!-- Nav vertical -->
             <jsp:include page = "../components/navbar_vertical.jsp"/>
-            <!-- / Nav vertical -->
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
-                <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvVenta" method="post" class="m-0">
+                <form action="/amanda-cell-sistema/SvServicio" method="post" class="m-0">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Nueva venta</h4>
+                            <h4 class="mb-1 mt-3">Nueva servicio</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
                             <button type="submit" class="btn btn-danger" name="action" value="cancelar">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" name="action" value="create">Generar venta</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="create">Generar servicio</button>
                         </div>
                     </div>
 
@@ -143,6 +139,45 @@
                         <div class="col-12 col-lg-8">
                             <!-- Información general -->
                             <div class="card mb-4 border-0 shadow-lg">
+                                <div class="card-header border-0 bg-body">
+                                    <h5 class="card-tile mb-0">Información General</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-8">
+                                            <label class="form-label" for="txtProblema">Problema principal</label>
+                                            <input type="text" class="form-control" name="txtProblema" id="txtProblema" placeholder="Problema">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtCosto">Costo</label>
+                                            <input type="text" class="form-control" name="txtCosto" id="txtCosto" placeholder="Costo">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtFechaRecepcion">Fecha de recepción</label>
+                                            <input type="date" class="form-control" name="txtFechaRecepcion" id="txtFechaRecepcion">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtFechaEntrega">Fecha de entrega</label>
+                                            <input type="date" class="form-control" name="txtFechaEntrega" id="txtFechaEntrega">
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtEstado">Estado</label>
+                                            <select id="cbEstado" class="form-select" name="cbEstado">
+                                                <option value="">Selecciona el estado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" for="areaDescripcion">Descripción</label>
+                                        <textarea class="form-control" name="areaDescripcion" id="areaDescripcion" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Información general -->
+                            <!-- Tabla -->
+                            <div class="card mb-4 border-0 shadow-lg">
                                 <div class="card-header border-0 d-flex align-items-center">
                                     <h5 class="card-tile mb-0">NRO. SERIE</h5>
                                     <div class="col-3 px-4">
@@ -185,7 +220,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Información genenal -->
+                            <!-- /Tabla -->
                         </div>
                         <!-- /Segunda columna -->
                     </div>
@@ -194,11 +229,11 @@
         </div>
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+        <!-- Scripts -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
     </body>
 </html>

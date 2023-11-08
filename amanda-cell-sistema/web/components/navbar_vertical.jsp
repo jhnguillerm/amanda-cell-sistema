@@ -38,7 +38,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="servicio.jsp">Reparación</a>
+                        <a href="servicio.jsp">Lista reparaciones</a>
+                    </li>
+                    <li>
+                        <a href="nuevoServicio.jsp">Nueva reparación</a>
                     </li>
                 </ul>
             </li>
