@@ -29,7 +29,7 @@ public class SvLogin extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String accion = request.getParameter("accion");
-        if (accion != null && accion.equalsIgnoreCase("login")) {
+        if (accion != null && accion.equals("login")) {
             String usuario = request.getParameter("txtUsuario");
             String password = request.getParameter("txtPassword");
             String encryptedPassword = empleadoDAO.getMD5(password);

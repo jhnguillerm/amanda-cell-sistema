@@ -163,3 +163,13 @@ body {
     background: #317de8;
     color: #abd5ff
 }
+
+.btn-primary {
+    background-color: #0a223b !important;
+    border-color: #0a223b !important;
+}
+
+.btn-primary:hover {
+    background: #317de8 !important;
+    border-color: #317de8 !important;
+}

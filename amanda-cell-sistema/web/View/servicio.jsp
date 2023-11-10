@@ -68,7 +68,7 @@
                                     </a>
 
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= servicio.getNumSerie()%>" data-id="<%= servicio.getIdServicio()%>"></button>
+                                    <!--<button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= servicio.getNumSerie()%>" data-id="<%= servicio.getIdServicio()%>"></button>-->
 
                                     <!-- Modal - Eliminar -->
                                     <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">

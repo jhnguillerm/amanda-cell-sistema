@@ -61,9 +61,6 @@
                     <li>
                         <a href="loadProducto.jsp">Nuevo producto</a>
                     </li>
-                    <li>
-                        <a href="error.jsp">Editar producto</a>
-                    </li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -77,9 +74,6 @@
                     </li>
                     <li>
                         <a href="loadProveedor.jsp">Nuevo proveedor</a>
-                    </li>
-                    <li>
-                        <a href="error.jsp">Editar proveedor</a>
                     </li>
                 </ul>
             </li>
@@ -99,9 +93,6 @@
                     <li>
                         <a href="loadCliente.jsp">Nuevo cliente</a>
                     </li>
-                    <li>
-                        <a href="error.jsp">Editar cliente</a>
-                    </li>
                 </ul>
             </li>
             <li class="sub-menu">
@@ -115,9 +106,6 @@
                     </li>
                     <li>
                         <a href="loadEmpleado.jsp">Nuevo empleado</a>
-                    </li>
-                    <li>
-                        <a href="error.jsp">Editar empleado</a>
                     </li>
                 </ul>
             </li>

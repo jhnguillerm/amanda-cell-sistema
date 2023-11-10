@@ -34,7 +34,7 @@ public class SvVenta extends HttpServlet {
     VentaDAO ventaDAO = new VentaDAO();
     int idVenta;
     int numSerie;
-    String fechaVenta = "2023-11-07";
+    String fechaVenta = "2023-11-08";
     double total;
     int idEmpleado = 1;
 
@@ -178,6 +178,7 @@ public class SvVenta extends HttpServlet {
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();
                 response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
+                total = 0.0;
                 return;
             }
             request.getRequestDispatcher("View/nuevaVenta.jsp").forward(request, response);

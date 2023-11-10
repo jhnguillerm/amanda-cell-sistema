@@ -199,6 +199,7 @@ public class SvServicio extends HttpServlet {
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();
                 response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
+                total = 0.0;
                 return;
             }
             request.getRequestDispatcher("View/nuevoServicio.jsp").forward(request, response);

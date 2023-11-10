@@ -35,7 +35,6 @@
                     <table id="tablaVenta" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>N° serie</th>
                                 <th>Fecha</th>
                                 <th>Total</th>
@@ -53,7 +52,6 @@
                                     venta = iterador.next();
                             %>
                             <tr>
-                                <td class="align-middle"><%=venta.getIdVenta()%></td>
                                 <td class="align-middle"><%=venta.getNumSerie()%></td>
                                 <td class="align-middle"><%=venta.getFechaVenta()%></td>
                                 <td class="align-middle"><%=venta.getMonto()%></td>
@@ -64,7 +62,7 @@
                                     </a>
 
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
-                                    <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= venta.getNumSerie()%>" data-id="<%= venta.getIdVenta()%>"></button>
+                                    <!--<button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= venta.getNumSerie()%>" data-id="<%= venta.getIdVenta()%>"></button>-->
 
                                     <!-- Modal - Eliminar -->
                                     <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">

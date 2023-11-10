@@ -254,5 +254,28 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
         }
         return totalStock;
     }
+    
+    public double totalPrecioCompra() {
+        double total = 0.0;
+        String sql = "SELECT SUM(precio_compra) AS total_compra FROM producto";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total_compra");
+            }
+        } catch (Exception e) {
+            System.out.println("Producto - totalPrecioCompra: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return total;
+    }
+
 
 }
