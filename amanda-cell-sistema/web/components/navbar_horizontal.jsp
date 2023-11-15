@@ -3,11 +3,11 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="main.jsp" class="nav-link px-2 link-secondary">Inicio</a></li>
+                <li><a href="/amanda-cell-sistema/SvRutas?action=main" class="nav-link px-2 link-secondary">Inicio</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Servicios</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Materiales</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Usuarios</a></li>
-                <li><a href="../webpage/webPage.jsp" class="nav-link px-2 link-body-emphasis">Pagina Web</a></li>
+                <li><a href="/amanda-cell-sistema/SvRutas?action=web" class="nav-link px-2 link-body-emphasis">Pagina Web</a></li>
             </ul>
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"

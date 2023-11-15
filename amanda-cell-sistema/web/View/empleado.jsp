@@ -59,7 +59,7 @@
                                 <td class="align-middle"><%=empleado.getTelefono()%></td>
                                 <td class="align-middle">
                                     <!-- Boton para actualizar -->
-                                    <a class="align-middle" href="loadEmpleado.jsp?idEmpleado=<%= empleado.getIdEmpleado()%>&nombres=<%= empleado.getNombres() %>&dni=<%= empleado.getDni()%>&correo=<%= empleado.getCorreo()%>&telefono=<%= empleado.getTelefono()%>&username=<%= empleado.getUsername()%>&pass=<%= empleado.getPass()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <a class="align-middle" href="loadEmpleado.jsp?idEmpleado=<%= empleado.getIdEmpleado()%>&nombres=<%= empleado.getNombres() %>&dni=<%= empleado.getDni()%>&correo=<%= empleado.getCorreo()%>&telefono=<%= empleado.getTelefono()%>&username=<%= empleado.getUsername()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= empleado.getNombres()%>" data-id="<%= empleado.getIdEmpleado()%>"></button>
                                     

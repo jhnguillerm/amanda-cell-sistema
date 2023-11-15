@@ -2,14 +2,14 @@
     <div id="leftside-navigation" class="nano">
         <!-- Logo -->
         <div>
-            <a class="sidebar-brand" href="main.jsp">
+            <a class="sidebar-brand" href="/amanda-cell-sistema/SvRutas?action=main">
                 <h1 class="sidebar-title">Amanda Cell</h1>
             </a>
         </div>
         <!-- / Logo -->
         <ul class="sidebar-nav">
             <li class="active">
-                <a href="main.jsp">
+                <a href="/amanda-cell-sistema/SvRutas?action=main">
                     <span>Inicio</span>
                 </a>
             </li>
@@ -24,7 +24,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="venta.jsp">Lista de ventas</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=venta">Lista de ventas</a>
                     </li>
                     <li>
                         <a href="nuevaVenta.jsp">Nueva venta</a>
@@ -38,7 +38,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="servicio.jsp">Lista reparaciones</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=servicio">Lista reparaciones</a>
                     </li>
                     <li>
                         <a href="nuevoServicio.jsp">Nueva reparación</a>
@@ -56,10 +56,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="producto.jsp">Lista de productos</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=producto">Lista de productos</a>
                     </li>
                     <li>
-                        <a href="loadProducto.jsp">Nuevo producto</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=loadProducto">Nuevo producto</a>
                     </li>
                 </ul>
             </li>
@@ -70,10 +70,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="proveedor.jsp">Lista de proveedores</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=proveedor">Lista de proveedores</a>
                     </li>
                     <li>
-                        <a href="loadProveedor.jsp">Nuevo proveedor</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=loadProveedor">Nuevo proveedor</a>
                     </li>
                 </ul>
             </li>
@@ -88,10 +88,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="cliente.jsp">Lista de clientes</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=cliente">Lista de clientes</a>
                     </li>
                     <li>
-                        <a href="loadCliente.jsp">Nuevo cliente</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=loadCliente">Nuevo cliente</a>
                     </li>
                 </ul>
             </li>
@@ -102,10 +102,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="empleado.jsp">Lista de empleados</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=empleado">Lista de empleados</a>
                     </li>
                     <li>
-                        <a href="loadEmpleado.jsp">Nuevo empleado</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=loadEmpleado">Nuevo empleado</a>
                     </li>
                 </ul>
             </li>

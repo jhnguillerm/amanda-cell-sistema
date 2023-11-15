@@ -83,7 +83,7 @@
                                     <!-- Pass -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPass">Contraseña</label>
-                                        <input type="password" class="form-control" id="txtPass" placeholder="Contraseña" name="txtPass">
+                                        <input type="password" class="form-control" id="txtPass" placeholder="Contraseña" name="txtPass" required>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,6 @@
                 document.getElementById("txtCorreo").value = params.get("correo");
                 document.getElementById("txtTelefono").value = params.get("telefono");
                 document.getElementById("txtUsername").value = params.get("username");
-                document.getElementById("txtPass").value = params.get("pass");
                 
                 const modoEditar = params.get("modo");
                 if (modoEditar === "editar") {
