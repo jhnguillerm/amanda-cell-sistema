@@ -11,7 +11,7 @@
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <body>
-        <section class="text-center text-lg-start d-flex align-items-center" style="height: 100vh">
+        <section class="text-center text-lg-start d-flex align-items-center" style="height: 100vh; background-color: #eff5f6;">
             <style>
                 .cascading-right {
                     margin-right: -50px;
@@ -25,6 +25,17 @@
             </style>
 
             <div class="container py-4">
+                <%
+                    String error = (String) request.getAttribute("error");
+                    if (error != null && !error.isEmpty()) {
+                %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong><%= error%></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <%
+                    }
+                %>
                 <div class="row g-0 align-items-center h-100">
                     <div class="col-lg-6 mb-5 mb-lg-0">
                         <div class="card cascading-right" style="

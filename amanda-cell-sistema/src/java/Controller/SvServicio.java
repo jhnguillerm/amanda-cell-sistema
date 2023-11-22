@@ -113,25 +113,37 @@ public class SvServicio extends HttpServlet {
                 subtotal = cantidad * precioVenta;
                 idServicio = numSerie;
 
-                detalleServicio = new DetalleServicio();
+                // Verificar si el producto ya está en la lista
+                boolean productoExistente = false;
+                for (DetalleServicio detalleExistente : listaDetalle) {
+                    if (detalleExistente.getIdProducto() == idProducto) {
+                        // Si el producto ya está en la lista, actualizar la cantidad y el subtotal
+                        detalleExistente.setCantidad(detalleExistente.getCantidad() + cantidad);
+                        detalleExistente.setSubtotal(detalleExistente.getSubtotal() + subtotal);
+                        productoExistente = true;
+                        break;
+                    }
+                }
 
-                detalleServicio.setCantidad(cantidad);
-                detalleServicio.setPrecioVenta(precioVenta);
-                detalleServicio.setSubtotal(subtotal);
-                detalleServicio.setIdProducto(idProducto);
-                detalleServicio.setNombreProducto(nombreProducto);
-                detalleServicio.setIdServicio(idServicio);
+                if (!productoExistente) {
+                    // Si el producto no está en la lista, agregar uno nuevo
+                    detalleServicio = new DetalleServicio();
+                    detalleServicio.setCantidad(cantidad);
+                    detalleServicio.setPrecioVenta(precioVenta);
+                    detalleServicio.setSubtotal(subtotal);
+                    detalleServicio.setIdProducto(idProducto);
+                    detalleServicio.setNombreProducto(nombreProducto);
+                    detalleServicio.setIdServicio(idServicio);
+                    listaDetalle.add(detalleServicio);
+                }
 
-                listaDetalle.add(detalleServicio);
-
+                // Recalcular el total
                 for (int i = 0; i < listaDetalle.size(); i++) {
                     total += listaDetalle.get(i).getSubtotal();
                 }
 
                 request.setAttribute("total", total);
                 request.setAttribute("listaDetalle", listaDetalle);
-
-                //Eliminar en registro de la tabla
             } else if (action.equals("eliminarDetalle")) {
                 
                 //Crear Servicio y DetalleServicio
@@ -195,6 +207,7 @@ public class SvServicio extends HttpServlet {
                 }
                 listaDetalle.clear();
                 response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
+                total = 0.0;
                 return;
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();

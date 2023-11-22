@@ -231,8 +231,8 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (4, 34.00, 136.00, 35, 7),
 -- Detalles de Venta Venta 8
 (4, 30.00, 120.00, 36, 8),
-(3, 44.00, 132.00, 37, 8),
-(2, 54.00, 108.00, 38, 8),
+(3, 44.00, 132.00, 31, 8),
+(2, 54.00, 108.00, 34, 8),
 (5, 29.00, 145.00, 1, 8),
 (1, 62.00, 62.00, 2, 8),
 -- Detalles de Venta Venta 9
@@ -275,8 +275,8 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (2, 54.00, 108.00, 33, 15),
 (5, 29.00, 145.00, 34, 15),
 (1, 67.00, 67.00, 35, 15),
-(4, 31.00, 124.00, 36, 15),
-(3, 45.00, 135.00, 37, 15);
+(4, 31.00, 124.00, 3, 15),
+(3, 45.00, 135.00, 32, 15);
 
 INSERT INTO servicio (num_serie, problema, descripcion, costo, total, fecha_recepcion, fecha_entrega, estado, id_cliente, id_empleado)
 VALUES

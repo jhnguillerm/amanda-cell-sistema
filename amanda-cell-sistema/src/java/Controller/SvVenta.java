@@ -49,6 +49,7 @@ public class SvVenta extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
     @Override
@@ -105,26 +106,39 @@ public class SvVenta extends HttpServlet {
                 subtotal = cantidad * precioVenta;
                 idVenta = numSerie;
 
-                detalleVenta = new DetalleVenta();
+                // Verificar si el producto ya está en la lista
+                boolean productoExistente = false;
+                for (DetalleVenta detalleExistente : listaDetalle) {
+                    if (detalleExistente.getIdProducto() == idProducto) {
+                        // Si el producto ya está en la lista, actualizar la cantidad y el subtotal
+                        detalleExistente.setCantidad(detalleExistente.getCantidad() + cantidad);
+                        detalleExistente.setSubtotal(detalleExistente.getSubtotal() + subtotal);
+                        productoExistente = true;
+                        break;
+                    }
+                }
 
-                detalleVenta.setCantidad(cantidad);
-                detalleVenta.setPrecioVenta(precioVenta);
-                detalleVenta.setSubtotal(subtotal);
-                detalleVenta.setIdProducto(idProducto);
-                detalleVenta.setNombreProducto(nombreProducto);
-                detalleVenta.setIdVenta(idVenta);
+                if (!productoExistente) {
+                    // Si el producto no está en la lista, agregar uno nuevo
+                    detalleVenta = new DetalleVenta();
+                    detalleVenta.setCantidad(cantidad);
+                    detalleVenta.setPrecioVenta(precioVenta);
+                    detalleVenta.setSubtotal(subtotal);
+                    detalleVenta.setIdProducto(idProducto);
+                    detalleVenta.setNombreProducto(nombreProducto);
+                    detalleVenta.setIdVenta(idVenta);
+                    listaDetalle.add(detalleVenta);
+                }
 
-                listaDetalle.add(detalleVenta);
-
+                // Recalcular el total
                 for (int i = 0; i < listaDetalle.size(); i++) {
                     total += listaDetalle.get(i).getSubtotal();
                 }
 
                 request.setAttribute("total", total);
                 request.setAttribute("listaDetalle", listaDetalle);
-
             } else if (action.equals("eliminarDetalle")) {
-                
+
             } else if (action.equals("create")) {
                 //Actualizar stock
                 for (int i = 0; i < listaDetalle.size(); i++) {
@@ -174,6 +188,7 @@ public class SvVenta extends HttpServlet {
                 }
                 listaDetalle.clear();
                 response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
+                total = 0.0;
                 return;
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();

@@ -4,8 +4,9 @@
 <%@page import="Model.Cliente"%>
 <%@page import="java.util.List"%>
 <%@page import="ModelDAO.ClienteDAO"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -126,7 +127,7 @@
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" value="1" class="form-control" name="txtCantidad" id="txtCantidad">
+                                            <input type="number" min="1" max="${producto.stock}" class="form-control" name="txtCantidad" id="txtCantidad" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -162,19 +163,29 @@
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                        <c:forEach items="${listaDetalle}" var="detalle">
+                                            <%
+                                                List<DetalleVenta> listaDetalle = (List<DetalleVenta>) request.getAttribute("listaDetalle");
+
+                                                if (listaDetalle != null) {
+                                                    for (DetalleVenta detalle : listaDetalle) {
+                                                        double subtotal = detalle.getSubtotal();
+                                                        String roundedSubtotal = String.format("%.2f", subtotal);
+                                            %>
                                             <tr>
-                                                <td class="align-middle">${detalle.nombreProducto}</td>
-                                                <td class="align-middle">S/.${detalle.precioVenta}</td>
-                                                <td class="align-middle">${detalle.cantidad}</td>
-                                                <td class="align-middle">S/.${detalle.subtotal}</td>
+                                                <td class="align-middle"><%= detalle.getNombreProducto()%></td>
+                                                <td class="align-middle">S/.<%= detalle.getPrecioVenta()%></td>
+                                                <td class="align-middle"><%= detalle.getCantidad()%></td>
+                                                <td class="align-middle">S/.<%= roundedSubtotal%></td>
                                                 <td class="align-middle">
-                                                    <button type="button" name="action" value="eliminarDetalle" class="btn-close align-middle">
-                                                    </button>
+                                                    <button type="button" name="action" value="eliminarDetalle" class="btn-close align-middle"></button>
                                                 </td>
                                             </tr>
-                                        </c:forEach>
+                                            <%
+                                                    }
+                                                }
+                                            %>
                                         </tbody>
+
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end align-items-center border-0">
@@ -200,5 +211,9 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
+        <script>
+            var total = parseFloat("${total}").toFixed(2);
+            $("#txtTotal").val(total);
+        </script>
     </body>
 </html>

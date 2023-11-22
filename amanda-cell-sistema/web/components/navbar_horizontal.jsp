@@ -1,4 +1,6 @@
 <%@page import="Model.Empleado"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <header id="nav-horizontal" class="p-3 mb-3 border-bottom rounded shadow-lg" style="background-color: #fff;">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -13,7 +15,7 @@
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                    data-bs-toggle="dropdown" aria-expanded="false">
 
-                    <span></span>
+                    <span class="align-middle px-1">${sessionScope.nombres}</span>
                     <img src="../images/profile.webp" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
@@ -26,7 +28,7 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-medium d-block" style="color: #808d9b"></span>
+                                    <span class="fw-medium d-block" style="color: #808d9b"> ${sessionScope.usuario}</span>
                                     <small class="text-muted" style="color: #a2b0bb">Admin</small>
                                 </div>
                             </div>
