@@ -43,25 +43,17 @@
                         <div class="row mb-4">
                             <div class="col-6 col-md-6">
                                 <%
-                                    int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
-                                    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-                                    Empleado empleado = new Empleado();
-                                    empleado.setIdEmpleado(idEmpleado);
+                                    String nombreEmpleado = (String) session.getAttribute("nombres");
 
-                                    if (empleadoDAO.search(empleado)) {
-                                        String nombreCliente = empleado.getNombres();
-                                        String dniCliente = empleado.getDni();
+                                    if (nombreEmpleado != null) {
                                 %>
                                 <div>
-                                    <h6 class="mb-2">Empleado: <strong><%= nombreCliente%></strong> </h6>
+                                    <h6 class="mb-2">Empleado: <strong><%= nombreEmpleado%></strong></h6>
                                 </div>
-
-                                <div>DNI: <%= dniCliente%></div>
                                 <%
                                 } else {
                                 %>
-                                <strong>Cliente no encontrado</strong>
-                                <div>DNI: Cliente no encontrado</div>
+                                <strong>Empleado no encontrado</strong>
                                 <%
                                     }
                                 %>

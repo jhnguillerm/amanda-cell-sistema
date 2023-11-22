@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" min="1" max="${producto.stock}" class="form-control" name="txtCantidad" id="txtCantidad" required>
+                                            <input type="number" value="1" min="1" max="${producto.stock}" class="form-control" name="txtCantidad" id="txtCantidad">
                                         </div>
                                     </div>
                                     <div class="row mb-3">

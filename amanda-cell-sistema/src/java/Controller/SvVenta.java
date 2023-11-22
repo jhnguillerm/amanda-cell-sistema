@@ -36,7 +36,7 @@ public class SvVenta extends HttpServlet {
     int numSerie;
     String fechaVenta = "2023-11-08";
     double total;
-    int idEmpleado = 1;
+    int idEmpleado;
 
     //DetalleVenta
     DetalleVenta detalleVenta = new DetalleVenta();
@@ -161,6 +161,9 @@ public class SvVenta extends HttpServlet {
                 String numSerieString = String.valueOf(numSerie);
                 total = Double.parseDouble(request.getParameter("txtTotal"));
                 idCliente = Integer.parseInt(request.getParameter("txtIdCliente"));
+
+                HttpSession session = request.getSession();
+                idEmpleado = (int) session.getAttribute("idEmpleado");
 
                 venta = new Venta();
 

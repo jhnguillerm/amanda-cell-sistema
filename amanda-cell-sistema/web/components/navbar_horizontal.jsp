@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-medium d-block" style="color: #808d9b"> ${sessionScope.usuario}</span>
-                                    <small class="text-muted" style="color: #a2b0bb">Admin</small>
+                                    <small class="text-muted" style="color: #a2b0bb"><!--Administrador--></small>
                                 </div>
                             </div>
                         </a>
