@@ -124,7 +124,7 @@
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" value="1" min="1" max="${producto.getStock()}" class="form-control" name="txtCantidad" id="txtCantidad">
+                                            <input type="number" min="1" max="${producto.getStock()}" class="form-control" name="txtCantidad" id="txtCantidad">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -187,7 +187,7 @@
                                 <div class="card-header border-0 d-flex align-items-center">
                                     <h5 class="card-tile mb-0">NRO. SERIE</h5>
                                     <div class="col-3 px-4">
-                                        <input type="text" class="form-control" value="${numSerie}" name="txtNumSerie" id="txtNumSerie" disabled>
+                                        <input type="text" class="form-control" value="${numSerieServicio}" name="txtNumSerie" id="txtNumSerie" disabled>
                                         <input type="hidden" class="form-control" value="${numSerie}" name="txtNumSerie">
                                     </div>
                                 </div>

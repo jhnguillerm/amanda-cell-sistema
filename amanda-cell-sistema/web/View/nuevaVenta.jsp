@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" value="1" min="1" max="${producto.stock}" class="form-control" name="txtCantidad" id="txtCantidad">
+                                            <input type="number" min="1" max="${producto.stock}" class="form-control" name="txtCantidad" id="txtCantidad">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -147,7 +147,7 @@
                                 <div class="card-header border-0 d-flex align-items-center">
                                     <h5 class="card-tile mb-0">NRO. SERIE</h5>
                                     <div class="col-3 px-4">
-                                        <input type="text" class="form-control" value="${numSerie}" name="txtNumSerie" id="txtNumSerie" disabled>
+                                        <input type="text" class="form-control" value="${numSerieVenta}" name="txtNumSerie" id="txtNumSerie" disabled>
                                         <input type="hidden" class="form-control" value="${numSerie}" name="txtNumSerie">
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
                                                 <td class="align-middle"><%= detalle.getCantidad()%></td>
                                                 <td class="align-middle">S/.<%= roundedSubtotal%></td>
                                                 <td class="align-middle">
-                                                    <button type="button" name="action" value="eliminarDetalle" class="btn-close align-middle"></button>
+                                                    <button type="button" name="action" value="eliminarDetalle" data-detalle-id="<%= detalle.getIdDetalleVenta()%>" class="btn-close align-middle"></button>
                                                 </td>
                                             </tr>
                                             <%
@@ -185,7 +185,6 @@
                                                 }
                                             %>
                                         </tbody>
-
                                     </table>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end align-items-center border-0">
@@ -212,8 +211,49 @@
         crossorigin="anonymous"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
         <script>
-            var total = parseFloat("${total}").toFixed(2);
-            $("#txtTotal").val(total);
-        </script>
+    $(document).ready(function () {
+        $(".btn-close").on("click", function () {
+            var detalleId = $(this).data("detalle-id");
+
+            // Eliminar la fila de la tabla
+            $("#tablaVenta").find('[data-detalle-id="' + detalleId + '"]').closest('tr').remove();
+
+            // Recalcular el total
+            recalcularTotal();
+
+            // Luego, realizar la eliminación en el lado del servidor
+            // (enviar una solicitud al servlet)
+            eliminarDetalle(detalleId);
+        });
+
+        function recalcularTotal() {
+            var total = 0;
+            $(".table tbody tr").each(function () {
+                var subtotal = parseFloat($(this).find("td:eq(3)").text().replace("S/.", ""));
+                total += subtotal;
+            });
+            $("#txtTotal").val(total.toFixed(2));
+        }
+
+        function eliminarDetalle(detalleId) {
+            // Realizar la eliminación en el lado del servidor
+            $.ajax({
+                type: "POST",
+                url: "/amanda-cell-sistema/SvVenta",
+                data: { action: "eliminarDetalle", detalleId: detalleId },
+                success: function (response) {
+                    // Puedes decidir si deseas recargar toda la página o solo las partes necesarias
+                    location.reload(); // Recarga toda la página
+                },
+                error: function (error) {
+                    console.error("Error al eliminar el detalle: ", error);
+                }
+            });
+        }
+    });
+    var total = parseFloat("${total}").toFixed(2);
+    $("#txtTotal").val(total);
+</script>
+
     </body>
 </html>

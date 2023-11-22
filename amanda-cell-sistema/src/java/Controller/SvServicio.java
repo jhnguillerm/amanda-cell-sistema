@@ -1,5 +1,6 @@
 package Controller;
 
+import Config.GenerarNumSerie;
 import Model.Cliente;
 import Model.DetalleServicio;
 import Model.Producto;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SvServicio extends HttpServlet {
 
@@ -33,6 +35,7 @@ public class SvServicio extends HttpServlet {
     ServicioDAO servicioDAO = new ServicioDAO();
     int idServicio;
     int numSerie;
+    String nuevoNumSerie;
     String problema;
     String descripcion;
     double costo;
@@ -40,7 +43,7 @@ public class SvServicio extends HttpServlet {
     String fechaRecepcion;
     String fechaEntrega;
     String estado;
-    int idEmpleado = 1;
+    int idEmpleado;
 
     //Detalle servicio;
     DetalleServicio detalleServicio = new DetalleServicio();
@@ -65,12 +68,18 @@ public class SvServicio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
 
         if (request.getParameter("action") != null) {
 
             String action = request.getParameter("action");
 
             numSerie = servicioDAO.generarNumSerie();
+            GenerarNumSerie generarNumSerie = new GenerarNumSerie();
+            nuevoNumSerie = generarNumSerie.generarNumeroSerieServicio(numSerie);
+            
+            request.setAttribute("numSerieServicio", nuevoNumSerie);
             request.setAttribute("numSerie", numSerie);
 
             //Buscar cliente
@@ -166,7 +175,6 @@ public class SvServicio extends HttpServlet {
 
                 //Servicio
                 numSerie = Integer.parseInt(request.getParameter("txtNumSerie"));
-                String numSerieString = String.valueOf(numSerie);
                 problema = request.getParameter("txtProblema");
                 descripcion = request.getParameter("areaDescripcion");
                 costo = Double.parseDouble(request.getParameter("txtCosto"));
@@ -175,10 +183,11 @@ public class SvServicio extends HttpServlet {
                 fechaEntrega = request.getParameter("txtFechaEntrega");
                 estado = request.getParameter("cbEstado");
                 idCliente = Integer.parseInt(request.getParameter("txtIdCliente"));
+                idEmpleado = (int) session.getAttribute("idEmpleado");
 
                 servicio = new Servicio();
 
-                servicio.setNumSerie(numSerieString);
+                servicio.setNumSerie(nuevoNumSerie);
                 servicio.setProblema(problema);
                 servicio.setDescripcion(descripcion);
                 servicio.setCosto(costo);

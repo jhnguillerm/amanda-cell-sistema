@@ -51,12 +51,10 @@
                                 <div>
                                     <h6 class="mb-2">Empleado: <strong><%= nombreCliente%></strong></h6>
                                 </div>
-                                <div>DNI: <%= dniCliente%></div>
                                 <%
                                 } else {
                                 %>
                                 <strong>Cliente no encontrado</strong>
-                                <div>DNI: Cliente no encontrado</div>
                                 <%
                                     }
                                 %>

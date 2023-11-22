@@ -1,5 +1,6 @@
 package Controller;
 
+import Config.GenerarNumSerie;
 import Model.Cliente;
 import Model.DetalleVenta;
 import Model.Producto;
@@ -10,6 +11,7 @@ import ModelDAO.ProductoDAO;
 import ModelDAO.VentaDAO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,7 @@ public class SvVenta extends HttpServlet {
     VentaDAO ventaDAO = new VentaDAO();
     int idVenta;
     int numSerie;
+    String nuevoNumSerie;
     String fechaVenta = "2023-11-08";
     double total;
     int idEmpleado;
@@ -62,10 +65,16 @@ public class SvVenta extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
         if (request.getParameter("action") != null) {
             String action = request.getParameter("action");
 
             numSerie = ventaDAO.generarNumSerie();
+            GenerarNumSerie generarNumSerie = new GenerarNumSerie();
+            nuevoNumSerie = generarNumSerie.generarNumeroSerieVenta(numSerie);
+
+            request.setAttribute("numSerieVenta", nuevoNumSerie);
             request.setAttribute("numSerie", numSerie);
 
             if (action.equals("searchCliente")) {
@@ -137,7 +146,11 @@ public class SvVenta extends HttpServlet {
 
                 request.setAttribute("total", total);
                 request.setAttribute("listaDetalle", listaDetalle);
+
+                //ELIMINAR DETALLE
             } else if (action.equals("eliminarDetalle")) {
+                int detalleId = Integer.parseInt(request.getParameter("detalleId"));
+                eliminarDetalle(detalleId, request);
 
             } else if (action.equals("create")) {
                 //Actualizar stock
@@ -158,16 +171,14 @@ public class SvVenta extends HttpServlet {
 
                 //Venta
                 numSerie = Integer.parseInt(request.getParameter("txtNumSerie"));
-                String numSerieString = String.valueOf(numSerie);
-                total = Double.parseDouble(request.getParameter("txtTotal"));
+                total = calcularTotal(listaDetalle);
                 idCliente = Integer.parseInt(request.getParameter("txtIdCliente"));
 
-                HttpSession session = request.getSession();
                 idEmpleado = (int) session.getAttribute("idEmpleado");
 
                 venta = new Venta();
 
-                venta.setNumSerie(numSerieString);
+                venta.setNumSerie(nuevoNumSerie);
                 venta.setFechaVenta(fechaVenta);
                 venta.setMonto(total);
                 venta.setIdCliente(idCliente);
@@ -190,13 +201,13 @@ public class SvVenta extends HttpServlet {
                     detalleVentaDAO.create(detalleVenta);
                 }
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                 total = 0.0;
+                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                 return;
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                 total = 0.0;
+                response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                 return;
             }
             request.getRequestDispatcher("View/nuevaVenta.jsp").forward(request, response);
@@ -207,5 +218,32 @@ public class SvVenta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private double calcularTotal(List<DetalleVenta> listaDetalle) {
+        double total = 0.0;
+        for (DetalleVenta detalle : listaDetalle) {
+            total += detalle.getSubtotal();
+        }
+        return total;
+    }
+
+    private void eliminarDetalle(int detalleId, HttpServletRequest request) {
+        // Eliminar el detalle de la lista
+        Iterator<DetalleVenta> iterator = listaDetalle.iterator();
+        while (iterator.hasNext()) {
+            DetalleVenta detalle = iterator.next();
+            if (detalle.getIdDetalleVenta() == detalleId) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        // Recalcular el total
+        total = calcularTotal(listaDetalle);
+
+        // Actualizar los atributos en el request
+        request.setAttribute("total", total);
+        request.setAttribute("listaDetalle", listaDetalle);
+    }
 
 }

@@ -230,9 +230,9 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 (2, 50.00, 100.00, 34, 7),
 (4, 34.00, 136.00, 35, 7),
 -- Detalles de Venta Venta 8
-(4, 30.00, 120.00, 36, 8),
-(3, 44.00, 132.00, 31, 8),
-(2, 54.00, 108.00, 34, 8),
+(4, 30.00, 120.00, 29, 8),
+(3, 44.00, 132.00, 27, 8),
+(2, 54.00, 108.00, 25, 8),
 (5, 29.00, 145.00, 1, 8),
 (1, 62.00, 62.00, 2, 8),
 -- Detalles de Venta Venta 9
@@ -274,17 +274,17 @@ INSERT INTO detalle_venta (cantidad, precio_venta, subtotal, id_producto, id_ven
 -- Detalles de Venta Venta 15
 (2, 54.00, 108.00, 33, 15),
 (5, 29.00, 145.00, 34, 15),
-(1, 67.00, 67.00, 35, 15),
-(4, 31.00, 124.00, 3, 15),
-(3, 45.00, 135.00, 32, 15);
+(1, 67.00, 67.00, 30, 15),
+(4, 31.00, 124.00, 36, 15),
+(3, 45.00, 135.00, 20, 15);
 
 INSERT INTO servicio (num_serie, problema, descripcion, costo, total, fecha_recepcion, fecha_entrega, estado, id_cliente, id_empleado)
 VALUES
-    ('1234567890', 'Pantalla rota', 'Reparación de la pantalla de iPhone 11', 80.00, 100.00, '2023-11-01', '2023-11-03', 'En proceso', 1, 1),
-    ('9876543210', 'Batería agotada', 'Reemplazo de batería de Samsung Galaxy S20', 35.00, 50.00, '2023-11-02', '2023-11-04', 'En proceso', 2, 1),
-    ('5678901234', 'Altavoz defectuoso', 'Reparación de altavoz para iPhone 8', 18.00, 25.00, '2023-11-03', '2023-11-05', 'En proceso', 3, 1),
-    ('3456789012', 'Cámara frontal dañada', 'Sustitución de cámara frontal de Huawei P30', 30.00, 45.00, '2023-11-04', '2023-11-06', 'En proceso', 4, 1),
-    ('4567890123', 'Botón de inicio no funciona', 'Reparación del botón de inicio de Samsung Galaxy A50', 7.00, 12.00, '2023-11-05', '2023-11-07', 'En proceso', 5, 1);
+    ('S0001', 'Pantalla rota', 'Reparación de la pantalla de iPhone 11', 80.00, 100.00, '2023-11-01', '2023-11-03', 'En proceso', 1, 1),
+    ('S0002', 'Batería agotada', 'Reemplazo de batería de Samsung Galaxy S20', 35.00, 50.00, '2023-11-02', '2023-11-04', 'En proceso', 2, 1),
+    ('S0003', 'Altavoz defectuoso', 'Reparación de altavoz para iPhone 8', 18.00, 25.00, '2023-11-03', '2023-11-05', 'En proceso', 3, 1),
+    ('S0004', 'Cámara frontal dañada', 'Sustitución de cámara frontal de Huawei P30', 30.00, 45.00, '2023-11-04', '2023-11-06', 'En proceso', 4, 1),
+    ('S0005', 'Botón de inicio no funciona', 'Reparación del botón de inicio de Samsung Galaxy A50', 7.00, 12.00, '2023-11-05', '2023-11-07', 'En proceso', 5, 1);
 
 INSERT INTO detalle_servicio (cantidad, precio_venta, subtotal, id_producto, id_servicio)
 VALUES

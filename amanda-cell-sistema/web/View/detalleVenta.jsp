@@ -43,9 +43,13 @@
                         <div class="row mb-4">
                             <div class="col-6 col-md-6">
                                 <%
-                                    String nombreEmpleado = (String) session.getAttribute("nombres");
+                                    int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
+                                    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                                    Empleado empleado = new Empleado();
+                                    empleado.setIdEmpleado(idEmpleado);
 
-                                    if (nombreEmpleado != null) {
+                                    if (empleadoDAO.search(empleado)) {
+                                        String nombreEmpleado = empleado.getNombres();
                                 %>
                                 <div>
                                     <h6 class="mb-2">Empleado: <strong><%= nombreEmpleado%></strong></h6>
@@ -83,7 +87,6 @@
                                     }
                                 %>
                             </div>
-
                         </div>
 
                         <div class="table-responsive-sm">

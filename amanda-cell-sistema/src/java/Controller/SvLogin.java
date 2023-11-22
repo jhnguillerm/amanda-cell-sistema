@@ -27,19 +27,19 @@ public class SvLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        
+
         String accion = request.getParameter("accion");
-        
+
         if (accion != null && accion.equals("login")) {
             String usuario = request.getParameter("txtUsuario");
             String password = request.getParameter("txtPassword");
             String encryptedPassword = empleadoDAO.getMD5(password);
-            
+
             empleado = empleadoDAO.login(usuario, encryptedPassword);
-            
-            if (empleado.getUsername() != null) {
+
+            if (empleado != null && empleado.getUsername() != null) {
                 session.setAttribute("usuario", empleado.getUsername());
                 session.setAttribute("nombres", empleado.getNombres());
                 session.setAttribute("idEmpleado", empleado.getIdEmpleado());
@@ -52,8 +52,7 @@ public class SvLogin extends HttpServlet {
         } else if (accion.equals("salir")) {
             session.invalidate();
             response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
-        else {
+        } else {
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }

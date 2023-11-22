@@ -16,7 +16,7 @@
                    data-bs-toggle="dropdown" aria-expanded="false">
 
                     <span class="align-middle px-1">${sessionScope.nombres}</span>
-                    <img src="../images/profile.webp" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img src="../images/profile.webp" alt="" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
                     <li>
