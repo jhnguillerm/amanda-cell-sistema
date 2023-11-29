@@ -94,7 +94,6 @@
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Precio Compra</th>
@@ -121,7 +120,6 @@
                                     boolean found = proveedorDAO.search(proveedor);
                             %>
                             <tr>
-                                <td class="align-middle td_id_producto"><%=producto.getIdProducto()%></td>
                                 <td class="align-middle td_nombre"><%=producto.getNombre()%></td>
                                 <td class="align-middle td_descripcion"><%=producto.getDescripcion()%></td>
                                 <td class="align-middle td_precio_compra"><%=producto.getPrecioCompra()%></td>

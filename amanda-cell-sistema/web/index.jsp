@@ -50,7 +50,6 @@
                                         <input type="text" name="txtUsuario" id="txtUsuario" class="form-control">
                                         <label class="form-label" for="txtUsuario">Usuario</label>
                                     </div>
-
                                     <!-- Password input -->
                                     <div class="form-outline mb-4">
                                         <input type="password" name="txtPassword" id="txtPassword" class="form-control">

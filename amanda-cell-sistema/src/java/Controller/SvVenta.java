@@ -89,6 +89,7 @@ public class SvVenta extends HttpServlet {
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
+
             } else if (action.equals("searchProducto")) {
 
                 idProducto = Integer.parseInt(request.getParameter("cbProducto"));
@@ -211,6 +212,8 @@ public class SvVenta extends HttpServlet {
                 return;
             }
             request.getRequestDispatcher("View/nuevaVenta.jsp").forward(request, response);
+            //response.sendRedirect(request.getContextPath() + "/View/nuevaVenta.jsp");
+
         }
     }
 

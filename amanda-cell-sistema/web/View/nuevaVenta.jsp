@@ -211,49 +211,49 @@
         crossorigin="anonymous"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
         <script>
-    $(document).ready(function () {
-        $(".btn-close").on("click", function () {
-            var detalleId = $(this).data("detalle-id");
+            $(document).ready(function () {
+                $(".btn-close").on("click", function () {
+                    var detalleId = $(this).data("detalle-id");
 
-            // Eliminar la fila de la tabla
-            $("#tablaVenta").find('[data-detalle-id="' + detalleId + '"]').closest('tr').remove();
+                    // Eliminar la fila de la tabla
+                    $("#tablaVenta").find('[data-detalle-id="' + detalleId + '"]').closest('tr').remove();
 
-            // Recalcular el total
-            recalcularTotal();
+                    // Recalcular el total
+                    recalcularTotal();
 
-            // Luego, realizar la eliminación en el lado del servidor
-            // (enviar una solicitud al servlet)
-            eliminarDetalle(detalleId);
-        });
+                    // Luego, realizar la eliminación en el lado del servidor
+                    // (enviar una solicitud al servlet)
+                    eliminarDetalle(detalleId);
+                });
 
-        function recalcularTotal() {
-            var total = 0;
-            $(".table tbody tr").each(function () {
-                var subtotal = parseFloat($(this).find("td:eq(3)").text().replace("S/.", ""));
-                total += subtotal;
-            });
-            $("#txtTotal").val(total.toFixed(2));
-        }
+                function recalcularTotal() {
+                    var total = 0;
+                    $(".table tbody tr").each(function () {
+                        var subtotal = parseFloat($(this).find("td:eq(3)").text().replace("S/.", ""));
+                        total += subtotal;
+                    });
+                    $("#txtTotal").val(total.toFixed(2));
+                }
 
-        function eliminarDetalle(detalleId) {
-            // Realizar la eliminación en el lado del servidor
-            $.ajax({
-                type: "POST",
-                url: "/amanda-cell-sistema/SvVenta",
-                data: { action: "eliminarDetalle", detalleId: detalleId },
-                success: function (response) {
-                    // Puedes decidir si deseas recargar toda la página o solo las partes necesarias
-                    location.reload(); // Recarga toda la página
-                },
-                error: function (error) {
-                    console.error("Error al eliminar el detalle: ", error);
+                function eliminarDetalle(detalleId) {
+                    // Realizar la eliminación en el lado del servidor
+                    $.ajax({
+                        type: "POST",
+                        url: "/amanda-cell-sistema/SvVenta",
+                        data: {action: "eliminarDetalle", detalleId: detalleId},
+                        success: function (response) {
+                            // Puedes decidir si deseas recargar toda la página o solo las partes necesarias
+                            location.reload(); // Recarga toda la página
+                        },
+                        error: function (error) {
+                            console.error("Error al eliminar el detalle: ", error);
+                        }
+                    });
                 }
             });
-        }
-    });
-    var total = parseFloat("${total}").toFixed(2);
-    $("#txtTotal").val(total);
-</script>
+            var total = parseFloat("${total}").toFixed(2);
+            $("#txtTotal").val(total);
+        </script>
 
     </body>
 </html>
