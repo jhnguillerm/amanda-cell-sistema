@@ -58,7 +58,7 @@ public class AuthenticationFilter implements Filter {
         // Obtener la URL solicitada
         String requestURI = httpRequest.getRequestURI();
         
-        if (isLoggedIn || requestURI.endsWith("index.jsp") || requestURI.endsWith("SvLogin")) {
+        if (isLoggedIn || requestURI.endsWith("index.jsp") || requestURI.endsWith("SvLogin") || requestURI.endsWith("login.jpg") ) {
             // Si el usuario está autenticado o está accediendo a la página de inicio o al servlet de inicio de sesión, permitir el acceso
             chain.doFilter(request, response);
         } else {
