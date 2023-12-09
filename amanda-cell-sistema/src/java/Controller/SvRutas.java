@@ -20,7 +20,8 @@ public class SvRutas extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                     break;
                 case "nuevaVenta":
-                    request.getRequestDispatcher("View/nuevaVenta.jsp").forward(request, response);
+                    //request.getRequestDispatcher("SvVenta").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/View/nuevaVenta.jsp");
                     break;
                 case "servicio":
                     response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");

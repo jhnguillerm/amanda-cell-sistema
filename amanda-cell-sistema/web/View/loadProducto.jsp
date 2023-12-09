@@ -53,15 +53,15 @@
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre del producto">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre">
                                         </div>
                                     </div>
                                     <!-- Stock - Tipo -->
                                     <div class="row mb-3">
                                         <div class="col-4"><label class="form-label" for="txtStock">Stock</label>
-                                            <input type="number" class="form-control" name="txtStock" id="txtStock" placeholder="Stock"></div>
+                                            <input type="number" class="form-control" name="txtStock" id="txtStock"></div>
                                         <div class="col-8"><label class="form-label" for="txtTipo">Tipo</label>
-                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo" placeholder="Tipo"></div>
+                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo"></div>
                                     </div>
                                     <!-- Description -->
                                     <div>
@@ -97,12 +97,12 @@
                                     <!-- Precio de compra -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioCompra">Precio de compra</label>
-                                        <input type="text" class="form-control" id="txtPrecioCompra" placeholder="Compra" name="txtPrecioCompra">
+                                        <input type="number" class="form-control" id="txtPrecioCompra" name="txtPrecioCompra" step="any">
                                     </div>
                                     <!-- Precio de venta -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioVenta">Precio de venta</label>
-                                        <input type="text" class="form-control" id="txtPrecioVenta" placeholder="Venta" name="txtPrecioVenta">
+                                        <input type="number" class="form-control" id="txtPrecioVenta" name="txtPrecioVenta" step="any">
                                     </div>
                                 </div>
                             </div>
@@ -113,14 +113,13 @@
                                     <h5 class="card-title mb-0">Proveedores</h5>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Vendor -->
                                     <div class="mb-3 col ecommerce-select2-dropdown">
                                         <div class="position-relative">
                                             <label class="form-label mb-1 d-flex justify-content-between align-items-center">
                                                 <span>Proveedor</span><a href="proveedor.jsp" class="fw-medium">Agregar proveedor</a>
                                             </label>
                                             <select id="cbProveedor" class="form-select" name="cbProveedor">
-                                                <option value="">Selecciona el proveedor</option>
+                                                <option disabled value="">Selecciona el proveedor</option>
                                                 <%
                                                     ProveedorDAO proveedorDAO = new ProveedorDAO();
                                                     List<Proveedor> listaProveedores = proveedorDAO.toList();

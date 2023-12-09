@@ -35,7 +35,6 @@
                     <table id="tablaProveedor" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Nombre</th>
                                 <th>Dirección</th>
                                 <th>Número</th>
@@ -54,7 +53,6 @@
                                     proveedor = iterador.next();
                             %>
                             <tr>
-                                <td class="align-middle td_id_proveedor"><%=proveedor.getIdProveedor()%></td>
                                 <td class="align-middletd_nombre"><%=proveedor.getNombre()%></td>
                                 <td class="align-middle td_direccion"><%=proveedor.getDireccion()%></td>
                                 <td class="align-middle td_numero"><%=proveedor.getNumero()%></td>
@@ -108,7 +106,7 @@
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#tablaProducto').DataTable({
+                $('#tablaProveedor').DataTable({
                     "paging": true,
                     "lengthMenu": [6, 10, 25, 50],
                     "searching": true

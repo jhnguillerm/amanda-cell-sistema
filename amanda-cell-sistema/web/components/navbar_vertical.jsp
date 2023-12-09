@@ -27,7 +27,7 @@
                         <a href="/amanda-cell-sistema/SvRutas?action=venta">Lista de ventas</a>
                     </li>
                     <li>
-                        <a href="nuevaVenta.jsp">Nueva venta</a>
+                        <a href="/amanda-cell-sistema/SvRutas?action=nuevaVenta">Nueva venta</a>
                     </li>
                 </ul>
             </li>

@@ -120,7 +120,10 @@
                                     boolean found = proveedorDAO.search(proveedor);
                             %>
                             <tr>
-                                <td class="align-middle td_nombre"><%=producto.getNombre()%></td>
+                                <td class="align-middle td_nombre d-flex align-items-center">
+                                    <img src="../images/no-photo-product.jpg" width="40" height="40" alt="alt"/>
+                                    <%=producto.getNombre()%>
+                                </td>
                                 <td class="align-middle td_descripcion"><%=producto.getDescripcion()%></td>
                                 <td class="align-middle td_precio_compra"><%=producto.getPrecioCompra()%></td>
                                 <td class="align-middle td_precio_venta"><%=producto.getPrecioVenta()%></td>
