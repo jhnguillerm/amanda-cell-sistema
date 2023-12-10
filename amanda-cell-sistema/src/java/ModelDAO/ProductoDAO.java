@@ -148,6 +148,8 @@ public class ProductoDAO extends ConexionDB {
             rs = ps.executeQuery();
 
             if (rs.next()) {
+                producto = new Producto();
+                
                 producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));

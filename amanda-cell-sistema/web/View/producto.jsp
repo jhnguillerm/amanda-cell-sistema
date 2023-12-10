@@ -1,4 +1,3 @@
-<%@page import="ModelDAO.ProductoImagenDAO"%>
 <%@page import="Model.Empleado"%>
 <%@page import="ModelDAO.ProveedorDAO"%>
 <%@page import="Model.Proveedor"%>
@@ -89,7 +88,7 @@
                         </div>
                         <div class="col-auto">
                             <!-- Button - Agregar Producto -->
-                            <a href="loadProducto.jsp?modo=agregar" class="btn btn-primary">Agregar Producto</a>
+                            <a href="newProducto.jsp" class="btn btn-primary">Agregar Producto</a>
                         </div>
                     </div>
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
@@ -143,10 +142,14 @@
                                 <td class="align-middle td_tipo"><%=producto.getTipo()%></td>
                                 <td class="align-middle td_proveedor"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
                                 <td class="align-middle">
-                                    <!-- Boton para actualizar un producto -->
-                                    <a class="align-middle" href="loadProducto.jsp?idProducto=<%= producto.getIdProducto()%>&nombre=<%= producto.getNombre()%>&descripcion=<%= producto.getDescripcion()%>&precioCompra=<%= producto.getPrecioCompra()%>&precioVenta=<%= producto.getPrecioVenta()%>&stock=<%= producto.getStock()%>&tipo=<%= producto.getTipo()%>&idProveedor=<%= producto.getIdProveedor()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
-                                    <!-- Boton para actualizar un producto -->
-                                    <a class="align-middle" href="editarProducto.jsp?idProducto=<%=producto.getIdProducto()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <!-- Boton para ver un producto -->
+                                    <a class="align-middle" href="viewProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">
+                                        <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i>
+                                    </a>
+                                        <!-- Boton para actualizar un producto -->
+                                    <a class="align-middle" href="editarProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">
+                                        <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i>
+                                    </a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar-producto" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-producto" data-nombre="<%= producto.getNombre()%>" data-id="<%= producto.getIdProducto()%>"></button>
 

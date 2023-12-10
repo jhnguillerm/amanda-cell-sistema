@@ -111,7 +111,7 @@
                                                 <span>Proveedor</span><a href="proveedor.jsp" class="fw-medium">Agregar proveedor</a>
                                             </label>
                                             <select id="cbProveedor" class="form-select" name="cbProveedor">
-                                                <option disabled value="">Selecciona el proveedor</option>
+                                                <option selected disabled value="">Selecciona el proveedor</option>
                                                 <%
                                                     ProveedorDAO proveedorDAO = new ProveedorDAO();
                                                     List<Proveedor> listaProveedores = proveedorDAO.toList();

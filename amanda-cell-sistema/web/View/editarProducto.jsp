@@ -5,6 +5,12 @@
 <%@page import="java.util.List"%>
 <%@page import="ModelDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String idProductoUrl = request.getParameter("idProductoUrl");
+    int idProducto = (idProductoUrl != null && !idProductoUrl.isEmpty()) ? Integer.parseInt(idProductoUrl) : 0;
+    ProductoDAO productoDAO = new ProductoDAO();
+    Producto producto = productoDAO.getProductoById(idProducto);
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,7 +29,7 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Agregar / Actualizar producto</h4>
+                            <h4 class="mb-1 mt-3">Actualizar producto</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
                             <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar Producto</button>
@@ -42,25 +48,25 @@
                                     <div class="row mb-3">
                                         <div class="col-4">
                                             <label class="form-label" for="txtIdProducto">ID</label>
-                                            <input type="text" class="form-control" id="txtIdProducto" disabled>
-                                            <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" class="form-control">
+                                            <input type="text" class="form-control" id="txtIdProducto" value="<%=producto.getIdProducto()%>" disabled>
+                                            <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" value="<%=producto.getIdProducto()%>" class="form-control">
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<%=producto.getNombre()%>">
                                         </div>
                                     </div>
                                     <!-- Stock - Tipo -->
                                     <div class="row mb-3">
                                         <div class="col-4"><label class="form-label" for="txtStock">Stock</label>
-                                            <input type="number" class="form-control" name="txtStock" id="txtStock"></div>
+                                            <input type="number" class="form-control" name="txtStock" id="txtStock" value="<%=producto.getStock()%>"></div>
                                         <div class="col-8"><label class="form-label" for="txtTipo">Tipo</label>
-                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo"></div>
+                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo" value="<%=producto.getTipo()%>"></div>
                                     </div>
                                     <!-- Description -->
                                     <div>
                                         <label class="form-label" for="areaDescripcion">Descripción</label>
-                                        <textarea class="form-control" name="areaDescripcion" id="areaDescripcion" rows="4"></textarea>
+                                        <textarea class="form-control" name="areaDescripcion" id="areaDescripcion" rows="4"><%=producto.getDescripcion()%></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +97,12 @@
                                     <!-- Precio de compra -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioCompra">Precio de compra</label>
-                                        <input type="number" class="form-control" id="txtPrecioCompra" name="txtPrecioCompra" step="any">
+                                        <input type="number" class="form-control" id="txtPrecioCompra" name="txtPrecioCompra" step="any" value="<%=producto.getPrecioCompra()%>">
                                     </div>
                                     <!-- Precio de venta -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioVenta">Precio de venta</label>
-                                        <input type="number" class="form-control" id="txtPrecioVenta" name="txtPrecioVenta" step="any">
+                                        <input type="number" class="form-control" id="txtPrecioVenta" name="txtPrecioVenta" step="any" value="<%=producto.getPrecioVenta()%>">
                                     </div>
                                 </div>
                             </div>
@@ -117,9 +123,12 @@
                                                 <%
                                                     ProveedorDAO proveedorDAO = new ProveedorDAO();
                                                     List<Proveedor> listaProveedores = proveedorDAO.toList();
+                                                    int idProveedorProducto = producto.getIdProveedor(); // Obtén el ID del proveedor asociado al producto
                                                     for (Proveedor proveedor : listaProveedores) {
+                                                        // Verifica si el proveedor es el mismo que el asociado al producto
+                                                        boolean isSelected = (idProveedorProducto == proveedor.getIdProveedor());
                                                 %>
-                                                <option value="<%= proveedor.getIdProveedor()%>"><%= proveedor.getNombre()%></option>
+                                                <option value="<%= proveedor.getIdProveedor()%>" <%= isSelected ? "selected" : ""%>><%= proveedor.getNombre()%></option>
                                                 <%
                                                     }
                                                 %>
@@ -155,33 +164,6 @@
         </script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Obtener parámetros de la URL
-                var params = new URLSearchParams(window.location.search);
-
-                document.getElementById("txtIdProducto").value = params.get("idProducto");
-                document.getElementById("txtIdProducto-hidden").value = params.get("idProducto");
-                document.getElementById("txtNombre").value = params.get("nombre");
-                document.getElementById("areaDescripcion").value = params.get("descripcion");
-                document.getElementById("txtPrecioCompra").value = params.get("precioCompra");
-                document.getElementById("txtPrecioVenta").value = params.get("precioVenta");
-                document.getElementById("txtStock").value = params.get("stock");
-                document.getElementById("txtTipo").value = params.get("tipo");
-                document.getElementById("cbProveedor").value = params.get("idProveedor");
-
-                const modoEditar = params.get("modo");
-                if (modoEditar === "editar") {
-                    $("#btn-agregar").hide();
-                }
-                
-                const modoAgregar = params.get("modo");
-                if (modoEditar === "agregar") {
-                    $("#btn-actualizar").hide();
-                }
-            });
-        </script>
-
     </body>
 
 </html>
