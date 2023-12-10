@@ -7,17 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <jsp:include page = "../components/head.jsp"/>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
             <jsp:include page = "../components/navbar_vertical.jsp"/>
             <!-- / Nav vertical -->
-
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
@@ -29,12 +26,9 @@
                             <h4 class="mb-1 mt-3">Agregar / Actualizar producto</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
-                            <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar Producto</button>
                             <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar Producto</button>
                         </div>
-
                     </div>
-
                     <div class="row">
                         <!-- Primera columna-->
                         <div class="col-12 col-lg-8">
@@ -180,7 +174,7 @@
                 if (modoEditar === "editar") {
                     $("#btn-agregar").hide();
                 }
-
+                
                 const modoAgregar = params.get("modo");
                 if (modoEditar === "agregar") {
                     $("#btn-actualizar").hide();

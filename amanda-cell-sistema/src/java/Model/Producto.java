@@ -1,5 +1,7 @@
-
 package Model;
+
+import java.io.InputStream;
+import java.time.LocalDate;
 
 public class Producto {
     
@@ -10,12 +12,14 @@ public class Producto {
     private double precioVenta;
     private int stock;
     private String tipo;
+    private InputStream imagen;
+    private LocalDate fecha;
     private int idProveedor;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String descripcion, double precioCompra, double precioVenta, int stock, String tipo, int idProveedor) {
+    public Producto(int idProducto, String nombre, String descripcion, double precioCompra, double precioVenta, int stock, String tipo, InputStream imagen, LocalDate fecha, int idProveedor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -23,6 +27,8 @@ public class Producto {
         this.precioVenta = precioVenta;
         this.stock = stock;
         this.tipo = tipo;
+        this.imagen = imagen;
+        this.fecha = fecha;
         this.idProveedor = idProveedor;
     }
 
@@ -82,6 +88,22 @@ public class Producto {
         this.tipo = tipo;
     }
 
+    public InputStream getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(InputStream imagen) {
+        this.imagen = imagen;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     public int getIdProveedor() {
         return idProveedor;
     }
@@ -89,5 +111,4 @@ public class Producto {
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
     }
-    
 }

@@ -77,6 +77,7 @@ public class SvVenta extends HttpServlet {
             request.setAttribute("numSerieVenta", nuevoNumSerie);
             request.setAttribute("numSerie", numSerie);
 
+            // BUSCAR CLIENTE ==============================================================================
             if (action.equals("searchCliente")) {
                 idCliente = Integer.parseInt(request.getParameter("cbCliente"));
 
@@ -90,6 +91,7 @@ public class SvVenta extends HttpServlet {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
 
+                // BUSCAR PRODUCTO ==============================================================================
             } else if (action.equals("searchProducto")) {
 
                 idProducto = Integer.parseInt(request.getParameter("cbProducto"));
@@ -103,6 +105,7 @@ public class SvVenta extends HttpServlet {
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
+                // AGREGAR PRODUCTO A LA TABLA ==============================================================================
             } else if (action.equals("agregarTabla")) {
                 total = 0;
 
@@ -148,11 +151,12 @@ public class SvVenta extends HttpServlet {
                 request.setAttribute("total", total);
                 request.setAttribute("listaDetalle", listaDetalle);
 
-                //ELIMINAR DETALLE
+                // ELIMINAR DETALLE ==============================================================================
             } else if (action.equals("eliminarDetalle")) {
                 int detalleId = Integer.parseInt(request.getParameter("detalleId"));
                 eliminarDetalle(detalleId, request);
 
+                // CREATE ==============================================================================
             } else if (action.equals("create")) {
                 //Actualizar stock
                 for (int i = 0; i < listaDetalle.size(); i++) {

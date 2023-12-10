@@ -1,37 +1,33 @@
 package ModelDAO;
 
 import Config.ConexionDB;
-import Interface.CRUD;
 import Model.Producto;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
 
-public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
+public class ProductoDAO extends ConexionDB {
 
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    Producto producto = new Producto();
 
-    public ProductoDAO() {
-    }
-
-    @Override
     public List toList() {
-        ArrayList<Producto> list = new ArrayList<>();
+        List<Producto> list = new ArrayList<>();
         String sql = "SELECT * FROM producto";
-
         try {
             connection = conexionDB.getConnection();
-
             ps = connection.prepareStatement(sql);
-
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 Producto producto = new Producto();
 
@@ -42,6 +38,8 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
                 producto.setPrecioVenta(rs.getDouble("precio_venta"));
                 producto.setStock(rs.getInt("stock"));
                 producto.setTipo(rs.getString("tipo"));
+                producto.setFecha(rs.getObject("fecha", LocalDate.class));
+                producto.setImagen(rs.getBinaryStream("imagen"));
                 producto.setIdProveedor(rs.getInt("id_proveedor"));
 
                 list.add(producto);
@@ -49,54 +47,39 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
         } catch (Exception e) {
             System.out.println("Producto - toList: " + e);
         }
-
         return list;
     }
 
-    @Override
-    public boolean create(Producto entidad) {
-        String sql = "INSERT INTO producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+    public void toListImagen(int idProducto, HttpServletResponse response) {
+        String sql = "SELECT * FROM producto WHERE id_producto = " + idProducto;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
+        response.setContentType("image/*");
         try {
-            Connection connection = conexionDB.getConnection();
-
-            Producto producto = (Producto) entidad;
-
+            outputStream = response.getOutputStream();
+            connection = conexionDB.getConnection();
             ps = connection.prepareStatement(sql);
-
-            ps.setString(1, producto.getNombre());
-            ps.setString(2, producto.getDescripcion());
-            ps.setDouble(3, producto.getPrecioCompra());
-            ps.setDouble(4, producto.getPrecioVenta());
-            ps.setInt(5, producto.getStock());
-            ps.setString(6, producto.getTipo());
-            ps.setInt(7, producto.getIdProveedor());
-
-            ps.execute();
-
-            System.out.println("Ser agregó con exito.");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Producto - create: " + e);
-            return false;
-        } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                inputStream = rs.getBinaryStream("imagen");
             }
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            bufferedOutputStream = new BufferedOutputStream(outputStream);
+            int i = 0;
+            while ((i = bufferedInputStream.read()) != -1) {
+                bufferedOutputStream.write(i);
+            }
+        } catch (Exception e) {
+            System.out.println("Producto Imagen - toListImagen: " + e);
         }
     }
 
-    @Override
-    public boolean update(Producto entidad) {
-        String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, id_proveedor = ? WHERE id_producto = ?";
-
+    public void create(Producto producto) {
+        String sql = "INSERT INTO producto (nombre, descripcion, precio_compra, precio_venta, stock, tipo, fecha, imagen, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = conexionDB.getConnection();
-
-            Producto producto = (Producto) entidad;
-
             ps = connection.prepareStatement(sql);
 
             ps.setString(1, producto.getNombre());
@@ -105,22 +88,83 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
             ps.setDouble(4, producto.getPrecioVenta());
             ps.setInt(5, producto.getStock());
             ps.setString(6, producto.getTipo());
-            ps.setInt(7, producto.getIdProveedor());
-            ps.setInt(8, producto.getIdProducto());
+            ps.setDate(7, java.sql.Date.valueOf(LocalDate.now()));
+            ps.setBlob(8, producto.getImagen());
+            ps.setInt(9, producto.getIdProveedor());
 
-            ps.execute();
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Producto - create: " + e);
+        } finally {
+            closeResources();
+        }
+    }
 
-            return true;
+    public void update(Producto producto) {
+        String sql = "UPDATE producto SET nombre = ?, descripcion = ?, precio_compra = ?, precio_venta = ?, stock = ?, tipo = ?, imagen = ?, id_proveedor = ? WHERE id_producto = ?";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getDescripcion());
+            ps.setDouble(3, producto.getPrecioCompra());
+            ps.setDouble(4, producto.getPrecioVenta());
+            ps.setInt(5, producto.getStock());
+            ps.setString(6, producto.getTipo());
+            ps.setBlob(7, producto.getImagen());
+            ps.setInt(8, producto.getIdProveedor());
+            ps.setInt(9, producto.getIdProducto());
+
+            ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Producto - update: " + e);
-            return false;
         } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            closeResources();
         }
+    }
+
+    public void delete(Producto producto) {
+        String sql = "DELETE FROM producto WHERE id_producto = ?";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, producto.getIdProducto());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Producto - delete: " + e);
+        } finally {
+            closeResources();
+        }
+    }
+
+    public Producto getProductoById(int idProducto) {
+        String sql = "SELECT * FROM producto WHERE id_producto = ?";
+        Producto producto = null;
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, idProducto);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecioCompra(Double.parseDouble(rs.getString("precio_compra")));
+                producto.setPrecioVenta(Double.parseDouble(rs.getString("precio_venta")));
+                producto.setStock(Integer.parseInt(rs.getString("stock")));
+                producto.setTipo(rs.getString("tipo"));
+                producto.setFecha(rs.getObject("fecha", LocalDate.class));
+                producto.setImagen(rs.getBinaryStream("imagen"));
+                producto.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
+            }
+        } catch (Exception e) {
+            System.out.println("Producto - getProductoById: " + e);
+        } finally {
+            closeResources();
+        }
+        return producto;
     }
 
     public boolean updateStock(int idProducto, int stock) {
@@ -138,69 +182,6 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
             return true;
         } catch (Exception e) {
             System.out.println("Producto - updateStock: " + e);
-            return false;
-        } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    }
-
-    @Override
-    public boolean delete(Producto entidad) {
-        String sql = "DELETE FROM producto WHERE id_producto = ?";
-
-        try {
-            connection = conexionDB.getConnection();
-
-            Producto producto = (Producto) entidad;
-
-            ps = connection.prepareStatement(sql);
-
-            ps.setInt(1, producto.getIdProducto());
-
-            ps.execute();
-
-            return true;
-        } catch (Exception e) {
-            System.out.println("Producto - delete: " + e);
-            return false;
-        } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    }
-
-    @Override
-    public boolean search(Producto entidad) {
-        String sql = "SELECT * FROM producto WHERE id_producto = ?";
-        try {
-            connection = conexionDB.getConnection();
-            Producto producto = (Producto) entidad;
-            ps = connection.prepareStatement(sql);
-            ps.setInt(1, producto.getIdProducto());
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
-                producto.setNombre(rs.getString("nombre"));
-                producto.setDescripcion(rs.getString("descripcion"));
-                producto.setPrecioCompra(Double.parseDouble(rs.getString("precio_compra")));
-                producto.setPrecioVenta(Double.parseDouble(rs.getString("precio_venta")));
-                producto.setStock(Integer.parseInt(rs.getString("stock")));
-                producto.setTipo(rs.getString("tipo"));
-                producto.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
-
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            System.out.println("Producto - search: " + e);
             return false;
         } finally {
             try {
@@ -254,7 +235,7 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
         }
         return totalStock;
     }
-    
+
     public double totalPrecioCompra() {
         double total = 0.0;
         String sql = "SELECT SUM(precio_compra) AS total_compra FROM producto";
@@ -277,5 +258,76 @@ public class ProductoDAO extends ConexionDB implements CRUD<Producto> {
         return total;
     }
 
+    public int obtenerSiguienteId() {
+        String sql = "SELECT MAX(id_producto) AS max_id FROM producto";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int maxId = rs.getInt("max_id");
+                return maxId + 1;
+            }
+        } catch (Exception e) {
+            System.out.println("Producto - obtenerSiguienteId: " + e);
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return 0;
+    }
+    
+    public boolean search(Producto entidad) {
+        String sql = "SELECT * FROM producto WHERE id_producto = ?";
+        try {
+            connection = conexionDB.getConnection();
+            Producto producto = (Producto) entidad;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, producto.getIdProducto());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecioCompra(Double.parseDouble(rs.getString("precio_compra")));
+                producto.setPrecioVenta(Double.parseDouble(rs.getString("precio_venta")));
+                producto.setStock(Integer.parseInt(rs.getString("stock")));
+                producto.setTipo(rs.getString("tipo"));
+                producto.setIdProveedor(Integer.parseInt(rs.getString("id_proveedor")));
+
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Producto - search: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    private void closeResources() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar recursos: " + e);
+        }
+    }
 
 }

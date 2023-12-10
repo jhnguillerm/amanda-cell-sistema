@@ -7,17 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <jsp:include page = "../components/head.jsp"/>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
             <jsp:include page = "../components/navbar_vertical.jsp"/>
             <!-- / Nav vertical -->
-
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
@@ -26,15 +23,12 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Agregar / Actualizar producto</h4>
+                            <h4 class="mb-1 mt-3">Agregar producto</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
                             <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar Producto</button>
-                            <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar Producto</button>
                         </div>
-
                     </div>
-
                     <div class="row">
                         <!-- Primera columna-->
                         <div class="col-12 col-lg-8">
@@ -46,14 +40,12 @@
                                 <div class="card-body">
                                     <!-- Nombre -->
                                     <div class="row mb-3">
-                                        <div class="col-4">
-                                            <label class="form-label" for="txtIdProducto">ID</label>
-                                            <input type="text" class="form-control" id="txtIdProducto" disabled>
-                                            <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" class="form-control">
-                                        </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombre">Nombre</label>
                                             <input type="text" class="form-control" name="txtNombre" id="txtNombre">
+                                        </div>
+                                        <div class="col-4">
+                                            <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" class="form-control">
                                         </div>
                                     </div>
                                     <!-- Stock - Tipo -->
@@ -180,7 +172,7 @@
                 if (modoEditar === "editar") {
                     $("#btn-agregar").hide();
                 }
-
+                
                 const modoAgregar = params.get("modo");
                 if (modoEditar === "agregar") {
                     $("#btn-actualizar").hide();

@@ -1,3 +1,4 @@
+<%@page import="ModelDAO.ProductoImagenDAO"%>
 <%@page import="Model.Empleado"%>
 <%@page import="ModelDAO.ProveedorDAO"%>
 <%@page import="Model.Proveedor"%>
@@ -48,7 +49,7 @@
                                         <div>
                                             <h6 class="mb-2">Cantidad productos</h6>
 
-                                            <h4 id="productCount"><%= cantidad %></h4>
+                                            <h4 id="productCount"><%= cantidad%></h4>
                                             <p class="mb-0 text-muted">-</p>
                                         </div>
                                     </div>
@@ -57,7 +58,7 @@
                                     <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                                         <div>
                                             <h6 class="mb-2">Total stock</h6>
-                                            <h4 class="mb-2"><%= totalStock %></h4>
+                                            <h4 class="mb-2"><%= totalStock%></h4>
                                             <p class="mb-0 text-muted">-</p>
                                         </div>
                                         <hr class="d-none d-sm-block d-lg-none">
@@ -67,7 +68,7 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h6 class="mb-2">Total</h6>
-                                            <h4 class="mb-2">S/<%= totalCompra %></h4>
+                                            <h4 class="mb-2">S/<%= totalCompra%></h4>
                                             <p class="mb-0"><span class="text-muted me-2">-</span></p>
                                         </div>
                                         <div class="avatar">
@@ -121,7 +122,18 @@
                             %>
                             <tr>
                                 <td class="align-middle td_nombre d-flex align-items-center">
-                                    <img src="../images/no-photo-product.jpg" width="40" height="40" alt="alt"/>
+                                    <%
+                                        String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
+                                        if (producto.getImagen() != null) {
+                                    %>
+                                    <img src="<%= imagePath%>" alt="no-photo" width="50px" height="50px" />
+                                    <%
+                                    } else {
+                                    %>
+                                    <img src="../images/no-photo-product.jpg" alt="no-photo" width="50px" height="50px" />
+                                    <%
+                                        }
+                                    %>
                                     <%=producto.getNombre()%>
                                 </td>
                                 <td class="align-middle td_descripcion"><%=producto.getDescripcion()%></td>
@@ -133,6 +145,8 @@
                                 <td class="align-middle">
                                     <!-- Boton para actualizar un producto -->
                                     <a class="align-middle" href="loadProducto.jsp?idProducto=<%= producto.getIdProducto()%>&nombre=<%= producto.getNombre()%>&descripcion=<%= producto.getDescripcion()%>&precioCompra=<%= producto.getPrecioCompra()%>&precioVenta=<%= producto.getPrecioVenta()%>&stock=<%= producto.getStock()%>&tipo=<%= producto.getTipo()%>&idProveedor=<%= producto.getIdProveedor()%>&modo=editar"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
+                                    <!-- Boton para actualizar un producto -->
+                                    <a class="align-middle" href="editarProducto.jsp?idProducto=<%=producto.getIdProducto()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar-producto" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-producto" data-nombre="<%= producto.getNombre()%>" data-id="<%= producto.getIdProducto()%>"></button>
 
