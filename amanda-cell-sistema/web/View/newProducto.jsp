@@ -142,44 +142,8 @@
         crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#tablaProducto').DataTable({
-                    "paging": true,
-                    "lengthMenu": [6, 10, 25, 50],
-                    "searching": true
-                });
-            });
-        </script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Obtener parámetros de la URL
-                var params = new URLSearchParams(window.location.search);
-
-                document.getElementById("txtIdProducto").value = params.get("idProducto");
-                document.getElementById("txtIdProducto-hidden").value = params.get("idProducto");
-                document.getElementById("txtNombre").value = params.get("nombre");
-                document.getElementById("areaDescripcion").value = params.get("descripcion");
-                document.getElementById("txtPrecioCompra").value = params.get("precioCompra");
-                document.getElementById("txtPrecioVenta").value = params.get("precioVenta");
-                document.getElementById("txtStock").value = params.get("stock");
-                document.getElementById("txtTipo").value = params.get("tipo");
-                document.getElementById("cbProveedor").value = params.get("idProveedor");
-
-                const modoEditar = params.get("modo");
-                if (modoEditar === "editar") {
-                    $("#btn-agregar").hide();
-                }
-                
-                const modoAgregar = params.get("modo");
-                if (modoEditar === "agregar") {
-                    $("#btn-actualizar").hide();
-                }
-            });
-        </script>
-
     </body>
 
 </html>

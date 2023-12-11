@@ -94,6 +94,7 @@
                     <table id="tablaProducto" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Precio Compra</th>
@@ -120,6 +121,7 @@
                                     boolean found = proveedorDAO.search(proveedor);
                             %>
                             <tr>
+                                <th class="align-middle"><%=producto.getIdProducto()%></th>
                                 <td class="align-middle td_nombre d-flex align-items-center">
                                     <%
                                         String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
@@ -143,13 +145,9 @@
                                 <td class="align-middle td_proveedor"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
                                 <td class="align-middle">
                                     <!-- Boton para ver un producto -->
-                                    <a class="align-middle" href="viewProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">
-                                        <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i>
-                                    </a>
+                                    <a class="align-middle" href="viewProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i></a>
                                         <!-- Boton para actualizar un producto -->
-                                    <a class="align-middle" href="editarProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">
-                                        <i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i>
-                                    </a>
+                                    <a class="align-middle" href="editarProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar-producto" data-bs-toggle="modal" data-bs-target="#modal-confirmar-eliminar-producto" data-nombre="<%= producto.getNombre()%>" data-id="<%= producto.getIdProducto()%>"></button>
 

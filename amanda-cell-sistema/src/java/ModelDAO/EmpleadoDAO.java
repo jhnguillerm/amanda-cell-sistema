@@ -1,27 +1,29 @@
 package ModelDAO;
 
 import Config.ConexionDB;
-import Interface.CRUD;
 import Model.Empleado;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
-public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
+public class EmpleadoDAO extends ConexionDB {
 
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    @Override
     public List toList() {
-        ArrayList<Empleado> list = new ArrayList<>();
+        List<Empleado> list = new ArrayList<>();
         String sql = "SELECT * FROM empleado";
         try {
             connection = conexionDB.getConnection();
@@ -35,8 +37,11 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
                 empleado.setDni(rs.getString("dni"));
                 empleado.setCorreo(rs.getString("correo"));
                 empleado.setTelefono(rs.getString("telefono"));
+                empleado.setDireccion(rs.getString("direccion"));
                 empleado.setUsername(rs.getString("username"));
                 empleado.setPass(rs.getString("pass"));
+                empleado.setRol(rs.getString("rol"));
+                empleado.setFoto(rs.getBinaryStream("foto"));
 
                 list.add(empleado);
             }
@@ -45,120 +50,125 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
         }
         return list;
     }
+    
+    public void toListImagen(int idEmpleado, HttpServletResponse response) {
+        String sql = "SELECT * FROM empleado WHERE id_empleado = " + idEmpleado;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        BufferedOutputStream bufferedOutputStream = null;
+        response.setContentType("image/*");
+        try {
+            outputStream = response.getOutputStream();
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                inputStream = rs.getBinaryStream("foto");
+            }
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            bufferedOutputStream = new BufferedOutputStream(outputStream);
+            int i = 0;
+            while ((i = bufferedInputStream.read()) != -1) {
+                bufferedOutputStream.write(i);
+            }
+        } catch (Exception e) {
+            System.out.println("Empleado - toListImagen: " + e);
+        }
+    }
 
-    @Override
-    public boolean create(Empleado entidad) {
-        String sql = "INSERT INTO empleado (nombres, dni, correo, telefono, username, pass) VALUES (?, ?, ?, ?, ?, ?)";
+    public void create(Empleado empleado) {
+        String sql = "INSERT INTO empleado (nombres, dni, correo, telefono, direccion, username, pass, rol, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             connection = conexionDB.getConnection();
-            Empleado empleado = (Empleado) entidad;
             ps = connection.prepareStatement(sql);
 
             ps.setString(1, empleado.getNombres());
             ps.setString(2, empleado.getDni());
             ps.setString(3, empleado.getCorreo());
             ps.setString(4, empleado.getTelefono());
-            ps.setString(5, empleado.getUsername());
+            ps.setString(5, empleado.getDireccion());
+            ps.setString(6, empleado.getUsername());
             String encryptedPassword = getMD5(empleado.getPass());
-            ps.setString(6, encryptedPassword);
+            ps.setString(7, encryptedPassword);
+            ps.setString(8, empleado.getRol());
+            ps.setBlob(9, empleado.getFoto());
 
-            ps.execute();
-
-            return true;
+            ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Empleado - create: " + e);
-            return false;
         } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            closeResources();
         }
     }
 
-    @Override
-    public boolean update(Empleado entidad) {
-        String sql = "  UPDATE empleado SET nombres = ?, dni = ?, correo = ?, telefono = ?, username = ?, pass = ? WHERE id_empleado = ?";
+    public void update(Empleado empleado) {
+        String sql = "  UPDATE empleado SET nombres = ?, dni = ?, correo = ?, telefono = ?, direccion = ?, username = ?, pass = ?, rol = ?, foto = ? WHERE id_empleado = ?";
         try {
             connection = conexionDB.getConnection();
-            Empleado empleado = (Empleado) entidad;
             ps = connection.prepareStatement(sql);
 
             ps.setString(1, empleado.getNombres());
             ps.setString(2, empleado.getDni());
             ps.setString(3, empleado.getCorreo());
             ps.setString(4, empleado.getTelefono());
-            ps.setString(5, empleado.getUsername());
+            ps.setString(5, empleado.getDireccion());
+            ps.setString(6, empleado.getUsername());
             String encryptedPassword = getMD5(empleado.getPass());
-            ps.setString(6, encryptedPassword);
-            ps.setInt(7, empleado.getIdEmpleado());
+            ps.setString(7, encryptedPassword);
+            ps.setString(8, empleado.getRol());
+            ps.setBlob(9, empleado.getFoto());
+            ps.setInt(10, empleado.getIdEmpleado());
 
-            ps.execute();
-
-            return true;
+            ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Empleado - update: " + e);
-            return false;
         } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            closeResources();
         }
     }
 
-    @Override
-    public boolean delete(Empleado entidad) {
+    public void delete(Empleado empleado) {
         String sql = "DELETE FROM empleado WHERE id_empleado = ?";
         try {
             connection = conexionDB.getConnection();
-            Empleado empleado = (Empleado) entidad;
             ps = connection.prepareStatement(sql);
             ps.setInt(1, empleado.getIdEmpleado());
-            ps.execute();
-            return true;
+            ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Empleado - delete: " + e);
-            return false;
         } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            closeResources();
         }
     }
 
-    @Override
-    public boolean search(Empleado entidad) {
+    public Empleado getEmpleadoById(int idEmpleado) {
         String sql = "SELECT * FROM empleado WHERE id_empleado = ?";
+        Empleado empleado = null;
         try {
             connection = conexionDB.getConnection();
-            Empleado empleado = (Empleado) entidad;
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, empleado.getIdEmpleado());
+            ps.setInt(1, idEmpleado);
             rs = ps.executeQuery();
             if (rs.next()) {
-                empleado.setIdEmpleado(rs.getInt("id_empleado"));
+                empleado = new Empleado();
+                
+                empleado.setIdEmpleado(Integer.parseInt(rs.getString("id_empleado")));
                 empleado.setNombres(rs.getString("nombres"));
                 empleado.setDni(rs.getString("dni"));
                 empleado.setCorreo(rs.getString("correo"));
                 empleado.setTelefono(rs.getString("telefono"));
-                return true;
+                empleado.setDireccion(rs.getString("direccion"));
+                empleado.setUsername(rs.getString("username"));
+                empleado.setRol(rs.getString("rol"));
+                empleado.setFoto(rs.getBinaryStream("foto"));
             }
-            return false;
         } catch (Exception e) {
-            System.out.println("Empleado - search: " + e);
-            return false;
+            System.out.println("Empleado - getEmpleadoById: " + e);
         } finally {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            closeResources();
         }
+        return empleado;
     }
 
     public Empleado login(String username, String pass) {
@@ -181,6 +191,7 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
                 empleado.setUsername(rs.getString("username"));
                 empleado.setCorreo(rs.getString("pass"));
                 empleado.setNombres(rs.getString("nombres"));
+                empleado.setRol(rs.getString("rol"));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -201,6 +212,22 @@ public class EmpleadoDAO extends ConexionDB implements CRUD<Empleado> {
             return string;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+    
+    private void closeResources() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar recursos: " + e);
         }
     }
 

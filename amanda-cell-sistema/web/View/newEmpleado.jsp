@@ -1,11 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <jsp:include page = "../components/head.jsp"/>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
@@ -20,11 +18,10 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Agregar / Actualizar empleado</h4>
+                            <h4 class="mb-1 mt-3">Agregar empleado</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
                             <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar empleado</button>
-                            <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar empleado</button>
                         </div>
 
                     </div>
@@ -139,29 +136,5 @@
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Obtener parámetros de la URL
-                var params = new URLSearchParams(window.location.search);
-
-                document.getElementById("txtIdEmpleado").value = params.get("idEmpleado");
-                document.getElementById("txtIdEmpleado-hidden").value = params.get("idEmpleado");
-                document.getElementById("txtNombres").value = params.get("nombres");
-                document.getElementById("txtDni").value = params.get("dni");
-                document.getElementById("txtCorreo").value = params.get("correo");
-                document.getElementById("txtTelefono").value = params.get("telefono");
-                document.getElementById("txtUsername").value = params.get("username");
-
-                const modoEditar = params.get("modo");
-                if (modoEditar === "editar") {
-                    $("#btn-agregar").hide();
-                }
-
-                const modoAgregar = params.get("modo");
-                if (modoEditar === "agregar") {
-                    $("#btn-actualizar").hide();
-                }
-            });
-        </script>
     </body>
 </html>

@@ -1,11 +1,17 @@
+<%@page import="Model.Empleado"%>
+<%@page import="ModelDAO.EmpleadoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String idEmpleadoUrl = request.getParameter("idEmpleadoUrl");
+    int idEmpleado = (idEmpleadoUrl != null && !idEmpleadoUrl.isEmpty()) ? Integer.parseInt(idEmpleadoUrl) : 0;
+    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+    Empleado empleado = empleadoDAO.getEmpleadoById(idEmpleado);
+%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <jsp:include page = "../components/head.jsp"/>
     </head>
-
     <body>
         <div class="wrapper">
             <!-- Nav vertical -->
@@ -20,10 +26,9 @@
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
-                            <h4 class="mb-1 mt-3">Agregar / Actualizar empleado</h4>
+                            <h4 class="mb-1 mt-3">Actualizar empleado</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
-                            <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar empleado</button>
                             <button type="submit" class="btn btn-primary" id="btn-actualizar" name="action" value="update">Actualizar empleado</button>
                         </div>
 
@@ -42,46 +47,47 @@
                                     <div class="row mb-3">
                                         <div class="col-4">
                                             <label class="form-label" for="txtIdEmpleado">ID</label>
-                                            <input type="text" class="form-control" id="txtIdEmpleado" disabled>
-                                            <input name="txtIdEmpleado" type="hidden" id="txtIdEmpleado-hidden" class="form-control">
+                                            <input type="text" class="form-control" id="txtIdEmpleado" disabled value="<%=empleado.getIdEmpleado()%>">
+                                            <input name="txtIdEmpleado" type="hidden" id="txtIdEmpleado-hidden" class="form-control" value="<%=empleado.getIdEmpleado()%>">
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombres">Nombres</label>
-                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" placeholder="Nombre completo">
+                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" value="<%=empleado.getNombres()%>">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <!-- Correo -->
                                         <div class="col-6">
                                             <label class="form-label" for="txtCorreo">Correo</label>
-                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo">
+                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" value="<%=empleado.getCorreo()%>">
                                         </div>
                                         <!-- Direccion -->
                                         <div class="col-6">
                                             <label class="form-label" for="txtDireccion">Dirección</label>
-                                            <input type="text" class="form-control" name="txtDireccion" id="txtDireccion">
+                                            <input type="text" class="form-control" name="txtDireccion" id="txtDireccion" value="<%=empleado.getDireccion()%>">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <!-- DNI -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtDni">DNI</label>
-                                            <input type="text" class="form-control" name="txtDni" id="txtDni" placeholder="DNI">
+                                            <input type="text" class="form-control" name="txtDni" id="txtDni" value="<%=empleado.getDni()%>">
                                         </div>
                                         <!-- Telefono -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtTelefono">Telefono</label>
-                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="Telefono">
+                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" value="<%=empleado.getTelefono()%>">
                                         </div>
                                         <!-- Rol -->
                                         <div class="col-4">
                                             <label class="form-label" for="cbRol">Rol</label>
                                             <select id="cbRol" class="form-select" name="cbRol">
-                                                <option selected disabled value="">Selecciona el rol</option>
-                                                <option value="Administrador">Administrador</option>
-                                                <option value="Empleado">Empleado</option>
+                                                <option disabled value="">Selecciona el rol</option>
+                                                <option value="Administrador" ${empleado.getRol().equals("Administrador") ? "selected" : ""}>Administrador</option>
+                                                <option value="Empleado" ${empleado.getRol().equals("Empleado") ? "selected" : ""}>Empleado</option>
                                             </select>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +105,7 @@
                                     <!-- User -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtUsername">Username</label>
-                                        <input type="text" class="form-control" id="txtUsername" placeholder="Username" name="txtUsername">
+                                        <input type="text" class="form-control" id="txtUsername" name="txtUsername" value="<%=empleado.getUsername()%>">
                                     </div>
                                     <!-- Pass -->
                                     <div class="mb-3">
@@ -139,29 +145,5 @@
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Obtener parámetros de la URL
-                var params = new URLSearchParams(window.location.search);
-
-                document.getElementById("txtIdEmpleado").value = params.get("idEmpleado");
-                document.getElementById("txtIdEmpleado-hidden").value = params.get("idEmpleado");
-                document.getElementById("txtNombres").value = params.get("nombres");
-                document.getElementById("txtDni").value = params.get("dni");
-                document.getElementById("txtCorreo").value = params.get("correo");
-                document.getElementById("txtTelefono").value = params.get("telefono");
-                document.getElementById("txtUsername").value = params.get("username");
-
-                const modoEditar = params.get("modo");
-                if (modoEditar === "editar") {
-                    $("#btn-agregar").hide();
-                }
-
-                const modoAgregar = params.get("modo");
-                if (modoEditar === "agregar") {
-                    $("#btn-actualizar").hide();
-                }
-            });
-        </script>
     </body>
 </html>

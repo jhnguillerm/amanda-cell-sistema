@@ -48,9 +48,9 @@ VALUES
     ('Cargador de Coche USB-C', 'Cargador de coche con puerto USB-C para carga rapida en el automovil', 12.00, 24.99, 25, 'Cargador', '2023-07-20', NULL, 4),
     ('Kit de Herramientas de Reparacion Profesional', 'Kit de herramientas de reparacion profesional para dispositivos electronicos', 35.00, 64.99, 10, 'Herramientas', '2023-07-21', NULL, 5);
 
-INSERT INTO  empleado (nombres, dni, correo, telefono, username, pass)
+INSERT INTO empleado (id_empleado, nombres, dni, correo, telefono, direccion, username, pass, rol, foto)
 VALUES 
-	("Jhon Moreno", "78453745", "jhn_guillerm@utp.edu.pe", "947534854", "jhnguillerm", "ebce79953d4fd11e1b8c625ef1ab3c9e");
+    (NULL, "Jhon Moreno", "78453745", "jhn_guillerm@utp.edu.pe", "947534854", "Dirección de ejemplo", "jhnguillerm", "ebce79953d4fd11e1b8c625ef1ab3c9e", "Administrador", NULL);
 
 INSERT INTO cliente (nombres, dni, correo, telefono) VALUES
 ('Juan Pérez', '12345678', 'juan@example.com', '555-1234'),

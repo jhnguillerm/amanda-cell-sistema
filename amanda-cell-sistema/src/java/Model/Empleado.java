@@ -1,5 +1,6 @@
-
 package Model;
+
+import java.io.InputStream;
 
 public class Empleado {
     
@@ -8,20 +9,26 @@ public class Empleado {
     private String dni;
     private String correo;
     private String telefono;
+    private String direccion;
     private String username;
     private String pass;
+    private String rol;
+    private InputStream foto;
 
     public Empleado() {
     }
 
-    public Empleado(int idEmpleado, String nombres, String dni, String correo, String telefono, String username, String pass) {
+    public Empleado(int idEmpleado, String nombres, String dni, String correo, String telefono, String direccion, String username, String pass, String rol, InputStream foto) {
         this.idEmpleado = idEmpleado;
         this.nombres = nombres;
         this.dni = dni;
         this.correo = correo;
         this.telefono = telefono;
+        this.direccion = direccion;
         this.username = username;
         this.pass = pass;
+        this.rol = rol;
+        this.foto = foto;
     }
 
     public int getIdEmpleado() {
@@ -64,6 +71,14 @@ public class Empleado {
         this.telefono = telefono;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -78,6 +93,22 @@ public class Empleado {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public InputStream getFoto() {
+        return foto;
+    }
+
+    public void setFoto(InputStream foto) {
+        this.foto = foto;
     }
     
 }

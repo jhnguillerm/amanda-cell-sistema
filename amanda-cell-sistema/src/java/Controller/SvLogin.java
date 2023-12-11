@@ -43,6 +43,7 @@ public class SvLogin extends HttpServlet {
                 session.setAttribute("usuario", empleado.getUsername());
                 session.setAttribute("nombres", empleado.getNombres());
                 session.setAttribute("idEmpleado", empleado.getIdEmpleado());
+                session.setAttribute("rol", empleado.getRol());
 
                 response.sendRedirect(request.getContextPath() + "/View/main.jsp");
             } else {

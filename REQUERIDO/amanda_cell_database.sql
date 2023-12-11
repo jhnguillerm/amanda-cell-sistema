@@ -28,12 +28,15 @@ CREATE TABLE producto (
 
 CREATE TABLE empleado (
     id_empleado INT AUTO_INCREMENT NOT NULL,
-    nombres VARCHAR(150),
-    dni CHAR(8),
-    correo VARCHAR(100),
-    telefono VARCHAR(15),
-    username VARCHAR(50),
-    pass VARCHAR(50),
+    nombres VARCHAR(150) NOT NULL,
+    dni CHAR(8) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NULL,
+    direccion VARCHAR(255) NULL,
+    username VARCHAR(100) NOT NULL,
+    pass VARCHAR(100) NOT NULL,
+    rol VARCHAR(100) NOT NULL,
+    foto LONGBLOB NULL,
     PRIMARY KEY (id_empleado)
 );
 
