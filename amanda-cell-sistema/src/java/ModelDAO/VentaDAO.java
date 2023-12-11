@@ -125,25 +125,6 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
     public boolean search(Venta entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public int generarNumSerie() {
-        int numSerie = 1;
-        String sql = "SELECT MAX(id_venta) FROM venta";
-        try {
-            connection = conexionDB.getConnection();
-            ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int maxId = rs.getInt(1);
-                if (maxId > 0) {
-                    numSerie = maxId + 1;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Venta - generarNumSerie: " + e);
-        }
-        return numSerie;
-    }
     
     public int cantidadVentas() {
         int cantidad = 0;
@@ -165,6 +146,50 @@ public class VentaDAO extends ConexionDB implements CRUD<Venta> {
             }
         }
         return cantidad;
+    }
+    
+    public int generarSiguienteId() {
+        int siguienteId = 0;
+        String sql = "SELECT MAX(CAST(SUBSTRING(num_serie, 2) AS UNSIGNED)) AS max_num_serie FROM venta";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                siguienteId = rs.getInt("max_num_serie") + 1;
+            }
+        } catch (Exception e) {
+            System.out.println("Venta - generarSiguienteId: " + e);
+        } finally {
+            closeResources();
+        }
+        return siguienteId;
+    }
+
+    public String generarNumSerie() {
+        String numSerie = null;
+        int siguienteId = generarSiguienteId();
+        if (siguienteId > 0) {
+            numSerie = String.format("V%04d", siguienteId);
+        }
+        return numSerie;
+    }
+    
+    private void closeResources() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar recursos: " + e);
+        }
     }
 
 }
