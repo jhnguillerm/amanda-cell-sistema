@@ -19,7 +19,7 @@
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
                 <h1 class="h3" style="grid-column: 1 / 5; grid-row: 1 / 2; height: 30px !important;">Panel de<strong> Empleados</strong></h1>
-                
+
                 <div class="container-fluid p-3 rounded shadow-lg" style="background-color: #fff">
                     <div class="row w-100 justify-content-between mb-3">
                         <div class="col-5">
@@ -43,6 +43,8 @@
                         </thead>
                         <tbody>
                             <%
+                                String userRole = (String) session.getAttribute("rol");
+
                                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
                                 List<Empleado> list = empleadoDAO.toList();
                                 Iterator<Empleado> iterador = list.iterator();
@@ -58,11 +60,15 @@
                                 <td class="align-middle"><%=empleado.getCorreo()%></td>
                                 <td class="align-middle"><%=empleado.getTelefono()%></td>
                                 <td class="align-middle">
+                                    <%
+                                        // Verificar el rol antes de mostrar los botones
+                                        if ("Administrador".equals(userRole)) {
+                                    %>
                                     <!-- Boton para actualizar -->
                                     <a class="align-middle" href="editarEmpleado.jsp?idEmpleadoUrl=<%=empleado.getIdEmpleado()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-pencil-square"></i></a>
                                     <!-- Boton que abre el modal para confirmar si desea eliminarlo o no -->
                                     <button type="button" class="btn-close align-middle btn-modal-eliminar" data-bs-toggle="modal" data-bs-target="#modal-eliminar" data-nombre="<%= empleado.getNombres()%>" data-id="<%= empleado.getIdEmpleado()%>"></button>
-                                    
+                                    <% } %>
                                     <!-- Modal - Eliminar -->
                                     <div class="modal fade" id="modal-eliminar" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
                                         <div class="modal-dialog">

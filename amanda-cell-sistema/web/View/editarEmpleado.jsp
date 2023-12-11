@@ -2,6 +2,8 @@
 <%@page import="ModelDAO.EmpleadoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    String userRole = (String) session.getAttribute("rol");
+
     String idEmpleadoUrl = request.getParameter("idEmpleadoUrl");
     int idEmpleado = (idEmpleadoUrl != null && !idEmpleadoUrl.isEmpty()) ? Integer.parseInt(idEmpleadoUrl) : 0;
     EmpleadoDAO empleadoDAO = new EmpleadoDAO();
@@ -81,13 +83,24 @@
                                         <!-- Rol -->
                                         <div class="col-4">
                                             <label class="form-label" for="cbRol">Rol</label>
+
+                                            <%
+                                                if ("Administrador".equals(userRole)) {
+                                            %>
                                             <select id="cbRol" class="form-select" name="cbRol">
                                                 <option disabled value="">Selecciona el rol</option>
                                                 <option value="Administrador" ${empleado.getRol().equals("Administrador") ? "selected" : ""}>Administrador</option>
                                                 <option value="Empleado" ${empleado.getRol().equals("Empleado") ? "selected" : ""}>Empleado</option>
                                             </select>
+                                            <%
+                                            } else if ("Empleado".equals(userRole)) {
+                                            %>
+                                            <input class="form-control" type="text" name="cbRol" value="Empleado" disabled>
+                                            <input type="hidden" name="cbRol" value="Empleado">
+                                            <%
+                                                }
+                                            %>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

@@ -33,11 +33,11 @@
                                     String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
                                     if (producto.getImagen() != null) {
                                 %>
-                                <img src="<%= imagePath%>" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" height="600px" />
+                                <img src="<%= imagePath%>" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" />
                                 <%
                                 } else {
                                 %>
-                                <img src="../images/no-photo-product.jpg" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" height="600px" />
+                                <img src="../images/no-photo-product.jpg" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" />
                                 <%
                                     }
                                 %>
