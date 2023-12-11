@@ -230,5 +230,34 @@ public class EmpleadoDAO extends ConexionDB {
             System.out.println("Error al cerrar recursos: " + e);
         }
     }
+    
+    public boolean search(Empleado entidad) {
+        String sql = "SELECT * FROM empleado WHERE id_empleado = ?";
+        try {
+            connection = conexionDB.getConnection();
+            Empleado empleado = (Empleado) entidad;
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, empleado.getIdEmpleado());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("id_empleado"));
+                empleado.setNombres(rs.getString("nombres"));
+                empleado.setDni(rs.getString("dni"));
+                empleado.setCorreo(rs.getString("correo"));
+                empleado.setTelefono(rs.getString("telefono"));
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Empleado - search: " + e);
+            return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
 
 }
