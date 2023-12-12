@@ -9,23 +9,19 @@
             <!-- Nav vertical -->
             <jsp:include page = "../components/navbar_vertical.jsp"/>
             <!-- / Nav vertical -->
-
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
                 <form action="/amanda-cell-sistema/SvEmpleado" method="post" class="m-0 needs-validation" novalidate enctype="multipart/form-data" id="formEmpleado">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-
                         <div class="d-flex flex-column justify-content-center">
                             <h4 class="mb-1 mt-3">Agregar empleado</h4>
                         </div>
                         <div class="d-flex align-content-center flex-wrap gap-3">
                             <button type="submit" class="btn btn-primary" id="btn-agregar" name="action" value="create">Agregar empleado</button>
                         </div>
-
                     </div>
-
                     <div class="row">
                         <!-- Primera columna -->
                         <div class="col-12 col-lg-8">

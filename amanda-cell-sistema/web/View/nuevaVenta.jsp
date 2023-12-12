@@ -82,7 +82,7 @@
                             <div class="card mb-4 border-0 shadow-lg">
                                 <div class="card-header border-0 bg-body d-flex justify-content-between align-items-center">
                                     <h5 class="card-title mb-0">Datos del producto</h5>
-                                    <a href="/amanda-cell-sistema/SvRutas?action=loadProducto" class="fw-medium">Nuevo producto</a>
+                                    <a href="../View/newProducto.jsp" class="fw-medium">Nuevo producto</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3 col">
