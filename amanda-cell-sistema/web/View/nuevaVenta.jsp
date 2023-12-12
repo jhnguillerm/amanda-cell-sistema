@@ -21,7 +21,7 @@
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvVenta" method="post" class="m-0">
+                <form action="/amanda-cell-sistema/SvVenta" method="post" class="m-0 needs-validation" novalidate id="formVenta">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
@@ -45,23 +45,21 @@
                                 <div class="card-body">
                                     <div class="mb-3 col">
                                         <div class="input-group">
-                                            <select id="cbCliente" class="form-select" name="cbCliente">
-                                                <option disabled selected value="">Selecciona el cliente</option>
+                                            <select id="cbCliente" class="form-select" name="cbCliente" required>
+                                                <option disabled value="">Selecciona el cliente</option>
                                                 <%
                                                     ClienteDAO clienteDAO = new ClienteDAO();
                                                     List<Cliente> listaClientes = clienteDAO.toList();
                                                     for (Cliente cliente : listaClientes) {
                                                 %>
-                                                <option value="<%= cliente.getIdCliente()%>"><%= cliente.getNombres()%></option>
+                                                <option selected value="<%= cliente.getIdCliente()%>"><%= cliente.getNombres()%></option>
                                                 <%
                                                     }
                                                 %>
                                             </select>
-
                                             <button class="btn btn-primary" name="action" value="searchCliente">
                                                 <i class="bi bi-search"></i>
                                             </button>
-
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -89,14 +87,14 @@
                                 <div class="card-body">
                                     <div class="mb-3 col">
                                         <div class="input-group">
-                                            <select id="cbProducto" class="form-select" name="cbProducto">
-                                                <option value="">Selecciona el producto</option>
+                                            <select id="cbProducto" class="form-select" name="cbProducto" required>
+                                                <option disabled selected value="">Selecciona el producto</option>
                                                 <%
                                                     ProductoDAO productoDAO = new ProductoDAO();
                                                     List<Producto> listaProductos = productoDAO.toList();
                                                     for (Producto producto : listaProductos) {
                                                 %>
-                                                <option value="<%= producto.getIdProducto()%>"><%= producto.getNombre()%></option>
+                                                <option selected value="<%= producto.getIdProducto()%>"><%= producto.getNombre()%></option>
                                                 <%
                                                     }
                                                 %>
@@ -214,6 +212,31 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
+        <script>
+    // Verifica la validez del formulario al enviar
+    document.getElementById('formVenta').addEventListener('submit', function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        this.classList.add('was-validated');
+    });
+
+    // Establece el valor seleccionado en el selector de clientes
+    var selectedClienteId = '<%= (session.getAttribute("idCliente") != null) ? session.getAttribute("idCliente") : "" %>';
+    var cbCliente = document.getElementById('cbCliente');
+    if (selectedClienteId) {
+        cbCliente.value = selectedClienteId;
+    }
+
+    // Establece el valor seleccionado en el selector de productos
+    var selectedProductoId = '<%= (session.getAttribute("idProducto") != null) ? session.getAttribute("idProducto") : "" %>';
+    var cbProducto = document.getElementById('cbProducto');
+    if (selectedProductoId) {
+        cbProducto.value = selectedProductoId;
+    }
+</script>
+
 
     </body>
 </html>

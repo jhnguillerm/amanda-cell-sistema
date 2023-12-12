@@ -50,7 +50,7 @@ public class EmpleadoDAO extends ConexionDB {
         }
         return list;
     }
-    
+
     public void toListImagen(int idEmpleado, HttpServletResponse response) {
         String sql = "SELECT * FROM empleado WHERE id_empleado = " + idEmpleado;
         InputStream inputStream = null;
@@ -78,53 +78,67 @@ public class EmpleadoDAO extends ConexionDB {
     }
 
     public void create(Empleado empleado) {
-        String sql = "INSERT INTO empleado (nombres, dni, correo, telefono, direccion, username, pass, rol, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            connection = conexionDB.getConnection();
-            ps = connection.prepareStatement(sql);
+        if (!datosExisten(empleado.getCorreo(), "correo", 0)
+                && !datosExisten(empleado.getDni(), "dni", 0)
+                && !datosExisten(empleado.getUsername(), "username", 0)
+                && !datosExisten(empleado.getTelefono(), "telefono", 0)) {
+            String sql = "INSERT INTO empleado (nombres, dni, correo, telefono, direccion, username, pass, rol, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try {
+                connection = conexionDB.getConnection();
+                ps = connection.prepareStatement(sql);
 
-            ps.setString(1, empleado.getNombres());
-            ps.setString(2, empleado.getDni());
-            ps.setString(3, empleado.getCorreo());
-            ps.setString(4, empleado.getTelefono());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getUsername());
-            String encryptedPassword = getMD5(empleado.getPass());
-            ps.setString(7, encryptedPassword);
-            ps.setString(8, empleado.getRol());
-            ps.setBlob(9, empleado.getFoto());
+                ps.setString(1, empleado.getNombres());
+                ps.setString(2, empleado.getDni());
+                ps.setString(3, empleado.getCorreo());
+                ps.setString(4, empleado.getTelefono());
+                ps.setString(5, empleado.getDireccion());
+                ps.setString(6, empleado.getUsername());
+                String encryptedPassword = getMD5(empleado.getPass());
+                ps.setString(7, encryptedPassword);
+                ps.setString(8, empleado.getRol());
+                ps.setBlob(9, empleado.getFoto());
 
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Empleado - create: " + e);
-        } finally {
-            closeResources();
+                ps.executeUpdate();
+            } catch (Exception e) {
+                System.out.println("Empleado - create: " + e);
+            } finally {
+                closeResources();
+            }
+        } else {
+            System.out.println("La información del empleado ya existe.");
         }
     }
 
     public void update(Empleado empleado) {
-        String sql = "  UPDATE empleado SET nombres = ?, dni = ?, correo = ?, telefono = ?, direccion = ?, username = ?, pass = ?, rol = ?, foto = ? WHERE id_empleado = ?";
-        try {
-            connection = conexionDB.getConnection();
-            ps = connection.prepareStatement(sql);
+        if (!datosExisten(empleado.getCorreo(), "correo", empleado.getIdEmpleado())
+                && !datosExisten(empleado.getDni(), "dni", empleado.getIdEmpleado())
+                && !datosExisten(empleado.getUsername(), "username", empleado.getIdEmpleado())
+                && !datosExisten(empleado.getTelefono(), "telefono", empleado.getIdEmpleado())) {
+            String sql = "UPDATE empleado SET nombres = ?, dni = ?, correo = ?, telefono = ?, direccion = ?, username = ?, pass = ?, rol = ?, foto = ? WHERE id_empleado = ?";
+            try {
+                connection = conexionDB.getConnection();
+                ps = connection.prepareStatement(sql);
 
-            ps.setString(1, empleado.getNombres());
-            ps.setString(2, empleado.getDni());
-            ps.setString(3, empleado.getCorreo());
-            ps.setString(4, empleado.getTelefono());
-            ps.setString(5, empleado.getDireccion());
-            ps.setString(6, empleado.getUsername());
-            String encryptedPassword = getMD5(empleado.getPass());
-            ps.setString(7, encryptedPassword);
-            ps.setString(8, empleado.getRol());
-            ps.setBlob(9, empleado.getFoto());
-            ps.setInt(10, empleado.getIdEmpleado());
+                ps.setString(1, empleado.getNombres());
+                ps.setString(2, empleado.getDni());
+                ps.setString(3, empleado.getCorreo());
+                ps.setString(4, empleado.getTelefono());
+                ps.setString(5, empleado.getDireccion());
+                ps.setString(6, empleado.getUsername());
+                String encryptedPassword = getMD5(empleado.getPass());
+                ps.setString(7, encryptedPassword);
+                ps.setString(8, empleado.getRol());
+                ps.setBlob(9, empleado.getFoto());
+                ps.setInt(10, empleado.getIdEmpleado());
 
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Empleado - update: " + e);
-        } finally {
-            closeResources();
+                ps.executeUpdate();
+            } catch (Exception e) {
+                System.out.println("Empleado - update: " + e);
+            } finally {
+                closeResources();
+            }
+        } else {
+            System.out.println("La información del empleado ya existe para otro empleado.");
         }
     }
 
@@ -152,7 +166,7 @@ public class EmpleadoDAO extends ConexionDB {
             rs = ps.executeQuery();
             if (rs.next()) {
                 empleado = new Empleado();
-                
+
                 empleado.setIdEmpleado(Integer.parseInt(rs.getString("id_empleado")));
                 empleado.setNombres(rs.getString("nombres"));
                 empleado.setDni(rs.getString("dni"));
@@ -214,7 +228,7 @@ public class EmpleadoDAO extends ConexionDB {
             throw new RuntimeException(ex);
         }
     }
-    
+
     private void closeResources() {
         try {
             if (rs != null) {
@@ -230,7 +244,7 @@ public class EmpleadoDAO extends ConexionDB {
             System.out.println("Error al cerrar recursos: " + e);
         }
     }
-    
+
     public boolean search(Empleado entidad) {
         String sql = "SELECT * FROM empleado WHERE id_empleado = ?";
         try {
@@ -258,6 +272,25 @@ public class EmpleadoDAO extends ConexionDB {
                 System.out.println(e);
             }
         }
+    }
+
+    public boolean datosExisten(String value, String columnName, int idEmpleado) {
+        String sql = "SELECT COUNT(*) FROM empleado WHERE " + columnName + " = ? AND id_empleado != ?";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, value);
+            ps.setInt(2, idEmpleado);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            System.out.println("Error al verificar la duplicación de información del empleado: " + e);
+        } finally {
+            closeResources();
+        }
+        return false;
     }
 
 }

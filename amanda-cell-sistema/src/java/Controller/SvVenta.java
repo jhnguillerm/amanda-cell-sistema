@@ -1,6 +1,5 @@
 package Controller;
 
-import Config.GenerarNumSerie;
 import Model.Cliente;
 import Model.DetalleVenta;
 import Model.Producto;
@@ -10,6 +9,7 @@ import ModelDAO.DetalleVentaDAO;
 import ModelDAO.ProductoDAO;
 import ModelDAO.VentaDAO;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +36,8 @@ public class SvVenta extends HttpServlet {
     VentaDAO ventaDAO = new VentaDAO();
     int idVenta;
     String numSerie = ventaDAO.generarNumSerie();
-    String fechaVenta = "2023-11-22";
+    LocalDate fechaActual = LocalDate.now();
+    String fechaVenta = fechaActual.toString();
     double total = 0.0;
     int idEmpleado;
 
@@ -219,7 +220,7 @@ public class SvVenta extends HttpServlet {
                 session.removeAttribute("stockProducto");
                 session.removeAttribute("listaDetalle");
                 session.removeAttribute("total");
-                
+
                 response.sendRedirect(request.getContextPath() + "/View/venta.jsp");
                 return;
 

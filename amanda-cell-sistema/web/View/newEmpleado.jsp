@@ -14,7 +14,7 @@
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvEmpleado" method="post" class="m-0" enctype="multipart/form-data">
+                <form action="/amanda-cell-sistema/SvEmpleado" method="post" class="m-0 needs-validation" novalidate enctype="multipart/form-data" id="formEmpleado">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
@@ -44,40 +44,58 @@
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombres">Nombres</label>
-                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" placeholder="Nombre completo">
+                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" required>
+                                            <div class="invalid-feedback">
+                                                Nombres requeridos.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <!-- Correo -->
                                         <div class="col-6">
                                             <label class="form-label" for="txtCorreo">Correo</label>
-                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo">
+                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" required>
+                                            <div class="invalid-feedback">
+                                                Correo incorrecto.
+                                            </div>
                                         </div>
                                         <!-- Direccion -->
                                         <div class="col-6">
                                             <label class="form-label" for="txtDireccion">Dirección</label>
                                             <input type="text" class="form-control" name="txtDireccion" id="txtDireccion">
+                                            <div class="valid-feedback">
+                                                Dirección no obligatoria.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <!-- DNI -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtDni">DNI</label>
-                                            <input type="text" class="form-control" name="txtDni" id="txtDni" placeholder="DNI">
+                                            <input type="text" class="form-control" name="txtDni" id="txtDni" required pattern="[0-9]{8}" title="Debe contener 8 dígitos numéricos">
+                                            <div class="invalid-feedback">
+                                                DNI incorrecto.
+                                            </div>
                                         </div>
                                         <!-- Telefono -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtTelefono">Telefono</label>
-                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="Telefono">
+                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" required>
+                                            <div class="invalid-feedback">
+                                                Télefono incorrecto.
+                                            </div>
                                         </div>
                                         <!-- Rol -->
                                         <div class="col-4">
                                             <label class="form-label" for="cbRol">Rol</label>
-                                            <select id="cbRol" class="form-select" name="cbRol">
+                                            <select id="cbRol" class="form-select" name="cbRol" required>
                                                 <option selected disabled value="">Selecciona el rol</option>
                                                 <option value="Administrador">Administrador</option>
                                                 <option value="Empleado">Empleado</option>
                                             </select>
+                                            <div class="invalid-feedback">
+                                                Rol requerido.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,12 +114,18 @@
                                     <!-- User -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtUsername">Username</label>
-                                        <input type="text" class="form-control" id="txtUsername" placeholder="Username" name="txtUsername">
+                                        <input type="text" class="form-control" id="txtUsername" name="txtUsername" required>
+                                        <div class="invalid-feedback">
+                                            Username requerido.
+                                        </div>
                                     </div>
                                     <!-- Pass -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPass">Contraseña</label>
-                                        <input type="password" class="form-control" id="txtPass" placeholder="Contraseña" name="txtPass" required>
+                                        <input type="password" class="form-control" id="txtPass" name="txtPass" required>
+                                         <div class="invalid-feedback">
+                                            Password requerido.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +139,9 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="fileFoto">Ingresa una foto</label>
                                         <input type="file" class="form-control" id="fileFoto" name="fileFoto">
+                                        <div class="valid-feedback">
+                                            Foto no obligatoria.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,5 +163,14 @@
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
+        <script>
+            document.getElementById('formEmpleado').addEventListener('submit', function (event) {
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                this.classList.add('was-validated');
+            });
+        </script>
     </body>
 </html>

@@ -15,7 +15,7 @@ import javax.servlet.http.Part;
 @MultipartConfig
 @WebServlet(name = "SvEmpleado", urlPatterns = {"/SvEmpleado"})
 public class SvEmpleado extends HttpServlet {
-    
+
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -47,65 +47,65 @@ public class SvEmpleado extends HttpServlet {
                 Part filePart = request.getPart("fileFoto");
                 InputStream inputStream = filePart.getInputStream();
 
-                Empleado empleado = new Empleado();
-                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                Empleado nuevoEmpleado = new Empleado();
+                nuevoEmpleado.setNombres(nombres);
+                nuevoEmpleado.setDni(dni);
+                nuevoEmpleado.setCorreo(correo);
+                nuevoEmpleado.setTelefono(telefono);
+                nuevoEmpleado.setDireccion(direccion);
+                nuevoEmpleado.setUsername(username);
+                nuevoEmpleado.setPass(pass);
+                nuevoEmpleado.setRol(rol);
+                nuevoEmpleado.setFoto(inputStream);
 
-                empleado.setNombres(nombres);
-                empleado.setDni(dni);
-                empleado.setCorreo(correo);
-                empleado.setTelefono(telefono);
-                empleado.setDireccion(direccion);
-                empleado.setUsername(username);
-                empleado.setPass(pass);
-                empleado.setRol(rol);
-                empleado.setFoto(inputStream);
-                
-                empleadoDAO.create(empleado);
-                
-                response.sendRedirect(request.getContextPath() + "/View/empleado.jsp");
-                return;
+                if (empleadoDAO.datosExisten(nuevoEmpleado.getCorreo(), "correo", 0)
+                        || empleadoDAO.datosExisten(nuevoEmpleado.getDni(), "dni", 0)
+                        || empleadoDAO.datosExisten(nuevoEmpleado.getUsername(), "username", 0)
+                        || empleadoDAO.datosExisten(nuevoEmpleado.getTelefono(), "telefono", 0)) {
+
+                    System.out.println("La información del empleado ya existe.");
+                } else {
+                    empleadoDAO.create(nuevoEmpleado);
+                    response.sendRedirect(request.getContextPath() + "/View/empleado.jsp");
+                    return;
+                }
             } else if (action.equals("update")) {
                 int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
-                String nombres = request.getParameter("txtNombres");
-                String dni = request.getParameter("txtDni");
-                String correo = request.getParameter("txtCorreo");
-                String telefono = request.getParameter("txtTelefono");
-                String direccion = request.getParameter("txtDireccion");
-                String username = request.getParameter("txtUsername");
-                String pass = request.getParameter("txtPass");
-                String rol = request.getParameter("cbRol");
+                Empleado empleado = empleadoDAO.getEmpleadoById(idEmpleado);
+
+                empleado.setNombres(request.getParameter("txtNombres"));
+                empleado.setDni(request.getParameter("txtDni"));
+                empleado.setCorreo(request.getParameter("txtCorreo"));
+                empleado.setTelefono(request.getParameter("txtTelefono"));
+                empleado.setDireccion(request.getParameter("txtDireccion"));
+                empleado.setUsername(request.getParameter("txtUsername"));
+                empleado.setPass(request.getParameter("txtPass"));
+                empleado.setRol(request.getParameter("cbRol"));
                 Part filePart = request.getPart("fileFoto");
                 InputStream inputStream = filePart.getInputStream();
-
-                Empleado empleado = new Empleado();
-                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-
-                empleado.setIdEmpleado(idEmpleado);
-                empleado.setNombres(nombres);
-                empleado.setDni(dni);
-                empleado.setCorreo(correo);
-                empleado.setTelefono(telefono);
-                empleado.setDireccion(direccion);
-                empleado.setUsername(username);
-                empleado.setPass(pass);
-                empleado.setRol(rol);
                 empleado.setFoto(inputStream);
-                
-                empleadoDAO.update(empleado);
-                
-                response.sendRedirect(request.getContextPath() + "/View/empleado.jsp");
-                return;
-                
+
+                if (empleadoDAO.datosExisten(empleado.getCorreo(), "correo", empleado.getIdEmpleado())
+                        || empleadoDAO.datosExisten(empleado.getDni(), "dni", empleado.getIdEmpleado())
+                        || empleadoDAO.datosExisten(empleado.getUsername(), "username", empleado.getIdEmpleado())
+                        || empleadoDAO.datosExisten(empleado.getTelefono(), "telefono", empleado.getIdEmpleado())) {
+                    // Información duplicada, manejar según tus necesidades
+                    System.out.println("La información del empleado ya existe para otro empleado.");
+                } else {
+                    empleadoDAO.update(empleado);
+                    response.sendRedirect(request.getContextPath() + "/View/empleado.jsp");
+                    return;
+                }
             } else if (action.equals("delete")) {
                 int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
-                
+
                 Empleado empleado = new Empleado();
                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-                
+
                 empleado.setIdEmpleado(idEmpleado);
-                
+
                 empleadoDAO.delete(empleado);
-                
+
                 response.sendRedirect(request.getContextPath() + "/View/empleado.jsp");
                 return;
             } else {
