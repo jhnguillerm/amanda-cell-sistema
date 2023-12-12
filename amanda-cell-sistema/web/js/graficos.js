@@ -1,5 +1,9 @@
-const getOptionChart1 = () => {
+const getOptionChart1 = (data) => {
     return {
+        title: {
+            text: 'Productos por tipo',
+            left: 'center'
+        },
         tooltip: {
             trigger: 'item'
         },
@@ -32,92 +36,136 @@ const getOptionChart1 = () => {
                 labelLine: {
                     show: false
                 },
-                data: [
-                    {value: 1048, name: 'Accesorios'},
-                    {value: 735, name: 'Baterias'},
-                    {value: 580, name: 'Cámaras'},
-                    {value: 484, name: 'Cargadores'},
-                    {value: 300, name: 'Pantallas'}
-                ]
+                data: data // Utilizar los datos obtenidos del servlet
             }
         ]
     };
 };
 
-const getOptionChart2 = () => {
+const getOptionChart2 = (data) => {
+    // Definir nombres de los meses en español
+    const mesesEnEspanol = [
+        'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+    ];
+
+    // Mapear los números de mes a sus nombres en español
+    const meses = data.map(item => mesesEnEspanol[item.month - 1]);
+    const cantidadProductos = data.map(item => item.cantidad_productos);
+
+    // Definir colores personalizados para las barras
+    const coloresBarras = [
+        '#5970ca', '#66cc7f', '#fac84c', '#ff664a', '#57c0eb', '#05a284', '#ff8439', '#c460a8', '#5970ca', '#66cc7f', '#04223f'
+    ];
+
     return {
         title: {
-            text: 'Stacked Line'
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
+            text: 'Ingreso de productos por mes',
+            left: 'center'
         },
         xAxis: {
             type: 'category',
-            boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: meses
         },
         yAxis: {
             type: 'value'
         },
         series: [
             {
-                name: 'Email',
-                type: 'line',
-                stack: 'Total',
-                data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name: 'Union Ads',
-                type: 'line',
-                stack: 'Total',
-                data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name: 'Video Ads',
-                type: 'line',
-                stack: 'Total',
-                data: [150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name: 'Direct',
-                type: 'line',
-                stack: 'Total',
-                data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name: 'Search Engine',
-                type: 'line',
-                stack: 'Total',
-                data: [820, 932, 901, 934, 1290, 1330, 1320]
+                data: cantidadProductos,
+                type: 'bar',
+                // Aplicar colores personalizados a las barras
+                itemStyle: {
+                    color: function (params) {
+                        return coloresBarras[params.dataIndex];
+                    }
+                }
             }
         ]
     };
 };
 
-const initCharts = () => {
+
+
+const obtenerTiposProductos = () => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/amanda-cell-sistema/obtenerTiposProductos",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log("Datos obtenidos del servlet para el gráfico 1:", data);
+
+                // Agrupar y sumar el stock por tipo
+                const datosAgrupados = data.reduce((acumulador, producto) => {
+                    const tipo = producto.name;
+                    const stock = producto.value;
+
+                    // Si el tipo ya existe en el acumulador, suma el stock
+                    if (acumulador[tipo]) {
+                        acumulador[tipo] += stock;
+                    } else {
+                        // Si no existe, crea una nueva entrada
+                        acumulador[tipo] = stock;
+                    }
+
+                    return acumulador;
+                }, {});
+
+                // Convertir los datos agrupados en un formato compatible con getOptionChart1
+                const datosFormateados = Object.keys(datosAgrupados).map(tipo => ({
+                    name: tipo,
+                    value: datosAgrupados[tipo]
+                }));
+
+                resolve(datosFormateados);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al obtener datos del servlet para el gráfico 1", error);
+                reject(error);
+            }
+        });
+    });
+};
+
+
+const obtenerProductosPorMes = () => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/amanda-cell-sistema/obtenerProductosPorMes",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log("Datos obtenidos del servlet para el gráfico 2:", data);
+                resolve(data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al obtener datos del servlet para el gráfico 2", error);
+                reject(error);
+            }
+        });
+    });
+};
+
+const initCharts = async () => {
     const chart1 = echarts.init(document.getElementById("chart1"));
     const chart2 = echarts.init(document.getElementById("chart2"));
 
-    chart1.setOption(getOptionChart1());
-    chart2.setOption(getOptionChart2());
+    try {
+        const dataChart1 = await obtenerTiposProductos();
+        console.log("Datos para el gráfico 1:", dataChart1);
+
+        const dataChart2 = await obtenerProductosPorMes();
+        console.log("Datos para el gráfico 2:", dataChart2);
+
+        const optionChart1 = getOptionChart1(dataChart1);
+        chart1.setOption(optionChart1);
+
+        const optionChart2 = getOptionChart2(dataChart2);
+        chart2.setOption(optionChart2);
+    } catch (error) {
+        console.error("Error en la inicialización de gráficos:", error);
+    }
 };
 
-window.addEventListener("load", () => {
-    initCharts();
-});
-
+// Llamar a initCharts cuando la página se cargue completamente
+window.addEventListener("load", initCharts);

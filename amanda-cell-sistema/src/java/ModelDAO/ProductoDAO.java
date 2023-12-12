@@ -315,6 +315,39 @@ public class ProductoDAO extends ConexionDB {
             }
         }
     }
+    
+    public List<Integer> obtenerProductosPorMes() {
+    List<Integer> productosPorMes = new ArrayList<>();
+
+    // Consulta para obtener la cantidad de productos por mes
+    String sql = "SELECT COUNT(*) AS cantidad_productos FROM producto WHERE MONTH(fecha) = ?";
+
+    try {
+        connection = conexionDB.getConnection();
+        ps = connection.prepareStatement(sql);
+
+        // Iterar sobre los meses
+        for (int mes = 1; mes <= 12; mes++) {
+            ps.setInt(1, mes);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int cantidad = rs.getInt("cantidad_productos");
+                productosPorMes.add(cantidad);
+            } else {
+                // Si no hay datos para el mes actual, agregar 0
+                productosPorMes.add(0);
+            }
+        }
+    } catch (Exception e) {
+        System.out.println("ProductoDAO - obtenerProductosPorMes: " + e);
+    } finally {
+        closeResources();
+    }
+
+    return productosPorMes;
+}
+
 
     private void closeResources() {
         try {

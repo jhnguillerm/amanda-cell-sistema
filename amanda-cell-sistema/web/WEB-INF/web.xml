@@ -32,6 +32,14 @@
         <servlet-name>SvRutas</servlet-name>
         <servlet-class>Controller.SvRutas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SvObtenerTiposProductos</servlet-name>
+        <servlet-class>Controller.SvObtenerTiposProductos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SvObtenerProductosPorMes</servlet-name>
+        <servlet-class>Controller.SvObtenerProductosPorMes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SvVenta</servlet-name>
         <url-pattern>/SvVenta</url-pattern>
@@ -55,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>SvRutas</servlet-name>
         <url-pattern>/SvRutas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SvObtenerTiposProductos</servlet-name>
+        <url-pattern>/SvObtenerTiposProductos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SvObtenerProductosPorMes</servlet-name>
+        <url-pattern>/SvObtenerProductosPorMes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
