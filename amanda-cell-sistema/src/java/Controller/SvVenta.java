@@ -90,7 +90,7 @@ public class SvVenta extends HttpServlet {
 
                 idProducto = Integer.parseInt(request.getParameter("cbProducto"));
 
-                producto.setIdProducto(idProducto);;
+                producto.setIdProducto(idProducto);
                 if (productoDAO.search(producto)) {
                     session.setAttribute("idProducto", producto.getIdProducto());
                     session.setAttribute("nombreProducto", producto.getNombre());
@@ -157,7 +157,7 @@ public class SvVenta extends HttpServlet {
                 total = calcularTotal(listaDetalle);
                 session.setAttribute("listaDetalle", listaDetalle);
                 session.setAttribute("total", total);
-                response.sendRedirect(request.getContextPath() + "/View/nuevaVenta.jsp");
+                response.sendRedirect(request.getContextPath() + "/View/nuevoServicio.jsp");
                 return;
                 // CREATE ==============================================================================
             } else if (action.equals("create")) {

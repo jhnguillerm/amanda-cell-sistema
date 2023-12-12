@@ -1,4 +1,3 @@
-
 package ModelDAO;
 
 import Config.ConexionDB;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
-    
+
     ConexionDB conexionDB = new ConexionDB();
     Connection connection = null;
     PreparedStatement ps = null;
@@ -57,8 +56,8 @@ public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
             ps.setString(1, servicio.getNumSerie());
             ps.setString(2, servicio.getProblema());
             ps.setString(3, servicio.getDescripcion());
-            ps.setDouble(4,servicio.getCosto());
-            ps.setDouble(5,servicio.getTotal());
+            ps.setDouble(4, servicio.getCosto());
+            ps.setDouble(5, servicio.getTotal());
             ps.setString(6, servicio.getFechaRecepcion());
             ps.setString(7, servicio.getFechaEntrega());
             ps.setString(8, servicio.getEstado());
@@ -91,8 +90,8 @@ public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
             ps.setString(1, servicio.getNumSerie());
             ps.setString(2, servicio.getProblema());
             ps.setString(3, servicio.getDescripcion());
-            ps.setDouble(4,servicio.getCosto());
-            ps.setDouble(5,servicio.getTotal());
+            ps.setDouble(4, servicio.getCosto());
+            ps.setDouble(5, servicio.getTotal());
             ps.setString(6, servicio.getFechaRecepcion());
             ps.setString(7, servicio.getFechaEntrega());
             ps.setString(8, servicio.getEstado());
@@ -141,26 +140,7 @@ public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
     public boolean search(Servicio entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public int generarNumSerie() {
-        int numSerie = 1;
-        String sql = "SELECT MAX(id_servicio) FROM servicio";
-        try {
-            connection = conexionDB.getConnection();
-            ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int maxId = rs.getInt(1);
-                if (maxId > 0) {
-                    numSerie = maxId + 1;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Servicio - generarNumSerie: " + e);
-        }
-        return numSerie;
-    }
-    
+
     public int cantidadServicios() {
         int cantidad = 0;
         String sql = "SELECT COUNT(*) AS cantidad_servicios FROM servicio";
@@ -182,5 +162,49 @@ public class ServicioDAO extends ConexionDB implements CRUD<Servicio> {
         }
         return cantidad;
     }
-    
+
+    public int generarSiguienteId() {
+        int siguienteId = 0;
+        String sql = "SELECT MAX(CAST(SUBSTRING(num_serie, 2) AS UNSIGNED)) AS max_num_serie FROM servicio";
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                siguienteId = rs.getInt("max_num_serie") + 1;
+            }
+        } catch (Exception e) {
+            System.out.println("ServicioDAO - generarSiguienteId: " + e);
+        } finally {
+            closeResources();
+        }
+        return siguienteId;
+    }
+
+    public String generarNumSerie() {
+        String numSerie = null;
+        int siguienteId = generarSiguienteId();
+        if (siguienteId > 0) {
+            numSerie = String.format("S%04d", siguienteId);
+        }
+        return numSerie;
+    }
+
+    private void closeResources() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al cerrar recursos: " + e);
+        }
+    }
+
 }

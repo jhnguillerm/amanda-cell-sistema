@@ -18,9 +18,8 @@
             <main class="content">
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
-                <form action="/amanda-cell-sistema/SvServicio" method="post" class="m-0">
+                <form action="/amanda-cell-sistema/SvServicio" method="post" class="m-0 needs-validation" novalidate id="formServicio">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-
                         <div class="d-flex flex-column justify-content-center">
                             <h4 class="mb-1 mt-3">Nueva servicio</h4>
                         </div>
@@ -29,7 +28,6 @@
                             <button type="submit" class="btn btn-primary" name="action" value="create">Generar servicio</button>
                         </div>
                     </div>
-
                     <div class="row">
                         <!-- Primera columna -->
                         <div class="col-12 col-lg-4">
@@ -42,14 +40,14 @@
                                 <div class="card-body">
                                     <div class="mb-3 col">
                                         <div class="input-group">
-                                            <select id="cbCliente" class="form-select" name="cbCliente">
-                                                <option value="">Selecciona el cliente</option>
+                                            <select id="cbCliente" class="form-select" name="cbCliente" required>
+                                                <option disabled value="">Selecciona el cliente</option>
                                                 <%
                                                     ClienteDAO clienteDAO = new ClienteDAO();
                                                     List<Cliente> listaClientes = clienteDAO.toList();
                                                     for (Cliente cliente : listaClientes) {
                                                 %>
-                                                <option value="<%= cliente.getIdCliente()%>"><%= cliente.getNombres()%></option>
+                                                <option selected value="<%= cliente.getIdCliente()%>"><%= cliente.getNombres()%></option>
                                                 <%
                                                     }
                                                 %>
@@ -64,14 +62,14 @@
                                     <div class="row mb-3">
                                         <div class="col-4">
                                             <label class="form-label" for="txtDni">DNI</label>
-                                            <input type="text" class="form-control" name="txtDni" id="txtDni" disabled value="${cliente.getDni()}">
-                                            <input name="txtDni" type="hidden" id="txtDni-hidden" class="form-control" value="${cliente.getDni()}">
-                                            <input type="hidden" class="form-control" name="txtIdCliente" value="${cliente.getIdCliente()}">
+                                            <input type="text" class="form-control" name="txtDni" id="txtDni" disabled value="${sessionScope.dniCliente}">
+                                            <input name="txtDni" type="hidden" id="txtDni-hidden" class="form-control" value="${sessionScope.dniCliente}">
+                                            <input type="hidden" class="form-control" name="txtIdCliente" value="${sessionScope.idCliente}">
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombres">Nombres</label>
-                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" disabled value="${cliente.getNombres()}">
-                                            <input name="txtNombres" type="hidden" id="txtNombres-hidden" class="form-control" value="${cliente.getNombres()}">
+                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" disabled value="${sessionScope.nombresCliente}">
+                                            <input name="txtNombres" type="hidden" id="txtNombres-hidden" class="form-control" value="${sessionScope.nombresCliente}">
                                         </div>
                                     </div>
                                 </div>
@@ -81,19 +79,19 @@
                             <div class="card mb-4 border-0 shadow-lg">
                                 <div class="card-header border-0 bg-body d-flex justify-content-between align-items-center">
                                     <h5 class="card-title mb-0">Datos del producto</h5>
-                                    <a href="loadProducto.jsp" class="fw-medium">Nuevo producto</a>
+                                    <a href="../View/newProducto.jsp" class="fw-medium">Nuevo producto</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-3 col">
                                         <div class="input-group">
-                                            <select id="cbProducto" class="form-select" name="cbProducto">
-                                                <option value="">Selecciona el producto</option>
+                                            <select id="cbProducto" class="form-select" name="cbProducto" required>
+                                                <option disabled selected value="">Selecciona el producto</option>
                                                 <%
                                                     ProductoDAO productoDAO = new ProductoDAO();
                                                     List<Producto> listaProductos = productoDAO.toList();
                                                     for (Producto producto : listaProductos) {
                                                 %>
-                                                <option value="<%= producto.getIdProducto()%>"><%= producto.getNombre()%></option>
+                                                <option selected value="<%= producto.getIdProducto()%>"><%= producto.getNombre()%></option>
                                                 <%
                                                     }
                                                 %>
@@ -106,25 +104,25 @@
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" disabled value="${producto.getNombre()}">
-                                            <input type="hidden" class="form-control" name="txtNombre" id="txtNombre-hidden" value="${producto.getNombre()}">
-                                            <input type="hidden" class="form-control" name="txtIdProducto" id="txtIdProducto" value="${producto.getIdProducto()}">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" disabled value="${sessionScope.nombreProducto}">
+                                            <input type="hidden" class="form-control" name="txtNombre" id="txtNombre-hidden" value="${sessionScope.nombreProducto}">
+                                            <input type="hidden" class="form-control" name="txtIdProducto" id="txtIdProducto" value="${sessionScope.idProducto}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-4">
                                             <label class="form-label" for="txtPrecio">Precio</label>
-                                            <input type="text" class="form-control" name="txtPrecio" id="txtPrecio" disabled value="${producto.getPrecioVenta()}">
-                                            <input type="hidden" class="form-control" name="txtPrecio" id="txtPrecio-hidden" value="${producto.getPrecioVenta()}">
+                                            <input type="text" class="form-control" name="txtPrecio" id="txtPrecio" disabled value="${sessionScope.precioProducto}">
+                                            <input type="hidden" class="form-control" name="txtPrecio" id="txtPrecio-hidden" value="${sessionScope.precioProducto}">
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtStock">Stock</label>
-                                            <input type="text" class="form-control" name="txtStock" id="txtStock" disabled value="${producto.getStock()}">
-                                            <input type="hidden" class="form-control" name="txtStock" id="txtStock-hidden" value="${producto.getStock()}">
+                                            <input type="text" class="form-control" name="txtStock" id="txtStock" disabled value="${sessionScope.stockProducto}">
+                                            <input type="hidden" class="form-control" name="txtStock" id="txtStock-hidden" value="${sessionScope.stockProducto}">
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCantidad">Cantidad</label>
-                                            <input type="number" min="1" max="${producto.getStock()}" class="form-control" name="txtCantidad" id="txtCantidad">
+                                            <input type="number" min="1" max="${sessionScope.stockProducto}" class="form-control" name="txtCantidad" id="txtCantidad" value="1">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -148,11 +146,11 @@
                                     <div class="row mb-3">
                                         <div class="col-8">
                                             <label class="form-label" for="txtProblema">Problema principal</label>
-                                            <input type="text" class="form-control" name="txtProblema" id="txtProblema" placeholder="Problema">
+                                            <input type="text" class="form-control" name="txtProblema" id="txtProblema">
                                         </div>
                                         <div class="col-4">
                                             <label class="form-label" for="txtCosto">Costo</label>
-                                            <input type="text" class="form-control" name="txtCosto" id="txtCosto" placeholder="Costo">
+                                            <input type="text" class="form-control" name="txtCosto" id="txtCosto">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -187,12 +185,12 @@
                                 <div class="card-header border-0 d-flex align-items-center">
                                     <h5 class="card-tile mb-0">NRO. SERIE</h5>
                                     <div class="col-3 px-4">
-                                        <input type="text" class="form-control" value="${numSerieServicio}" name="txtNumSerie" id="txtNumSerie" disabled>
-                                        <input type="hidden" class="form-control" value="${numSerie}" name="txtNumSerie">
+                                        <input type="text" class="form-control" value="${sessionScope.numSerie}" name="txtNumSerie" id="txtNumSerie" disabled>
+                                        <input type="hidden" class="form-control" value="${sessionScope.numSerie}" name="txtNumSerie">
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="tablaVenta" class="table table-hover" style="width:100%">
+                                    <table id="tablaServicio" class="table table-hover" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Producto</th>
@@ -204,20 +202,24 @@
                                         </thead>
                                         <tbody class="table-group-divider">
                                             <%
-                                                List<DetalleServicio> listaDetalleServicio = (List<DetalleServicio>) request.getAttribute("listaDetalle");
+                                                List<DetalleServicio> listaDetalle = (List<DetalleServicio>) session.getAttribute("listaDetalle");
 
-                                                if (listaDetalleServicio != null) {
-                                                    for (DetalleServicio detalleServicio : listaDetalleServicio) {
-                                                        double subtotal = detalleServicio.getSubtotal();
+                                                if (listaDetalle != null) {
+                                                    for (DetalleServicio detalle : listaDetalle) {
+                                                        double subtotal = detalle.getSubtotal();
                                                         String roundedSubtotal = String.format("%.2f", subtotal);
                                             %>
                                             <tr>
-                                                <td class="align-middle"><%= detalleServicio.getNombreProducto()%></td>
-                                                <td class="align-middle">S/.<%= detalleServicio.getPrecioVenta()%></td>
-                                                <td class="align-middle"><%= detalleServicio.getCantidad()%></td>
-                                                <td class="align-middle">S/.<%= roundedSubtotal %></td>
+                                                <td class="align-middle"><%= detalle.getNombreProducto()%></td>
+                                                <td class="align-middle">S/.<%= detalle.getPrecioVenta()%></td>
+                                                <td class="align-middle"><%= detalle.getCantidad()%></td>
+                                                <td class="align-middle">S/.<%= roundedSubtotal%></td>
                                                 <td class="align-middle">
-                                                    <button type="button" name="action" value="eliminarDetalle" class="btn-close align-middle"></button>
+                                                    <form action="/amanda-cell-sistema/SvServicio" method="post">
+                                                        <input type="hidden" name="action" value="eliminarDetalle">
+                                                        <input type="hidden" name="detalleIdProducto" value="<%= detalle.getIdProducto()%>">
+                                                        <button type="submit" class="btn-close align-middle"></button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             <%
@@ -251,8 +253,28 @@
         <!-- Scripts -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
         <script>
-            var total = parseFloat("${total}").toFixed(2);
-            $("#txtTotal").val(total);
+            // Verifica la validez del formulario al enviar
+            document.getElementById('formServicio').addEventListener('submit', function (event) {
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                this.classList.add('was-validated');
+            });
+
+            // Establece el valor seleccionado en el selector de clientes
+            var selectedClienteId = '<%= (session.getAttribute("idCliente") != null) ? session.getAttribute("idCliente") : ""%>';
+            var cbCliente = document.getElementById('cbCliente');
+            if (selectedClienteId) {
+                cbCliente.value = selectedClienteId;
+            }
+
+            // Establece el valor seleccionado en el selector de productos
+            var selectedProductoId = '<%= (session.getAttribute("idProducto") != null) ? session.getAttribute("idProducto") : ""%>';
+            var cbProducto = document.getElementById('cbProducto');
+            if (selectedProductoId) {
+                cbProducto.value = selectedProductoId;
+            }
         </script>
     </body>
 </html>

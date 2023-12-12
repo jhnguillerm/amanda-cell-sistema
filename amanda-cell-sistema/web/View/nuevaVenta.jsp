@@ -6,7 +6,6 @@
 <%@page import="ModelDAO.ClienteDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +22,6 @@
                 <!-- / Nav horizontal -->
                 <form action="/amanda-cell-sistema/SvVenta" method="post" class="m-0 needs-validation" novalidate id="formVenta">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-
                         <div class="d-flex flex-column justify-content-center">
                             <h4 class="mb-1 mt-3">Nueva venta</h4>
                         </div>
@@ -32,7 +30,6 @@
                             <button type="submit" class="btn btn-primary" name="action" value="create">Generar venta</button>
                         </div>
                     </div>
-
                     <div class="row">
                         <!-- Primera columna -->
                         <div class="col-12 col-lg-4">
@@ -213,30 +210,28 @@
         crossorigin="anonymous"></script>
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
         <script>
-    // Verifica la validez del formulario al enviar
-    document.getElementById('formVenta').addEventListener('submit', function (event) {
-        if (!this.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        this.classList.add('was-validated');
-    });
+            // Verifica la validez del formulario al enviar
+            document.getElementById('formVenta').addEventListener('submit', function (event) {
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                this.classList.add('was-validated');
+            });
 
-    // Establece el valor seleccionado en el selector de clientes
-    var selectedClienteId = '<%= (session.getAttribute("idCliente") != null) ? session.getAttribute("idCliente") : "" %>';
-    var cbCliente = document.getElementById('cbCliente');
-    if (selectedClienteId) {
-        cbCliente.value = selectedClienteId;
-    }
+            // Establece el valor seleccionado en el selector de clientes
+            var selectedClienteId = '<%= (session.getAttribute("idCliente") != null) ? session.getAttribute("idCliente") : ""%>';
+            var cbCliente = document.getElementById('cbCliente');
+            if (selectedClienteId) {
+                cbCliente.value = selectedClienteId;
+            }
 
-    // Establece el valor seleccionado en el selector de productos
-    var selectedProductoId = '<%= (session.getAttribute("idProducto") != null) ? session.getAttribute("idProducto") : "" %>';
-    var cbProducto = document.getElementById('cbProducto');
-    if (selectedProductoId) {
-        cbProducto.value = selectedProductoId;
-    }
-</script>
-
-
+            // Establece el valor seleccionado en el selector de productos
+            var selectedProductoId = '<%= (session.getAttribute("idProducto") != null) ? session.getAttribute("idProducto") : ""%>';
+            var cbProducto = document.getElementById('cbProducto');
+            if (selectedProductoId) {
+                cbProducto.value = selectedProductoId;
+            }
+        </script>
     </body>
 </html>

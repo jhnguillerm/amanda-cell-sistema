@@ -1,6 +1,5 @@
 package Controller;
 
-import Config.GenerarNumSerie;
 import Model.Cliente;
 import Model.DetalleServicio;
 import Model.Producto;
@@ -11,6 +10,7 @@ import ModelDAO.ProductoDAO;
 import ModelDAO.ServicioDAO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,12 +34,11 @@ public class SvServicio extends HttpServlet {
     Servicio servicio = new Servicio();
     ServicioDAO servicioDAO = new ServicioDAO();
     int idServicio;
-    int numSerie;
-    String nuevoNumSerie;
+    String numSerie = servicioDAO.generarNumSerie();
     String problema;
     String descripcion;
     double costo;
-    double total;
+    double total = 0.0;
     String fechaRecepcion;
     String fechaEntrega;
     String estado;
@@ -68,59 +67,49 @@ public class SvServicio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
 
         if (request.getParameter("action") != null) {
-
             String action = request.getParameter("action");
 
-            numSerie = servicioDAO.generarNumSerie();
-            GenerarNumSerie generarNumSerie = new GenerarNumSerie();
-            nuevoNumSerie = generarNumSerie.generarNumeroSerieServicio(numSerie);
-            
-            request.setAttribute("numSerieServicio", nuevoNumSerie);
-            request.setAttribute("numSerie", numSerie);
+            session.setAttribute("numSerie", numSerie);
 
-            //Buscar cliente
+            // BUSCAR CLIENTE ==============================================================================
             if (action.equals("searchCliente")) {
                 idCliente = Integer.parseInt(request.getParameter("cbCliente"));
 
                 cliente.setIdCliente(idCliente);
                 if (clienteDAO.search(cliente)) {
-                    request.setAttribute("cliente", cliente);
-                    request.setAttribute("producto", producto);
-                    request.setAttribute("listaDetalle", listaDetalle);
-                    request.setAttribute("total", total);
+                    session.setAttribute("idCliente", cliente.getIdCliente());
+                    session.setAttribute("dniCliente", cliente.getDni());
+                    session.setAttribute("nombresCliente", cliente.getNombres());
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
 
-                //Buscar Producto
+                // BUSCAR PRODUCTO ==============================================================================
             } else if (action.equals("searchProducto")) {
                 idProducto = Integer.parseInt(request.getParameter("cbProducto"));
 
-                producto.setIdProducto(idProducto);;
+                producto.setIdProducto(idProducto);
                 if (productoDAO.search(producto)) {
-                    request.setAttribute("cliente", cliente);
-                    request.setAttribute("producto", producto);
-                    request.setAttribute("listaDetalle", listaDetalle);
-                    request.setAttribute("total", total);
+                    session.setAttribute("idProducto", producto.getIdProducto());
+                    session.setAttribute("nombreProducto", producto.getNombre());
+                    session.setAttribute("precioProducto", producto.getPrecioVenta());
+                    session.setAttribute("stockProducto", producto.getStock());
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 }
+                // AGREGAR PRODUCTO A LA TABLA ==============================================================================
             } else if (action.equals("agregarTabla")) {
-                total = 0;
-
-                request.setAttribute("cliente", cliente);
-                request.setAttribute("producto", producto);
 
                 idProducto = Integer.parseInt(request.getParameter("txtIdProducto"));
                 nombreProducto = request.getParameter("txtNombre");
                 cantidad = Integer.parseInt(request.getParameter("txtCantidad"));
                 precioVenta = Double.parseDouble(request.getParameter("txtPrecio"));
                 subtotal = cantidad * precioVenta;
-                idServicio = numSerie;
+                idServicio = servicioDAO.generarSiguienteId();
 
                 // Verificar si el producto ya está en la lista
                 boolean productoExistente = false;
@@ -146,16 +135,33 @@ public class SvServicio extends HttpServlet {
                     listaDetalle.add(detalleServicio);
                 }
 
+                total = 0.0;
+
                 // Recalcular el total
                 for (int i = 0; i < listaDetalle.size(); i++) {
                     total += listaDetalle.get(i).getSubtotal();
                 }
-
-                request.setAttribute("total", total);
-                request.setAttribute("listaDetalle", listaDetalle);
-            } else if (action.equals("eliminarDetalle")) {
+                session.setAttribute("listaDetalle", listaDetalle);
                 
-                //Crear Servicio y DetalleServicio
+                // ELIMINAR DETALLE ==============================================================================
+            } else if (action.equals("eliminarDetalle")) {
+                int detalleIdProducto = Integer.parseInt(request.getParameter("detalleIdProducto"));
+
+                Iterator<DetalleServicio> iterator = listaDetalle.iterator();
+                while (iterator.hasNext()) {
+                    DetalleServicio detalle = iterator.next();
+                    if (detalle.getIdProducto() == detalleIdProducto) {
+                        iterator.remove();
+                        break;
+                    }
+                }
+
+                total = calcularTotal(listaDetalle);
+                session.setAttribute("listaDetalle", listaDetalle);
+                session.setAttribute("total", total);
+                response.sendRedirect(request.getContextPath() + "/View/nuevoServicio.jsp");
+                return;
+                // CREATE ==============================================================================
             } else if (action.equals("create")) {
                 //Actualizar stock
                 for (int i = 0; i < listaDetalle.size(); i++) {
@@ -174,11 +180,11 @@ public class SvServicio extends HttpServlet {
                 }
 
                 //Servicio
-                numSerie = Integer.parseInt(request.getParameter("txtNumSerie"));
+                numSerie = request.getParameter("txtNumSerie");
+                total = calcularTotal(listaDetalle);
                 problema = request.getParameter("txtProblema");
                 descripcion = request.getParameter("areaDescripcion");
                 costo = Double.parseDouble(request.getParameter("txtCosto"));
-                total = Double.parseDouble(request.getParameter("txtTotal"));
                 fechaRecepcion = request.getParameter("txtFechaRecepcion");
                 fechaEntrega = request.getParameter("txtFechaEntrega");
                 estado = request.getParameter("cbEstado");
@@ -187,7 +193,7 @@ public class SvServicio extends HttpServlet {
 
                 servicio = new Servicio();
 
-                servicio.setNumSerie(nuevoNumSerie);
+                servicio.setNumSerie(numSerie);
                 servicio.setProblema(problema);
                 servicio.setDescripcion(descripcion);
                 servicio.setCosto(costo);
@@ -215,16 +221,43 @@ public class SvServicio extends HttpServlet {
                     detalleServicioDAO.create(detalleServicio);
                 }
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 total = 0.0;
+                session.removeAttribute("numSerie");
+                session.removeAttribute("idCliente");
+                session.removeAttribute("dniCliente");
+                session.removeAttribute("nombresCliente");
+                session.removeAttribute("idProducto");
+                session.removeAttribute("nombreProducto");
+                session.removeAttribute("precioProducto");
+                session.removeAttribute("stockProducto");
+                session.removeAttribute("listaDetalle");
+                session.removeAttribute("total");
+
+                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 return;
+                
+                // CANCELAR ==============================================================================
             } else if (action.equals("cancelar")) {
                 listaDetalle.clear();
-                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 total = 0.0;
+
+                session.removeAttribute("numSerie");
+                session.removeAttribute("idCliente");
+                session.removeAttribute("dniCliente");
+                session.removeAttribute("nombresCliente");
+                session.removeAttribute("idProducto");
+                session.removeAttribute("nombreProducto");
+                session.removeAttribute("precioProducto");
+                session.removeAttribute("stockProducto");
+                session.removeAttribute("listaDetalle");
+                session.removeAttribute("total");
+
+                response.sendRedirect(request.getContextPath() + "/View/servicio.jsp");
                 return;
             }
-            request.getRequestDispatcher("View/nuevoServicio.jsp").forward(request, response);
+            session.setAttribute("total", total);
+            //request.getRequestDispatcher("View/nuevoServicio.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/View/nuevoServicio.jsp");
         }
     }
 
@@ -232,5 +265,13 @@ public class SvServicio extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private double calcularTotal(List<DetalleServicio> listaDetalle) {
+        double total = 0.0;
+        for (DetalleServicio detalle : listaDetalle) {
+            total += detalle.getSubtotal();
+        }
+        return Double.parseDouble(String.format("%.2f", total));
+    }
 
 }
