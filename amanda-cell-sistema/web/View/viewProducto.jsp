@@ -33,16 +33,16 @@
                 <section class="py-5">
                     <div class="container px-4 px-lg-5 my-5">
                         <div class="row gx-4 gx-lg-5 align-items-center">
-                            <div class="col-md-6" style="width: 600px;">
+                            <div class="col-md-6">
                                 <%
                                     String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
                                     if (producto.getImagen() != null) {
                                 %>
-                                <img src="<%= imagePath%>" class="w-100 mb-md-0 rounded-5 object-fit-contain" alt="no-photo" />
+                                <img src="<%= imagePath%>" class="w-100 mb-md-0 rounded-5 object-fit-contain" alt="no-photo" width="100%" />
                                 <%
                                 } else {
                                 %>
-                                <img src="../images/no-photo-product.jpg" class="mb-md-0 rounded-5 object-fit-contain" alt="no-photo" width="600px" />
+                                <img src="../images/no-photo-product.jpg" class="mb-md-0 rounded-5 object-fit-contain" alt="no-photo" width="100%" />
                                 <%
                                     }
                                 %>
@@ -52,16 +52,16 @@
                                 <h1 class="display-5 fw-bolder"><%=producto.getNombre()%></h1>
                                 <p class="lead"><%=producto.getDescripcion()%></p>
                                 <div class="fs-5 mb-2">
-                                    <span>Precio de compra: s/<%=producto.getPrecioCompra()%></span>
+                                    <span style="font-size: 15px; color: #495057">Precio de compra: s/<%=producto.getPrecioCompra()%></span>
                                 </div>
                                 <div class="fs-5 mb-2">
-                                    <span>Precio de venta: s/<%=producto.getPrecioVenta()%></span>
+                                    <span style="font-size: 15px">Precio de venta: s/<%=producto.getPrecioVenta()%></span>
                                 </div>
                                 <div class="fs-5 mb-2">
-                                    <span>Stock: <%=producto.getStock()%></span>
+                                    <span style="font-size: 15px">Stock: <%=producto.getStock()%></span>
                                 </div>
                                 <div class="fs-5 mb-5">
-                                    <span>Proveedor: <%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></span>
+                                    <span style="font-size: 15px">Proveedor: <%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></span>
                                 </div>
                                 <div class="d-flex">
                                     <a class="btn btn-outline-dark flex-shrink-0" href="editarProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">

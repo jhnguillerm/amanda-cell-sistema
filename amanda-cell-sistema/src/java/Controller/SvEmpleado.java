@@ -46,7 +46,6 @@ public class SvEmpleado extends HttpServlet {
                 String pass = request.getParameter("txtPass");
                 String rol = request.getParameter("cbRol");
                 Part filePart = request.getPart("fileFoto");
-                InputStream inputStream = filePart.getInputStream();
 
                 Empleado nuevoEmpleado = new Empleado();
                 nuevoEmpleado.setNombres(nombres);
@@ -57,7 +56,10 @@ public class SvEmpleado extends HttpServlet {
                 nuevoEmpleado.setUsername(username);
                 nuevoEmpleado.setPass(pass);
                 nuevoEmpleado.setRol(rol);
-                nuevoEmpleado.setFoto(inputStream);
+                if (filePart != null && filePart.getSize() > 0) {
+                    InputStream inputStream = filePart.getInputStream();
+                    nuevoEmpleado.setFoto(inputStream);
+                }
 
                 if (empleadoDAO.datosExisten(nuevoEmpleado.getCorreo(), "correo", 0)
                         || empleadoDAO.datosExisten(nuevoEmpleado.getDni(), "dni", 0)
