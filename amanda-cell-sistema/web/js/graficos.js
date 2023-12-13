@@ -4,6 +4,11 @@ const getOptionChart1 = (data) => {
             text: 'Productos por tipo',
             left: 'center'
         },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         tooltip: {
             trigger: 'item'
         },
@@ -62,6 +67,11 @@ const getOptionChart2 = (data) => {
             text: 'Ingreso de productos por mes',
             left: 'center'
         },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         xAxis: {
             type: 'category',
             data: meses
@@ -113,9 +123,9 @@ const obtenerTiposProductos = () => {
 
                 // Convertir los datos agrupados en un formato compatible con getOptionChart1
                 const datosFormateados = Object.keys(datosAgrupados).map(tipo => ({
-                    name: tipo,
-                    value: datosAgrupados[tipo]
-                }));
+                        name: tipo,
+                        value: datosAgrupados[tipo]
+                    }));
 
                 resolve(datosFormateados);
             },

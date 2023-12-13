@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -119,7 +120,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPass">Contraseña</label>
                                         <input type="password" class="form-control" id="txtPass" name="txtPass" required>
-                                         <div class="invalid-feedback">
+                                        <div class="invalid-feedback">
                                             Password requerido.
                                         </div>
                                     </div>

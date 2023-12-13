@@ -14,11 +14,29 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/amanda-cell-sistema/SvRutas?action=main" class="nav-link px-2 link-secondary">Inicio</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">Servicios</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">Materiales</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">Usuarios</a></li>
-                <li><a href="/amanda-cell-sistema/SvRutas?action=web" class="nav-link px-2 link-body-emphasis">Pagina Web</a></li>
+                <li><a href="../View/main.jsp" class="nav-link px-2 link-secondary">Inicio</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link px-2 link-body-emphasis dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Servicios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="../View/venta.jsp">Ventas</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../View/servicio.jsp">Reparaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="../View/producto.jsp" class="nav-link px-2 link-body-emphasis">Productos</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link px-2 link-body-emphasis dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Usuarios
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="../View/empleado.jsp">Empleados</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="../View/cliente.jsp">Clientes</a></li>
+                    </ul>
+                </li>
+                <li><a href="/amanda-cell-sistema/SvRutas?action=web" class="nav-link px-2 link-body-emphasis disabled">Pagina Web</a></li>
             </ul>
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"

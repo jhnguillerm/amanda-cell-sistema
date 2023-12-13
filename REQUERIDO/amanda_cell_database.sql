@@ -42,10 +42,11 @@ CREATE TABLE empleado (
 
 CREATE TABLE cliente (
     id_cliente INT AUTO_INCREMENT NOT NULL,
-    nombres VARCHAR(150),
-    dni CHAR(8),
-    correo VARCHAR(100),
-    telefono VARCHAR(15),
+    nombres VARCHAR(150) NOT NULL,
+    dni CHAR(8) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    fecha DATE NOT NULL,
     PRIMARY KEY (id_cliente)
 );
 

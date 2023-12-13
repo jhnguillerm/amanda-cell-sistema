@@ -1,3 +1,6 @@
+<%
+    String userRole = (String) session.getAttribute("rol");
+%>
 <nav class="sidebar">
     <div id="leftside-navigation" class="nano">
         <!-- Logo -->
@@ -27,7 +30,7 @@
                         <a href="/amanda-cell-sistema/SvRutas?action=venta">Lista de ventas</a>
                     </li>
                     <li>
-                        <a href="/amanda-cell-sistema/SvRutas?action=nuevaVenta">Nueva venta</a>
+                        <a href="../View/nuevaVenta.jsp">Nueva venta</a>
                     </li>
                 </ul>
             </li>
@@ -59,7 +62,7 @@
                         <a href="/amanda-cell-sistema/SvRutas?action=producto">Lista de productos</a>
                     </li>
                     <li>
-                        <a href="/amanda-cell-sistema/SvRutas?action=loadProducto">Nuevo producto</a>
+                        <a href="../View/newProducto.jsp">Nuevo producto</a>
                     </li>
                 </ul>
             </li>
@@ -105,7 +108,17 @@
                         <a href="/amanda-cell-sistema/SvRutas?action=empleado">Lista de empleados</a>
                     </li>
                     <li>
-                        <a href="/amanda-cell-sistema/SvRutas?action=loadEmpleado">Nuevo empleado</a>
+                        <%
+                            if ("Administrador".equals(userRole)) {
+                        %>
+                        <a href="../View/newEmpleado.jsp">Nuevo empleado</a>
+                        <%
+                        } else {
+                        %>
+                        <a class="disabled" href="">Nuevo empleado</a>
+                        <%
+                            }
+                        %>
                     </li>
                 </ul>
             </li>

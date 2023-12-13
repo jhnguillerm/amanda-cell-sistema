@@ -96,12 +96,10 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Descripción</th>
                                 <th>Precio Compra</th>
                                 <th>Precio Venta</th>
                                 <th>Stock</th>
                                 <th>Tipo</th>
-                                <th>Proveedor</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -114,11 +112,6 @@
 
                                 while (iterador.hasNext()) {
                                     producto = iterador.next();
-                                    int idProveedor = producto.getIdProveedor();
-                                    ProveedorDAO proveedorDAO = new ProveedorDAO();
-                                    Proveedor proveedor = new Proveedor();
-                                    proveedor.setIdProveedor(idProveedor);
-                                    boolean found = proveedorDAO.search(proveedor);
                             %>
                             <tr>
                                 <th class="align-middle"><%=producto.getIdProducto()%></th>
@@ -127,22 +120,20 @@
                                         String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
                                         if (producto.getImagen() != null) {
                                     %>
-                                    <img src="<%= imagePath%>" alt="no-photo" width="50px" height="50px" />
+                                    <img class="rounded-2 mx-3" src="<%= imagePath%>" alt="no-photo" width="50px" height="50px" />
                                     <%
                                     } else {
                                     %>
-                                    <img src="../images/no-photo-product.jpg" alt="no-photo" width="50px" height="50px" />
+                                    <img class="rounded-2 mx-3" src="../images/no-photo-product.jpg" alt="no-photo" width="50px" height="50px" />
                                     <%
                                         }
                                     %>
                                     <%=producto.getNombre()%>
                                 </td>
-                                <td class="align-middle td_descripcion"><%=producto.getDescripcion()%></td>
                                 <td class="align-middle td_precio_compra"><%=producto.getPrecioCompra()%></td>
                                 <td class="align-middle td_precio_venta"><%=producto.getPrecioVenta()%></td>
                                 <td class="align-middle td_stock"><%=producto.getStock()%></td>
                                 <td class="align-middle td_tipo"><%=producto.getTipo()%></td>
-                                <td class="align-middle td_proveedor"><%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></td>
                                 <td class="align-middle">
                                     <!-- Boton para ver un producto -->
                                     <a class="align-middle" href="viewProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>"><i style="color: #7e7e7d; font-size: 18px;" class="bi bi-eye"></i></a>

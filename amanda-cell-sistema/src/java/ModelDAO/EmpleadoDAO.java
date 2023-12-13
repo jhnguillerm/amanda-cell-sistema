@@ -228,6 +228,25 @@ public class EmpleadoDAO extends ConexionDB {
             throw new RuntimeException(ex);
         }
     }
+    
+    public InputStream obtenerFotoExistente(int idEmpleado) {
+    String sql = "SELECT foto FROM empleado WHERE id_empleado = ?";
+    try {
+        connection = conexionDB.getConnection();
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, idEmpleado);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getBinaryStream("foto");
+        }
+    } catch (Exception e) {
+        System.out.println("Empleado - obtenerFotoExistente: " + e);
+    } finally {
+        closeResources();
+    }
+    return null;
+}
+
 
     private void closeResources() {
         try {

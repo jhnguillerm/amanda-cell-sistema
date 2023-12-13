@@ -149,7 +149,7 @@ public class ProductoDAO extends ConexionDB {
 
             if (rs.next()) {
                 producto = new Producto();
-                
+
                 producto.setIdProducto(Integer.parseInt(rs.getString("id_producto")));
                 producto.setNombre(rs.getString("nombre"));
                 producto.setDescripcion(rs.getString("descripcion"));
@@ -281,7 +281,7 @@ public class ProductoDAO extends ConexionDB {
         }
         return 0;
     }
-    
+
     public boolean search(Producto entidad) {
         String sql = "SELECT * FROM producto WHERE id_producto = ?";
         try {
@@ -315,39 +315,57 @@ public class ProductoDAO extends ConexionDB {
             }
         }
     }
-    
+
     public List<Integer> obtenerProductosPorMes() {
-    List<Integer> productosPorMes = new ArrayList<>();
+        List<Integer> productosPorMes = new ArrayList<>();
 
-    // Consulta para obtener la cantidad de productos por mes
-    String sql = "SELECT COUNT(*) AS cantidad_productos FROM producto WHERE MONTH(fecha) = ?";
+        // Consulta para obtener la cantidad de productos por mes
+        String sql = "SELECT COUNT(*) AS cantidad_productos FROM producto WHERE MONTH(fecha) = ?";
 
-    try {
-        connection = conexionDB.getConnection();
-        ps = connection.prepareStatement(sql);
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
 
-        // Iterar sobre los meses
-        for (int mes = 1; mes <= 12; mes++) {
-            ps.setInt(1, mes);
-            rs = ps.executeQuery();
+            // Iterar sobre los meses
+            for (int mes = 1; mes <= 12; mes++) {
+                ps.setInt(1, mes);
+                rs = ps.executeQuery();
 
-            if (rs.next()) {
-                int cantidad = rs.getInt("cantidad_productos");
-                productosPorMes.add(cantidad);
-            } else {
-                // Si no hay datos para el mes actual, agregar 0
-                productosPorMes.add(0);
+                if (rs.next()) {
+                    int cantidad = rs.getInt("cantidad_productos");
+                    productosPorMes.add(cantidad);
+                } else {
+                    // Si no hay datos para el mes actual, agregar 0
+                    productosPorMes.add(0);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("ProductoDAO - obtenerProductosPorMes: " + e);
+        } finally {
+            closeResources();
         }
-    } catch (Exception e) {
-        System.out.println("ProductoDAO - obtenerProductosPorMes: " + e);
-    } finally {
-        closeResources();
+
+        return productosPorMes;
     }
 
-    return productosPorMes;
-}
-
+    public InputStream obtenerImagenExistente(int idProducto) {
+        String sql = "SELECT imagen FROM producto WHERE id_producto = ?";
+        InputStream inputStream = null;
+        try {
+            connection = conexionDB.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, idProducto);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                inputStream = rs.getBinaryStream("imagen");
+            }
+        } catch (Exception e) {
+            System.out.println("ProductoDAO - obtenerImagenExistente: " + e);
+        } finally {
+            closeResources();
+        }
+        return inputStream;
+    }
 
     private void closeResources() {
         try {

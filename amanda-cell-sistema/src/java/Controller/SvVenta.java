@@ -157,7 +157,7 @@ public class SvVenta extends HttpServlet {
                 total = calcularTotal(listaDetalle);
                 session.setAttribute("listaDetalle", listaDetalle);
                 session.setAttribute("total", total);
-                response.sendRedirect(request.getContextPath() + "/View/nuevoServicio.jsp");
+                response.sendRedirect(request.getContextPath() + "/View/nuevaVenta.jsp");
                 return;
                 // CREATE ==============================================================================
             } else if (action.equals("create")) {

@@ -47,7 +47,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">
@@ -79,7 +78,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-xxl-3 col-md-6">
@@ -102,17 +100,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8 mb-4 order-0">
-                        <div class="card bg-body border-0 shadow-lg">
+                    <div class="col-lg-7 mb-4 order-0">
+                        <div class="card bg-body border-0 shadow-lg pt-3">
                             <div id="chart2" class="chart">
-                                
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 mb-4 order-1">
-                        <div class="card bg-body border-0 shadow-lg">
+                    <div class="col-lg-5 col-md-4 mb-4 order-1">
+                        <div class="card bg-body border-0 shadow-lg pt-3">
                             <div id="chart1" class="chart">
-                                
+
                             </div>
                         </div>
                     </div>

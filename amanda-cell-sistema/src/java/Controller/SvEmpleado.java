@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 @MultipartConfig
@@ -83,7 +84,14 @@ public class SvEmpleado extends HttpServlet {
                 empleado.setRol(request.getParameter("cbRol"));
                 Part filePart = request.getPart("fileFoto");
                 InputStream inputStream = filePart.getInputStream();
-                empleado.setFoto(inputStream);
+                //Cambiar imagen o no
+                String cambiarFoto = request.getParameter("cambiarFoto");
+                boolean cambiarFotoVerificado = "on".equals(cambiarFoto);
+                if (cambiarFotoVerificado) {
+                    empleado.setFoto(inputStream);
+                } else {
+                    empleado.setFoto(empleadoDAO.obtenerFotoExistente(idEmpleado));
+                }
 
                 if (empleadoDAO.datosExisten(empleado.getCorreo(), "correo", empleado.getIdEmpleado())
                         || empleadoDAO.datosExisten(empleado.getDni(), "dni", empleado.getIdEmpleado())

@@ -10,6 +10,11 @@
     int idProducto = (idProductoUrl != null && !idProductoUrl.isEmpty()) ? Integer.parseInt(idProductoUrl) : 0;
     ProductoDAO productoDAO = new ProductoDAO();
     Producto producto = productoDAO.getProductoById(idProducto);
+
+    ProveedorDAO proveedorDAO = new ProveedorDAO();
+    Proveedor proveedor = new Proveedor();
+    proveedor.setIdProveedor(producto.getIdProveedor());
+    boolean found = proveedorDAO.search(proveedor);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,16 +33,16 @@
                 <section class="py-5">
                     <div class="container px-4 px-lg-5 my-5">
                         <div class="row gx-4 gx-lg-5 align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="width: 600px;">
                                 <%
                                     String imagePath = "/amanda-cell-sistema/SvProducto?idProducto=" + producto.getIdProducto();
                                     if (producto.getImagen() != null) {
                                 %>
-                                <img src="<%= imagePath%>" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" />
+                                <img src="<%= imagePath%>" class="w-100 mb-md-0 rounded-5 object-fit-contain" alt="no-photo" />
                                 <%
                                 } else {
                                 %>
-                                <img src="../images/no-photo-product.jpg" class="card-img-top mb-5 mb-md-0 rounded-5" alt="no-photo" width="600px" />
+                                <img src="../images/no-photo-product.jpg" class="mb-md-0 rounded-5 object-fit-contain" alt="no-photo" width="600px" />
                                 <%
                                     }
                                 %>
@@ -45,13 +50,19 @@
                             <div class="col-md-6">
                                 <div class="small mb-1">Fecha: <%=producto.getFecha()%></div>
                                 <h1 class="display-5 fw-bolder"><%=producto.getNombre()%></h1>
+                                <p class="lead"><%=producto.getDescripcion()%></p>
                                 <div class="fs-5 mb-2">
                                     <span>Precio de compra: s/<%=producto.getPrecioCompra()%></span>
                                 </div>
-                                <div class="fs-5 mb-5">
+                                <div class="fs-5 mb-2">
                                     <span>Precio de venta: s/<%=producto.getPrecioVenta()%></span>
                                 </div>
-                                <p class="lead"><%=producto.getDescripcion()%></p>
+                                <div class="fs-5 mb-2">
+                                    <span>Stock: <%=producto.getStock()%></span>
+                                </div>
+                                <div class="fs-5 mb-5">
+                                    <span>Proveedor: <%=found ? proveedor.getNombre() : "Proveedor no encontrado"%></span>
+                                </div>
                                 <div class="d-flex">
                                     <a class="btn btn-outline-dark flex-shrink-0" href="editarProducto.jsp?idProductoUrl=<%=producto.getIdProducto()%>">
                                         <i class="bi-cart-fill me-1"></i>

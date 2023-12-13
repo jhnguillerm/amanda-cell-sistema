@@ -4,6 +4,9 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    String userRole = (String) session.getAttribute("rol");
+%>
 <html lang="en">
     <head>
         <jsp:include page = "../components/head.jsp"/>
@@ -27,7 +30,13 @@
                         </div>
                         <div class="col-auto">
                             <!-- Button - Agregar -->
+                            <%
+                                if ("Administrador".equals(userRole)) {
+                            %>
                             <a href="newEmpleado.jsp" class="btn btn-primary">Agregar empleado</a>
+                            <%
+                                }
+                            %>
                         </div>
                     </div>
                     <table id="tablaEmpleado" class="table table-striped" style="width:100%">
@@ -43,8 +52,6 @@
                         </thead>
                         <tbody>
                             <%
-                                String userRole = (String) session.getAttribute("rol");
-
                                 EmpleadoDAO empleadoDAO = new EmpleadoDAO();
                                 List<Empleado> list = empleadoDAO.toList();
                                 Iterator<Empleado> iterador = list.iterator();
@@ -61,7 +68,6 @@
                                 <td class="align-middle"><%=empleado.getTelefono()%></td>
                                 <td class="align-middle">
                                     <%
-                                        // Verificar el rol antes de mostrar los botones
                                         if ("Administrador".equals(userRole)) {
                                     %>
                                     <!-- Boton para actualizar -->

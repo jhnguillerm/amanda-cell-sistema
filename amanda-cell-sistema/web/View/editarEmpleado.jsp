@@ -159,8 +159,14 @@
                                         <label class="form-label" for="fileFoto">Ingresa una foto</label>
                                         <input type="file" class="form-control" id="fileFoto" name="fileFoto">
                                         <div class="valid-feedback">
-                                            Foto no guardada, vuelve a subirla.
+                                            Foto no obligatoria.
                                         </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="on" id="cambiarFoto" name="cambiarFoto">
+                                        <label class="form-check-label" for="cambiarFoto">
+                                            Deseo cambiar mi foto de perfil
+                                        </label>
                                     </div>
                                 </div>
                             </div>

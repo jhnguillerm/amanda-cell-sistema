@@ -15,7 +15,7 @@ import javax.servlet.http.Part;
 @MultipartConfig
 @WebServlet(name = "SvProducto", urlPatterns = {"/SvProducto"})
 public class SvProducto extends HttpServlet {
-    
+
     ProductoDAO productoDAO = new ProductoDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -74,9 +74,14 @@ public class SvProducto extends HttpServlet {
                 double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
                 int stock = Integer.parseInt(request.getParameter("txtStock"));
                 String tipo = request.getParameter("txtTipo");
+                //Imagen
                 Part filePart = request.getPart("fileImagen");
                 InputStream inputStream = filePart.getInputStream();
+                //ID proveedor
                 int idProveedor = Integer.parseInt(request.getParameter("cbProveedor"));
+                //Cambiar imagen o no
+                String cambiarImagen = request.getParameter("cambiarImagen");
+                boolean cambiarImagenVerificado = "on".equals(cambiarImagen);
 
                 Producto producto = new Producto();
                 ProductoDAO productoDAO = new ProductoDAO();
@@ -88,9 +93,13 @@ public class SvProducto extends HttpServlet {
                 producto.setPrecioVenta(precioVenta);
                 producto.setStock(stock);
                 producto.setTipo(tipo);
-                producto.setImagen(inputStream);
+                if (cambiarImagenVerificado) {
+                    producto.setImagen(inputStream);
+                } else {
+                    producto.setImagen(productoDAO.obtenerImagenExistente(idProducto));
+                }
                 producto.setIdProveedor(idProveedor);
-                
+
                 productoDAO.update(producto);
 
                 response.sendRedirect(request.getContextPath() + "/View/producto.jsp");

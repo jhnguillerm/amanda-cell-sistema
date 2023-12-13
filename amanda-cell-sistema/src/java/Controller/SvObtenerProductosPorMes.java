@@ -28,7 +28,7 @@ public class SvObtenerProductosPorMes extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
         for (int i = 0; i < productosPorMes.size(); i++) {
             JsonObject jsonItem = new JsonObject();
-            jsonItem.addProperty("month", i + 1); // Puedes ajustar esto según tus necesidades
+            jsonItem.addProperty("month", i + 1);
             jsonItem.addProperty("cantidad_productos", productosPorMes.get(i));
             jsonArray.add(jsonItem);
         }

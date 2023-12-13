@@ -25,7 +25,7 @@
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvProducto" method="post" class="m-0" enctype="multipart/form-data">
+                <form action="/amanda-cell-sistema/SvProducto" method="post" class="m-0 needs-validation" novalidate enctype="multipart/form-data" id="formProducto">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
@@ -44,29 +44,47 @@
                                     <h5 class="card-tile mb-0">Información general</h5>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Nombre -->
                                     <div class="row mb-3">
+                                        <!-- ID -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtIdProducto">ID</label>
                                             <input type="text" class="form-control" id="txtIdProducto" value="<%=producto.getIdProducto()%>" disabled>
                                             <input name="txtIdProducto" type="hidden" id="txtIdProducto-hidden" value="<%=producto.getIdProducto()%>" class="form-control">
                                         </div>
+                                        <!-- Nombre -->
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<%=producto.getNombre()%>">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" value="<%=producto.getNombre()%>" required>
+                                            <div class="invalid-feedback">
+                                                Nombre del producto requerido.
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Stock - Tipo -->
                                     <div class="row mb-3">
-                                        <div class="col-4"><label class="form-label" for="txtStock">Stock</label>
-                                            <input type="number" class="form-control" name="txtStock" id="txtStock" value="<%=producto.getStock()%>"></div>
-                                        <div class="col-8"><label class="form-label" for="txtTipo">Tipo</label>
-                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo" value="<%=producto.getTipo()%>"></div>
+                                        <!-- Stock -->
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtStock">Stock</label>
+                                            <input type="number" min="1" class="form-control" name="txtStock" id="txtStock" value="<%=producto.getStock()%>">
+                                            <div class="valid-feedback">
+                                                Mínimo de stock 1.
+                                            </div>
+                                        </div>
+                                        <!-- Tipo -->
+                                        <div class="col-8">
+                                            <label class="form-label" for="txtTipo">Tipo</label>
+                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo" value="<%=producto.getTipo()%>" required>
+                                            <div class="invalid-feedback">
+                                                Tipo requerido.
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- Description -->
                                     <div>
                                         <label class="form-label" for="areaDescripcion">Descripción</label>
                                         <textarea class="form-control" name="areaDescripcion" id="areaDescripcion" rows="4"><%=producto.getDescripcion()%></textarea>
+                                        <div class="valid-feedback">
+                                            Descripcion.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,6 +98,15 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="fileImagen">Ingresa una imagen</label>
                                         <input type="file" class="form-control" id="fileImagen" name="fileImagen">
+                                        <div class="valid-feedback">
+                                            Imagen no obligatoria.
+                                        </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="on" id="cambiarImagen" name="cambiarImagen">
+                                        <label class="form-check-label" for="cambiarImagen">
+                                            Deseo cambiar la imagen
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -97,12 +124,18 @@
                                     <!-- Precio de compra -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioCompra">Precio de compra</label>
-                                        <input type="number" class="form-control" id="txtPrecioCompra" name="txtPrecioCompra" step="any" value="<%=producto.getPrecioCompra()%>">
+                                        <input type="number" class="form-control" id="txtPrecioCompra" name="txtPrecioCompra" step="any" value="<%=producto.getPrecioCompra()%>" required>
+                                        <div class="invalid-feedback">
+                                            Precio requerido.
+                                        </div>
                                     </div>
                                     <!-- Precio de venta -->
                                     <div class="mb-3">
                                         <label class="form-label" for="txtPrecioVenta">Precio de venta</label>
-                                        <input type="number" class="form-control" id="txtPrecioVenta" name="txtPrecioVenta" step="any" value="<%=producto.getPrecioVenta()%>">
+                                        <input type="number" class="form-control" id="txtPrecioVenta" name="txtPrecioVenta" step="any" value="<%=producto.getPrecioVenta()%>" required>
+                                        <div class="invalid-feedback">
+                                            Precio requerido.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -118,8 +151,8 @@
                                             <label class="form-label mb-1 d-flex justify-content-between align-items-center">
                                                 <span>Proveedor</span><a href="proveedor.jsp" class="fw-medium">Agregar proveedor</a>
                                             </label>
-                                            <select id="cbProveedor" class="form-select" name="cbProveedor">
-                                                <option disabled value="">Selecciona el proveedor</option>
+                                            <select id="cbProveedor" class="form-select" name="cbProveedor" required>
+                                                <option selected disabled value="">Selecciona el proveedor</option>
                                                 <%
                                                     ProveedorDAO proveedorDAO = new ProveedorDAO();
                                                     List<Proveedor> listaProveedores = proveedorDAO.toList();
@@ -133,6 +166,9 @@
                                                     }
                                                 %>
                                             </select>
+                                            <div class="invalid-feedback">
+                                                Seleccione un proveedor.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -153,17 +189,16 @@
         crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#tablaProducto').DataTable({
-                    "paging": true,
-                    "lengthMenu": [6, 10, 25, 50],
-                    "searching": true
-                });
-            });
-        </script>
         <!-- / Bootstrap -->
         <script src="${pageContext.servletContext.contextPath}/js/script.js"></script>
+        <script>
+            document.getElementById('formProducto').addEventListener('submit', function (event) {
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                this.classList.add('was-validated');
+            });
+        </script>
     </body>
-
 </html>
