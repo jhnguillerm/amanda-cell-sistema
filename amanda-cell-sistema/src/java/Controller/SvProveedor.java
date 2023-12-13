@@ -43,6 +43,7 @@ public class SvProveedor extends HttpServlet {
                 String direccion = request.getParameter("txtDireccion");
                 String numero = request.getParameter("txtNumero");
                 String correo = request.getParameter("txtCorreo");
+                String ruc = request.getParameter("txtRuc");
                 
                 Proveedor proveedor = new Proveedor();
                 
@@ -50,6 +51,7 @@ public class SvProveedor extends HttpServlet {
                 proveedor.setDireccion(direccion);
                 proveedor.setNumero(numero);
                 proveedor.setCorreo(correo);
+                proveedor.setRuc(ruc);
                 
                 ProveedorDAO proveedorDAO = new ProveedorDAO();
                 if (proveedorDAO.create(proveedor)) {
@@ -63,6 +65,7 @@ public class SvProveedor extends HttpServlet {
                 String direccion = request.getParameter("txtDireccion");
                 String numero = request.getParameter("txtNumero");
                 String correo = request.getParameter("txtCorreo");
+                String ruc = request.getParameter("txtRuc");
                 
                 Proveedor proveedor = new Proveedor();
                 
@@ -71,6 +74,7 @@ public class SvProveedor extends HttpServlet {
                 proveedor.setDireccion(direccion);
                 proveedor.setNumero(numero);
                 proveedor.setCorreo(correo);
+                proveedor.setRuc(ruc);
                 
                 ProveedorDAO proveedorDAO = new ProveedorDAO();
                 if (proveedorDAO.update(proveedor)) {

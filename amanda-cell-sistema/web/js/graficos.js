@@ -59,7 +59,7 @@ const getOptionChart2 = (data) => {
 
     // Definir colores personalizados para las barras
     const coloresBarras = [
-        '#5970ca', '#66cc7f', '#fac84c', '#ff664a', '#57c0eb', '#05a284', '#ff8439', '#c460a8', '#5970ca', '#66cc7f', '#04223f'
+        '#5970ca', '#66cc7f', '#fac84c', '#ff664a', '#57c0eb', '#05a284', '#ff8439', '#c460a8', '#5970ca', '#66cc7f', '#04223f', '#04323f'
     ];
 
     return {

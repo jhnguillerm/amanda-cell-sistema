@@ -16,11 +16,10 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    Proveedor proveedor = new Proveedor();
 
     @Override
     public List toList() {
-        ArrayList<Proveedor> list = new ArrayList<>();
+        List<Proveedor> list = new ArrayList<>();
         String sql = "SELECT * FROM proveedor";
         
         try {
@@ -38,6 +37,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
                 proveedor.setDireccion(rs.getString("direccion"));
                 proveedor.setNumero(rs.getString("numero"));
                 proveedor.setCorreo(rs.getString("correo"));
+                proveedor.setRuc(rs.getString("ruc"));
                 
                 list.add(proveedor);
             }
@@ -50,7 +50,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean create(Proveedor entidad) {
-        String sql = "INSERT INTO proveedor (nombre, direccion, numero, correo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO proveedor (nombre, direccion, numero, correo, ruc) VALUES (?, ?, ?, ?, ?)";
         
         try {
             connection = conexionDB.getConnection();
@@ -63,6 +63,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
             ps.setString(2, proveedor.getDireccion());
             ps.setString(3, proveedor.getNumero());
             ps.setString(4, proveedor.getCorreo());
+            ps.setString(5, proveedor.getRuc());
             
             ps.execute();
             
@@ -81,7 +82,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
 
     @Override
     public boolean update(Proveedor entidad) {
-        String sql = "UPDATE proveedor SET nombre = ?, direccion = ?, numero = ?, correo = ? WHERE id_proveedor = ?";
+        String sql = "UPDATE proveedor SET nombre = ?, direccion = ?, numero = ?, correo = ?, ruc = ? WHERE id_proveedor = ?";
         
         try {
             connection = conexionDB.getConnection();
@@ -94,7 +95,8 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
             ps.setString(2, proveedor.getDireccion());
             ps.setString(3, proveedor.getNumero());
             ps.setString(4, proveedor.getCorreo());
-            ps.setInt(5, proveedor.getIdProveedor());
+            ps.setString(5, proveedor.getRuc());
+            ps.setInt(6, proveedor.getIdProveedor());
             
             ps.execute();
             
@@ -160,6 +162,7 @@ public class ProveedorDAO extends ConexionDB implements CRUD<Proveedor>{
                 proveedor.setDireccion(rs.getString("direccion"));
                 proveedor.setNumero(rs.getString("numero"));
                 proveedor.setCorreo(rs.getString("correo"));
+                proveedor.setRuc(rs.getString("ruc"));
                 
                 return true;
             }

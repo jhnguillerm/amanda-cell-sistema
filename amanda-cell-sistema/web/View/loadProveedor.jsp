@@ -38,29 +38,41 @@
                                     <h5 class="card-tile mb-0">Información general</h5>
                                 </div>
                                 <div class="card-body">
-                                    <!-- ID - Nombre -->
                                     <div class="row mb-3">
+                                        <!-- ID -->
                                         <div class="col-4">
                                             <label class="form-label" for="txtIdProveedor">ID</label>
                                             <input type="text" class="form-control" id="txtIdProveedor" disabled>
                                             <input name="txtIdProveedor" type="hidden" id="txtIdProveedor-hidden" class="form-control">
                                         </div>
+                                        <!-- Nombre -->
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombre">Nombre</label>
-                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre del producto">
+                                            <input type="text" class="form-control" name="txtNombre" id="txtNombre">
                                         </div>
                                     </div>
-                                    <!-- Numero - Direccion -->
                                     <div class="row mb-3">
-                                        <div class="col-4"><label class="form-label" for="txtNumero">Número</label>
-                                            <input type="text" class="form-control" name="txtNumero" id="txtNumero" placeholder="Número"></div>
-                                        <div class="col-8"><label class="form-label" for="txtDireccion">Dirección</label>
-                                            <input type="text" class="form-control" name="txtDireccion" id="txtDireccion" placeholder="Dirección"></div>
+                                         <!-- Numero -->
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtNumero">Número</label>
+                                            <input type="text" class="form-control" name="txtNumero" id="txtNumero">
+                                        </div>
+                                          <!-- Direccion -->
+                                        <div class="col-8">
+                                            <label class="form-label" for="txtDireccion">Dirección</label>
+                                            <input type="text" class="form-control" name="txtDireccion" id="txtDireccion">
+                                        </div>
                                     </div>
-                                    <!-- Correo -->
                                     <div class="row mb-3">
-                                        <div class="col-8"><label class="form-label" for="txtCorreo">Correo</label>
-                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" placeholder="Correo"></div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtRuc">RUC</label>
+                                            <input type="text" class="form-control" name="txtRuc" id="txtRuc">
+                                        </div>
+                                        <!-- Correo -->
+                                        <div class="col-8">
+                                            <label class="form-label" for="txtCorreo">Correo</label>
+                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ CREATE TABLE proveedor (
     direccion VARCHAR(100),
     numero VARCHAR(15),
     correo VARCHAR(100),
+    ruc CHAR(11),
     PRIMARY KEY (id_proveedor)
 );
 

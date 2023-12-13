@@ -1,6 +1,8 @@
 
 package Model;
 
+import java.time.LocalDate;
+
 public class Cliente {
     
     private int idCliente;
@@ -8,16 +10,18 @@ public class Cliente {
     private String dni;
     private String correo;
     private String telefono;
+    private LocalDate fecha;
 
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nombres, String dni, String correo, String telefono) {
+    public Cliente(int idCliente, String nombres, String dni, String correo, String telefono, LocalDate fecha) {
         this.idCliente = idCliente;
         this.nombres = nombres;
         this.dni = dni;
         this.correo = correo;
         this.telefono = telefono;
+        this.fecha = fecha;
     }
 
     public int getIdCliente() {
@@ -58,6 +62,14 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
     
 }

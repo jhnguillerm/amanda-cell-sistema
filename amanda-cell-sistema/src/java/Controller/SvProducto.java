@@ -43,7 +43,7 @@ public class SvProducto extends HttpServlet {
                 double precioCompra = Double.parseDouble(request.getParameter("txtPrecioCompra"));
                 double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
                 int stock = Integer.parseInt(request.getParameter("txtStock"));
-                String tipo = request.getParameter("txtTipo");
+                String tipo = request.getParameter("cbTipo");
                 Part filePart = request.getPart("fileImagen");
                 InputStream inputStream = filePart.getInputStream();
                 int idProveedor = Integer.parseInt(request.getParameter("cbProveedor"));
@@ -73,7 +73,7 @@ public class SvProducto extends HttpServlet {
                 double precioCompra = Double.parseDouble(request.getParameter("txtPrecioCompra"));
                 double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
                 int stock = Integer.parseInt(request.getParameter("txtStock"));
-                String tipo = request.getParameter("txtTipo");
+                String tipo = request.getParameter("cbTipo");
                 //Imagen
                 Part filePart = request.getPart("fileImagen");
                 InputStream inputStream = filePart.getInputStream();

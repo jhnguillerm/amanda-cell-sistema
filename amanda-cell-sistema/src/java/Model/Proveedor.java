@@ -8,16 +8,18 @@ public class Proveedor {
     private String direccion;
     private String numero;
     private String correo;
+    private String ruc;
 
     public Proveedor() {
     }
 
-    public Proveedor(int idProveedor, String nombre, String direccion, String numero, String correo) {
+    public Proveedor(int idProveedor, String nombre, String direccion, String numero, String correo, String ruc) {
         this.idProveedor = idProveedor;
         this.nombre = nombre;
         this.direccion = direccion;
         this.numero = numero;
         this.correo = correo;
+        this.ruc = ruc;
     }
 
     public int getIdProveedor() {
@@ -59,5 +61,13 @@ public class Proveedor {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
 }

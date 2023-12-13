@@ -7,6 +7,7 @@ import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
@@ -18,7 +19,7 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
 
     @Override
     public List toList() {
-        ArrayList<Cliente> list = new ArrayList<>();
+        List<Cliente> list = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
         try {
             connection = conexionDB.getConnection();
@@ -32,6 +33,7 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
                 cliente.setDni(rs.getString("dni"));
                 cliente.setCorreo(rs.getString("correo"));
                 cliente.setTelefono(rs.getString("telefono"));
+                cliente.setFecha(rs.getObject("fecha", LocalDate.class));
                 
                 list.add(cliente);
             }
@@ -43,7 +45,7 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
 
     @Override
     public boolean create(Cliente entidad) {
-        String sql = "INSERT INTO cliente (nombres, dni, correo, telefono) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO cliente (nombres, dni, correo, telefono, fecha) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = conexionDB.getConnection();
             Cliente cliente = (Cliente) entidad;
@@ -53,6 +55,7 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
             ps.setString(2, cliente.getDni());
             ps.setString(3, cliente.getCorreo());
             ps.setString(4, cliente.getTelefono());
+            ps.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
             
             ps.execute();
             
@@ -135,6 +138,7 @@ public class ClienteDAO extends ConexionDB implements  CRUD<Cliente> {
                 cliente.setDni(rs.getString("dni"));
                 cliente.setCorreo(rs.getString("correo"));
                 cliente.setTelefono(rs.getString("telefono"));
+                cliente.setFecha(rs.getObject("fecha", LocalDate.class));
                 return true;
             }
             return false;

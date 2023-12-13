@@ -71,8 +71,17 @@
                                         </div>
                                         <!-- Tipo -->
                                         <div class="col-8">
-                                            <label class="form-label" for="txtTipo">Tipo</label>
-                                            <input type="text" class="form-control" name="txtTipo" id="txtTipo" value="<%=producto.getTipo()%>" required>
+                                            <label class="form-label" for="cbTipo">Tipo</label>
+                                            <select class="form-select" name="cbTipo" id="cbTipo" required>
+                                                <option disabled selected value="">Selecciona el tipo</option>
+                                                <option value="Accesorio">Accesorio</option>
+                                                <option value="Altavoz">Altavoz</option>
+                                                <option value="Bateria">Batería</option>
+                                                <option value="Boton">Botón</option>
+                                                <option value="Camara">Cámara</option>
+                                                <option value="Pantalla">Pantalla</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
                                             <div class="invalid-feedback">
                                                 Tipo requerido.
                                             </div>
@@ -200,5 +209,17 @@
                 this.classList.add('was-validated');
             });
         </script>
+        <script>
+    // Establece el valor seleccionado en el selector de tipo (cbTipo)
+    var selectedTipo = '<%=producto.getTipo()%>';
+    var cbTipo = document.getElementById('cbTipo');
+    
+    for (var i = 0; i < cbTipo.options.length; i++) {
+        if (cbTipo.options[i].value === selectedTipo) {
+            cbTipo.options[i].selected = true;
+            break;
+        }
+    }
+</script>
     </body>
 </html>

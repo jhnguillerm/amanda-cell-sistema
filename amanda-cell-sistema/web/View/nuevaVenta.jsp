@@ -42,7 +42,7 @@
                                 <div class="card-body">
                                     <div class="mb-3 col">
                                         <div class="input-group">
-                                            <select id="cbCliente" class="form-select" name="cbCliente" required>
+                                            <select id="cbCliente" class="form-select" name="cbCliente" data-live-search="true" required>
                                                 <option disabled value="">Selecciona el cliente</option>
                                                 <%
                                                     ClienteDAO clienteDAO = new ClienteDAO();
@@ -203,7 +203,6 @@
         </div>
         <!-- jquery -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-        <!-- / jquery -->
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
