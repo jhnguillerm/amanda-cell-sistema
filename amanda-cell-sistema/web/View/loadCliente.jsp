@@ -16,7 +16,7 @@
                 <!-- Nav horizontal -->
                 <jsp:include page = "../components/navbar_horizontal.jsp"/>
                 <!-- / Nav horizontal -->
-                <form action="/amanda-cell-sistema/SvCliente" method="post" class="m-0">
+                <form action="/amanda-cell-sistema/SvCliente" method="post" class="m-0 needs-validation" novalidate id="formCliente">
                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
 
                         <div class="d-flex flex-column justify-content-center">
@@ -47,20 +47,38 @@
                                         </div>
                                         <div class="col-8">
                                             <label class="form-label" for="txtNombres">Nombres</label>
-                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" placeholder="Nombre completo">
+                                            <input type="text" class="form-control" name="txtNombres" id="txtNombres" placeholder="Nombre completo" required>
+                                            <div class="invalid-feedback">
+                                                Nombres requeridos.
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- DNI - Correo -->
                                     <div class="row mb-3">
-                                        <div class="col-4"><label class="form-label" for="txtDni">DNI</label>
-                                            <input type="text" class="form-control" name="txtDni" id="txtDni" placeholder="DNI"></div>
-                                        <div class="col-8"><label class="form-label" for="txtCorreo">Correo</label>
-                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" placeholder="Correo"></div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtDni">DNI</label>
+                                            <input type="text" class="form-control" name="txtDni" id="txtDni" placeholder="DNI" required pattern="[0-9]{8}" title="Debe contener 8 dígitos numéricos">
+                                            <div class="invalid-feedback">
+                                                DNI incorrecto.
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <label class="form-label" for="txtCorreo">Correo</label>
+                                            <input type="email" class="form-control" name="txtCorreo" id="txtCorreo" placeholder="Correo" required>
+                                            <div class="invalid-feedback">
+                                                Correo incorrecto.
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- Telefono -->
                                     <div class="row mb-3">
-                                        <div class="col-4"><label class="form-label" for="txtTelefono">Telefono</label>
-                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="Telefono"></div>
+                                        <div class="col-4">
+                                            <label class="form-label" for="txtTelefono">Télefono</label>
+                                            <input type="text" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="Telefono" required>
+                                            <div class="invalid-feedback">
+                                                Télefono incorrecto.
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +123,15 @@
                 }
             });
         </script>
-
+        <script>
+            document.getElementById('formCliente').addEventListener('submit', function (event) {
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                this.classList.add('was-validated');
+            });
+        </script>
     </body>
 
 </html>
